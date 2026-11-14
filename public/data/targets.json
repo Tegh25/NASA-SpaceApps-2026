@@ -1,0 +1,203 @@
+{
+  "targets": [
+    {
+      "id": "moon-shackleton-rim",
+      "body": "moon",
+      "name": "Shackleton Crater rim",
+      "lat": -89.9,
+      "lon": 129,
+      "summary": "Ridge at the lunar south pole next to permanently shadowed terrain.",
+      "whyItMatters": "Parts of the rim see sunlight for most of the year, which helps solar power and thermal stability. The crater floor next to it stays in permanent shadow and may hold water ice. That pairing of light and possible ice is why it is a leading Artemis candidate.",
+      "values": {
+        "elevation_m": 1900,
+        "slope_deg": 12,
+        "roughness_m": 8,
+        "rock_fraction": 0.15,
+        "temp_max_k": 220,
+        "temp_min_k": 70,
+        "temp_range_k": 90,
+        "illum_fraction": 0.85,
+        "ice_signal": 0.7,
+        "basalt_fraction": 0.05,
+        "albedo": 0.2,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 0,
+        "radiation_index": 1,
+        "isolation_index": 0.8
+      },
+      "heightmap": "heightmaps/moon-shackleton-rim.json",
+      "sources": [
+        "LOLA 20 m south polar DEM (mock values)",
+        "Diviner (mock values)"
+      ]
+    },
+    {
+      "id": "moon-malapert-massif",
+      "body": "moon",
+      "name": "Malapert massif",
+      "lat": -86,
+      "lon": 0,
+      "summary": "Tall south polar mountain with long sunlit periods and a view of Earth.",
+      "whyItMatters": "Its summit is high enough to catch sunlight for long stretches and to keep direct line of sight to Earth for communication. Nearby shadowed craters could supply volatiles.",
+      "values": {
+        "elevation_m": 5000,
+        "slope_deg": 15,
+        "roughness_m": 10,
+        "rock_fraction": 0.2,
+        "temp_max_k": 230,
+        "temp_min_k": 80,
+        "temp_range_k": 100,
+        "illum_fraction": 0.75,
+        "ice_signal": 0.4,
+        "basalt_fraction": 0.05,
+        "albedo": 0.18,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 0,
+        "radiation_index": 1,
+        "isolation_index": 0.5
+      },
+      "heightmap": "heightmaps/moon-malapert-massif.json",
+      "sources": [
+        "LOLA (mock values)",
+        "Diviner (mock values)"
+      ]
+    },
+    {
+      "id": "moon-mare-tranquillitatis",
+      "body": "moon",
+      "name": "Mare Tranquillitatis plain",
+      "lat": 8.5,
+      "lon": 31.4,
+      "summary": "Flat basaltic lava plain on the near side.",
+      "whyItMatters": "Mare plains are smooth, well mapped and made of basalt, which is useful for construction material studies. The near side keeps constant line of sight to Earth. Lava tube skylights have been seen in this mare.",
+      "values": {
+        "elevation_m": -1900,
+        "slope_deg": 2,
+        "roughness_m": 1.5,
+        "rock_fraction": 0.05,
+        "temp_max_k": 390,
+        "temp_min_k": 95,
+        "temp_range_k": 280,
+        "illum_fraction": 0.5,
+        "ice_signal": 0.02,
+        "basalt_fraction": 0.95,
+        "albedo": 0.07,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 0,
+        "radiation_index": 1,
+        "isolation_index": 0.3
+      },
+      "heightmap": "heightmaps/moon-mare-tranquillitatis.json",
+      "sources": [
+        "LOLA (mock values)",
+        "Diviner (mock values)",
+        "LROC (mock values)"
+      ]
+    },
+    {
+      "id": "mars-jezero",
+      "body": "mars",
+      "name": "Jezero Crater",
+      "lat": 18.4,
+      "lon": 77.5,
+      "summary": "Ancient lake basin with a river delta, explored by Perseverance.",
+      "whyItMatters": "Jezero once held a lake fed by a river that built a delta. Delta and lakebed sediments are good places to look for signs of past life, which is why Perseverance was sent there.",
+      "values": {
+        "elevation_m": -2500,
+        "slope_deg": 4,
+        "roughness_m": 3,
+        "rock_fraction": 0.2,
+        "temp_max_k": 270,
+        "temp_min_k": 180,
+        "temp_range_k": 80,
+        "illum_fraction": 0.5,
+        "ice_signal": 0.1,
+        "basalt_fraction": 0.6,
+        "albedo": 0.2,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 0,
+        "radiation_index": 0.7,
+        "isolation_index": 0.6
+      },
+      "heightmap": "heightmaps/mars-jezero.json",
+      "sources": [
+        "MOLA (mock values)",
+        "CRISM (mock values)"
+      ]
+    },
+    {
+      "id": "mars-gale",
+      "body": "mars",
+      "name": "Gale Crater",
+      "lat": -5.4,
+      "lon": 137.8,
+      "summary": "Large crater with a layered central mound, explored by Curiosity.",
+      "whyItMatters": "The central mound, Aeolis Mons, exposes kilometres of layered sediment that record changes in the Martian climate. Curiosity found evidence of an ancient habitable lake environment.",
+      "values": {
+        "elevation_m": -4500,
+        "slope_deg": 8,
+        "roughness_m": 5,
+        "rock_fraction": 0.25,
+        "temp_max_k": 290,
+        "temp_min_k": 180,
+        "temp_range_k": 90,
+        "illum_fraction": 0.5,
+        "ice_signal": 0.05,
+        "basalt_fraction": 0.5,
+        "albedo": 0.2,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 0,
+        "radiation_index": 0.7,
+        "isolation_index": 0.6
+      },
+      "heightmap": "heightmaps/mars-gale.json",
+      "sources": [
+        "MOLA (mock values)",
+        "RAD (mock values)"
+      ]
+    },
+    {
+      "id": "mars-arcadia-ice",
+      "body": "mars",
+      "name": "Arcadia Planitia (ice-rich mid-latitudes)",
+      "lat": 40,
+      "lon": -165,
+      "summary": "Low plains with shallow buried ice, a candidate for human landings.",
+      "whyItMatters": "Radar and fresh impact craters show water ice close to the surface at mid-latitudes. Flat, low terrain helps landing, and accessible ice could supply water and propellant.",
+      "values": {
+        "elevation_m": -3800,
+        "slope_deg": 2,
+        "roughness_m": 1.5,
+        "rock_fraction": 0.08,
+        "temp_max_k": 250,
+        "temp_min_k": 150,
+        "temp_range_k": 70,
+        "illum_fraction": 0.5,
+        "ice_signal": 0.85,
+        "basalt_fraction": 0.5,
+        "albedo": 0.22,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 0,
+        "radiation_index": 0.7,
+        "isolation_index": 0.6
+      },
+      "heightmap": "heightmaps/mars-arcadia-ice.json",
+      "sources": [
+        "SHARAD (mock values)",
+        "MOLA (mock values)"
+      ]
+    }
+  ],
+  "provenance": {
+    "mock": true,
+    "generatedAt": "2026-11-14T21:32:18.931Z",
+    "processing": "MOCK DATA generated by scripts/mockData.ts from simple heuristics. Not real analysis.",
+    "datasets": [
+      {
+        "name": "Natural Earth 110m land (land mask only)",
+        "url": "https://www.naturalearthdata.com/",
+        "notes": "Public domain"
+      }
+    ]
+  }
+}

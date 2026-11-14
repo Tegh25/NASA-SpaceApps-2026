@@ -1,0 +1,51 @@
+{
+  "name": "terralog",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Find Earth's Moon and Mars lookalikes. NASA Space Apps 2026, Toronto.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "mock-data": "tsx scripts/mockData.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tegh25/NASA-SpaceApps-2026.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tegh25/NASA-SpaceApps-2026/issues"
+  },
+  "homepage": "https://github.com/Tegh25/NASA-SpaceApps-2026#readme",
+  "dependencies": {
+    "cesium": "^1.147.0",
+    "lucide-react": "^1.73.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5",
+    "three": "^0.187.0",
+    "zod": "^4.6.7",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "@vercel/node": "^31.0.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "tailwindcss": "^4.3.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vite-plugin-static-copy": "^4.1.1",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "features": [
+    {
+      "key": "elevation_m",
+      "label": "Elevation",
+      "unit": "m",
+      "group": "Terrain",
+      "description": "Earth: above sea level. Moon and Mars: relative to the reference sphere or geoid.",
+      "norm": {
+        "min": -5000,
+        "max": 6000,
+        "scale": "linear"
+      },
+      "higherIs": "higher",
+      "sources": [
+        "Copernicus GLO-30",
+        "LOLA",
+        "MOLA"
+      ]
+    },
+    {
+      "key": "slope_deg",
+      "label": "Mean slope",
+      "unit": "deg",
+      "group": "Terrain",
+      "description": "Mean slope at a 20 to 100 m baseline.",
+      "norm": {
+        "min": 0,
+        "max": 30,
+        "scale": "linear"
+      },
+      "higherIs": "steeper",
+      "sources": [
+        "Copernicus GLO-30",
+        "LOLA",
+        "MOLA"
+      ]
+    },
+    {
+      "key": "roughness_m",
+      "label": "Surface roughness",
+      "unit": "m RMS",
+      "group": "Terrain",
+      "description": "Height deviation at about a 100 m baseline.",
+      "norm": {
+        "min": 0,
+        "max": 40,
+        "scale": "log"
+      },
+      "higherIs": "rougher",
+      "sources": [
+        "Copernicus GLO-30",
+        "LOLA",
+        "MOLA"
+      ]
+    },
+    {
+      "key": "rock_fraction",
+      "label": "Rock abundance",
+      "unit": "0 to 1",
+      "group": "Terrain",
+      "description": "Fraction of surface covered by rocks. Earth: proxy from roughness and land cover.",
+      "norm": {
+        "min": 0,
+        "max": 1,
+        "scale": "linear"
+      },
+      "higherIs": "rockier",
+      "sources": [
+        "Diviner rock abundance",
+        "THEMIS",
+        "ESA WorldCover"
+      ]
+    },
+    {
+      "key": "temp_max_k",
+      "label": "Max surface temp",
+      "unit": "K",
+      "group": "Thermal",
+      "description": "Annual maximum surface temperature.",
+      "norm": {
+        "min": 200,
+        "max": 400,
+        "scale": "linear"
+      },
+      "higherIs": "hotter",
+      "sources": [
+        "ERA5",
+        "Diviner",
+        "Mars Climate Database"
+      ]
+    },
+    {
+      "key": "temp_min_k",
+      "label": "Min surface temp",
+      "unit": "K",
+      "group": "Thermal",
+      "description": "Annual minimum surface temperature.",
+      "norm": {
+        "min": 40,
+        "max": 300,
+        "scale": "linear"
+      },
+      "higherIs": "warmer",
+      "sources": [
+        "ERA5",
+        "Diviner",
+        "Mars Climate Database"
+      ]
+    },
+    {
+      "key": "temp_range_k",
+      "label": "Diurnal temp range",
+      "unit": "K",
+      "group": "Thermal",
+      "description": "Mean daily maximum minus minimum.",
+      "norm": {
+        "min": 0,
+        "max": 300,
+        "scale": "log"
+      },
+      "higherIs": "wider swing",
+      "sources": [
+        "ERA5",
+        "Diviner",
+        "Mars Climate Database"
+      ]
+    },
+    {
+      "key": "illum_fraction",
+      "label": "Sunlit fraction",
+      "unit": "0 to 1",
+      "group": "Light",
+      "description": "Fraction of the year the sun is above the local horizon. Earth: geometric, ignoring atmosphere and cloud.",
+      "norm": {
+        "min": 0,
+        "max": 1,
+        "scale": "linear"
+      },
+      "higherIs": "more sunlit",
+      "sources": [
+        "LOLA illumination maps",
+        "Computed"
+      ]
+    },
+    {
+      "key": "ice_signal",
+      "label": "Volatile or ground ice",
+      "unit": "0 to 1",
+      "group": "Volatiles and Geology",
+      "description": "Composite likelihood index for ice in or on the ground.",
+      "norm": {
+        "min": 0,
+        "max": 1,
+        "scale": "linear"
+      },
+      "higherIs": "more likely ice",
+      "sources": [
+        "LEND",
+        "Mini-RF",
+        "SHARAD",
+        "ESA CCI Permafrost"
+      ]
+    },
+    {
+      "key": "basalt_fraction",
+      "label": "Basaltic composition",
+      "unit": "0 to 1",
+      "group": "Volatiles and Geology",
+      "description": "Fraction of basaltic or volcanic terrain.",
+      "norm": {
+        "min": 0,
+        "max": 1,
+        "scale": "linear"
+      },
+      "higherIs": "more basaltic",
+      "sources": [
+        "Geologic maps",
+        "CRISM",
+        "GLiM"
+      ]
+    },
+    {
+      "key": "albedo",
+      "label": "Albedo",
+      "unit": "0 to 1",
+      "group": "Surface and Climate",
+      "description": "Visible albedo.",
+      "norm": {
+        "min": 0,
+        "max": 0.9,
+        "scale": "linear"
+      },
+      "higherIs": "brighter",
+      "sources": [
+        "MODIS",
+        "LRO WAC",
+        "TES"
+      ]
+    },
+    {
+      "key": "vegetation_ndvi",
+      "label": "Vegetation",
+      "unit": "0 to 1",
+      "group": "Surface and Climate",
+      "description": "Vegetation index. Moon and Mars are 0. Lower matches better.",
+      "norm": {
+        "min": 0,
+        "max": 0.9,
+        "scale": "linear"
+      },
+      "higherIs": "greener",
+      "sources": [
+        "MODIS NDVI"
+      ]
+    },
+    {
+      "key": "precip_mm_yr",
+      "label": "Precipitation",
+      "unit": "mm/yr",
+      "group": "Surface and Climate",
+      "description": "Annual precipitation. Moon and Mars are 0.",
+      "norm": {
+        "min": 0,
+        "max": 3000,
+        "scale": "log"
+      },
+      "higherIs": "wetter",
+      "sources": [
+        "ERA5"
+      ]
+    },
+    {
+      "key": "radiation_index",
+      "label": "Radiation exposure",
+      "unit": "0 to 1",
+      "group": "Hazards and Access",
+      "description": "Relative surface radiation index. Earth values stay low because of the atmosphere and magnetosphere.",
+      "norm": {
+        "min": 0,
+        "max": 1,
+        "scale": "linear"
+      },
+      "higherIs": "more exposed",
+      "sources": [
+        "CRaTER",
+        "RAD",
+        "Model"
+      ]
+    },
+    {
+      "key": "isolation_index",
+      "label": "Isolation",
+      "unit": "0 to 1",
+      "group": "Hazards and Access",
+      "description": "Earth: from population density and road distance. Moon and Mars: defined by the data team.",
+      "norm": {
+        "min": 0,
+        "max": 1,
+        "scale": "linear"
+      },
+      "higherIs": "more isolated",
+      "sources": [
+        "GHSL",
+        "OpenStreetMap"
+      ]
+    }
+  ],
+  "provenance": {
+    "mock": true,
+    "generatedAt": "2026-11-14T21:32:18.929Z",
+    "processing": "MOCK DATA generated by scripts/mockData.ts from simple heuristics. Not real analysis.",
+    "datasets": [
+      {
+        "name": "Natural Earth 110m land (land mask only)",
+        "url": "https://www.naturalearthdata.com/",
+        "notes": "Public domain"
+      }
+    ]
+  }
+}

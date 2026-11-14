@@ -1,0 +1,629 @@
+{
+  "featured": [
+    {
+      "id": "devon-island-haughton",
+      "name": "Haughton Crater, Devon Island",
+      "region": "Nunavut, Canada",
+      "lat": 75.37,
+      "lon": -89.68,
+      "analogFor": [
+        "moon-shackleton-rim",
+        "mars-arcadia-ice"
+      ],
+      "headline": "Polar desert impact crater with ground ice.",
+      "description": "Haughton is a roughly 20 km wide impact crater on one of the largest uninhabited islands on Earth. It sits in a cold, dry polar desert with permafrost and very little plant cover. Research teams have used it for decades to rehearse Moon and Mars field operations.",
+      "matches": [
+        "Cold, dry polar desert",
+        "Impact crater morphology",
+        "Ground ice in permafrost",
+        "Very remote"
+      ],
+      "shortfalls": [
+        "Thin vegetation and liquid water in summer",
+        "Sun sets for months in winter instead of grazing the horizon"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": 75.37,
+          "lon": -89.68,
+          "heading": 90,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": 75.37,
+            "lon": -89.68,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": 75.382,
+            "lon": -89.68,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": 75.37,
+            "lon": -89.63248955052273,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "Haughton-Mars Project (NASA)",
+          "url": "https://www.nasa.gov/general/haughton-mars-project/"
+        }
+      ],
+      "values": {
+        "elevation_m": 250,
+        "slope_deg": 7,
+        "roughness_m": 6,
+        "rock_fraction": 0.45,
+        "temp_max_k": 285,
+        "temp_min_k": 228,
+        "temp_range_k": 6,
+        "illum_fraction": 0.49,
+        "ice_signal": 0.8,
+        "basalt_fraction": 0.03,
+        "albedo": 0.3,
+        "vegetation_ndvi": 0.04,
+        "precip_mm_yr": 130,
+        "radiation_index": 0.14,
+        "isolation_index": 0.97
+      },
+      "score": {
+        "moon-shackleton-rim": 71,
+        "mars-arcadia-ice": 72
+      }
+    },
+    {
+      "id": "atacama-yungay",
+      "name": "Yungay, Atacama Desert",
+      "region": "Antofagasta, Chile",
+      "lat": -24.1,
+      "lon": -70,
+      "analogFor": [
+        "mars-jezero",
+        "mars-gale"
+      ],
+      "headline": "One of the driest places on Earth.",
+      "description": "The Yungay area of the Atacama receives almost no rain, and its soils hold very little life. Strong sunlight and oxidising salts in the soil echo conditions on the Martian surface. Rover and life-detection instruments are regularly tested here.",
+      "matches": [
+        "Hyper-arid, almost no rain",
+        "No vegetation",
+        "Oxidised, salty soils",
+        "High solar exposure"
+      ],
+      "shortfalls": [
+        "Warm compared with Mars",
+        "Thick atmosphere filters ultraviolet light"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": -24.1,
+          "lon": -70,
+          "heading": 0,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": -24.1,
+            "lon": -70,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": -24.088,
+            "lon": -70,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": -24.1,
+            "lon": -69.9868541293706,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "Mars-like soils in the Atacama Desert (Science, 2003)",
+          "url": "https://www.science.org/doi/10.1126/science.1089143"
+        }
+      ],
+      "values": {
+        "elevation_m": 1000,
+        "slope_deg": 4,
+        "roughness_m": 3,
+        "rock_fraction": 0.4,
+        "temp_max_k": 312,
+        "temp_min_k": 272,
+        "temp_range_k": 24,
+        "illum_fraction": 0.47,
+        "ice_signal": 0,
+        "basalt_fraction": 0.2,
+        "albedo": 0.32,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 1,
+        "radiation_index": 0.12,
+        "isolation_index": 0.82
+      },
+      "score": {
+        "mars-jezero": 81,
+        "mars-gale": 80
+      }
+    },
+    {
+      "id": "wright-valley-dry-valleys",
+      "name": "Wright Valley, McMurdo Dry Valleys",
+      "region": "Victoria Land, Antarctica",
+      "lat": -77.5,
+      "lon": 161.8,
+      "analogFor": [
+        "mars-arcadia-ice",
+        "moon-shackleton-rim"
+      ],
+      "headline": "Ice-free polar valley with buried ice and extreme cold.",
+      "description": "The Dry Valleys are among the coldest and driest ice-free places on Earth. Strong winds remove snow, leaving bare rock, sand and ice-cemented ground. Patterned ground and buried ice here resemble features seen in the Martian mid-latitudes.",
+      "matches": [
+        "Extreme cold",
+        "Hyper-arid and ice-free",
+        "Buried ground ice",
+        "No vegetation"
+      ],
+      "shortfalls": [
+        "Seasonal meltwater streams",
+        "Much warmer than the lunar poles"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": -77.5,
+          "lon": 161.8,
+          "heading": 270,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": -77.5,
+            "lon": 161.8,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": -77.488,
+            "lon": 161.8,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": -77.5,
+            "lon": 161.85544271578416,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "McMurdo Dry Valleys LTER",
+          "url": "https://mcm.lternet.edu/"
+        }
+      ],
+      "values": {
+        "elevation_m": 300,
+        "slope_deg": 10,
+        "roughness_m": 9,
+        "rock_fraction": 0.55,
+        "temp_max_k": 280,
+        "temp_min_k": 210,
+        "temp_range_k": 8,
+        "illum_fraction": 0.48,
+        "ice_signal": 0.85,
+        "basalt_fraction": 0.15,
+        "albedo": 0.25,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 10,
+        "radiation_index": 0.22,
+        "isolation_index": 1
+      },
+      "score": {
+        "mars-arcadia-ice": 75,
+        "moon-shackleton-rim": 74
+      }
+    },
+    {
+      "id": "askja-iceland",
+      "name": "Askja caldera",
+      "region": "Highlands, Iceland",
+      "lat": 65.03,
+      "lon": -16.75,
+      "analogFor": [
+        "moon-mare-tranquillitatis",
+        "mars-jezero"
+      ],
+      "headline": "Barren basaltic volcanic field where Apollo crews trained.",
+      "description": "Askja is a volcanic caldera surrounded by fresh lava and pumice with almost no plant cover. Apollo astronauts trained here in the 1960s to recognise volcanic geology. Basaltic surfaces and lava flows make it a strong compositional match for lunar maria.",
+      "matches": [
+        "Basaltic lava and tephra",
+        "Bare, unvegetated ground",
+        "Volcanic landforms"
+      ],
+      "shortfalls": [
+        "Frequent rain and snow",
+        "Much smaller temperature swings than the Moon"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": 65.03,
+          "lon": -16.75,
+          "heading": 180,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": 65.03,
+            "lon": -16.75,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": 65.042,
+            "lon": -16.75,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": 65.03,
+            "lon": -16.721573658270884,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "Apollo geology training in Iceland",
+          "url": "https://www.lpi.usra.edu/lunar/missions/apollo/apollo_training/"
+        }
+      ],
+      "values": {
+        "elevation_m": 1100,
+        "slope_deg": 6,
+        "roughness_m": 5,
+        "rock_fraction": 0.5,
+        "temp_max_k": 288,
+        "temp_min_k": 250,
+        "temp_range_k": 7,
+        "illum_fraction": 0.48,
+        "ice_signal": 0.35,
+        "basalt_fraction": 0.95,
+        "albedo": 0.1,
+        "vegetation_ndvi": 0.04,
+        "precip_mm_yr": 450,
+        "radiation_index": 0.14,
+        "isolation_index": 0.88
+      },
+      "score": {
+        "moon-mare-tranquillitatis": 64,
+        "mars-jezero": 74
+      }
+    },
+    {
+      "id": "kilauea-hawaii",
+      "name": "Kīlauea summit and Kaʻū Desert",
+      "region": "Hawaiʻi, United States",
+      "lat": 19.42,
+      "lon": -155.29,
+      "analogFor": [
+        "moon-mare-tranquillitatis"
+      ],
+      "headline": "Young basaltic lava fields and lava tubes.",
+      "description": "The Kaʻū Desert on the flank of Kīlauea is covered in recent basaltic lava and ash, with sparse plants due to volcanic gases and rain shadow. Fresh basalt here is chemically close to lunar mare basalt, and the area is used to test regolith handling and rovers.",
+      "matches": [
+        "Fresh basalt",
+        "Lava tubes nearby",
+        "Sparse vegetation in the desert zone"
+      ],
+      "shortfalls": [
+        "Warm and humid compared with any lunar site",
+        "Vegetation close by"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": 19.42,
+          "lon": -155.29,
+          "heading": 200,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": 19.42,
+            "lon": -155.29,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": 19.432000000000002,
+            "lon": -155.29,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": 19.42,
+            "lon": -155.2772760944435,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "PISCES analog testing, Hawaiʻi",
+          "url": "https://www.pacificspaceflight.com/"
+        }
+      ],
+      "values": {
+        "elevation_m": 1100,
+        "slope_deg": 3,
+        "roughness_m": 2,
+        "rock_fraction": 0.35,
+        "temp_max_k": 302,
+        "temp_min_k": 284,
+        "temp_range_k": 10,
+        "illum_fraction": 0.48,
+        "ice_signal": 0,
+        "basalt_fraction": 1,
+        "albedo": 0.08,
+        "vegetation_ndvi": 0.15,
+        "precip_mm_yr": 900,
+        "radiation_index": 0.08,
+        "isolation_index": 0.45
+      },
+      "score": {
+        "moon-mare-tranquillitatis": 69
+      }
+    },
+    {
+      "id": "mdrs-utah",
+      "name": "Mars Desert Research Station",
+      "region": "Utah, United States",
+      "lat": 38.41,
+      "lon": -110.79,
+      "analogFor": [
+        "mars-gale",
+        "mars-jezero"
+      ],
+      "headline": "Layered red sedimentary desert used for Mars simulations.",
+      "description": "The badlands around the station expose layered sedimentary rock coloured by iron oxides, much like the layered terrain in Gale Crater. Crews live in a simulated habitat and run field missions in suits.",
+      "matches": [
+        "Layered sedimentary rock",
+        "Iron-oxide colouring",
+        "Arid with little vegetation"
+      ],
+      "shortfalls": [
+        "Liquid water and rain events",
+        "Earth gravity and air pressure"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": 38.41,
+          "lon": -110.79,
+          "heading": 45,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": 38.41,
+            "lon": -110.79,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": 38.422,
+            "lon": -110.79,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": 38.41,
+            "lon": -110.77468577184436,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "Mars Desert Research Station (Mars Society)",
+          "url": "https://mdrs.marssociety.org/"
+        }
+      ],
+      "values": {
+        "elevation_m": 1350,
+        "slope_deg": 8,
+        "roughness_m": 6,
+        "rock_fraction": 0.35,
+        "temp_max_k": 314,
+        "temp_min_k": 255,
+        "temp_range_k": 18,
+        "illum_fraction": 0.46,
+        "ice_signal": 0,
+        "basalt_fraction": 0.08,
+        "albedo": 0.28,
+        "vegetation_ndvi": 0.05,
+        "precip_mm_yr": 180,
+        "radiation_index": 0.15,
+        "isolation_index": 0.72
+      },
+      "score": {
+        "mars-gale": 78,
+        "mars-jezero": 76
+      }
+    },
+    {
+      "id": "cueva-de-los-verdes",
+      "name": "Cueva de los Verdes lava tube",
+      "region": "Lanzarote, Canary Islands, Spain",
+      "lat": 29.16,
+      "lon": -13.43,
+      "analogFor": [
+        "moon-mare-tranquillitatis"
+      ],
+      "headline": "Kilometres-long lava tube used for cave training.",
+      "description": "This lava tube runs for several kilometres beneath basaltic lava fields. Lunar and Martian lava tubes could shelter habitats from radiation and temperature swings, and astronaut cave training has used tubes on Lanzarote. Scores here describe the surface only.",
+      "matches": [
+        "Lava tube",
+        "Basaltic lava field",
+        "Dry, sparsely vegetated surface"
+      ],
+      "shortfalls": [
+        "Surface score only, the tube interior is not modelled",
+        "Mild oceanic climate"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": 29.16,
+          "lon": -13.43,
+          "heading": 0,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": 29.16,
+            "lon": -13.43,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": 29.172,
+            "lon": -13.43,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": 29.16,
+            "lon": -13.416258426737684,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "ESA PANGAEA training, Lanzarote",
+          "url": "https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/CAVES_and_Pangaea"
+        }
+      ],
+      "values": {
+        "elevation_m": 50,
+        "slope_deg": 3,
+        "roughness_m": 3,
+        "rock_fraction": 0.4,
+        "temp_max_k": 303,
+        "temp_min_k": 287,
+        "temp_range_k": 8,
+        "illum_fraction": 0.49,
+        "ice_signal": 0,
+        "basalt_fraction": 1,
+        "albedo": 0.1,
+        "vegetation_ndvi": 0.05,
+        "precip_mm_yr": 120,
+        "radiation_index": 0.09,
+        "isolation_index": 0.3
+      },
+      "score": {
+        "moon-mare-tranquillitatis": 72
+      }
+    },
+    {
+      "id": "danakil-depression",
+      "name": "Danakil Depression",
+      "region": "Afar, Ethiopia",
+      "lat": 14.24,
+      "lon": 40.3,
+      "analogFor": [
+        "mars-jezero"
+      ],
+      "headline": "Hot, salty, volcanic basin below sea level.",
+      "description": "The Danakil is one of the hottest places on Earth, with salt flats, acidic hot springs and basaltic volcanoes. Brines and evaporite minerals here help scientists understand salty deposits found in ancient Martian lake basins.",
+      "matches": [
+        "Evaporite and salt deposits",
+        "Basaltic volcanism",
+        "No vegetation"
+      ],
+      "shortfalls": [
+        "Extremely hot, unlike any Mars site",
+        "Active hydrothermal water"
+      ],
+      "tour": {
+        "spawn": {
+          "lat": 14.24,
+          "lon": 40.3,
+          "heading": 90,
+          "heightM": 1.7
+        },
+        "waypoints": [
+          {
+            "name": "Spawn point",
+            "lat": 14.24,
+            "lon": 40.3,
+            "note": "Mock narration: starting position for the tour."
+          },
+          {
+            "name": "North lookout",
+            "lat": 14.252,
+            "lon": 40.3,
+            "note": "Mock narration: replace with curated notes from the data team."
+          },
+          {
+            "name": "East ridge",
+            "lat": 14.24,
+            "lon": 40.31238040200489,
+            "note": "Mock narration: replace with curated notes from the data team."
+          }
+        ]
+      },
+      "references": [
+        {
+          "title": "Europlanet: Danakil as a Mars analogue",
+          "url": "https://www.europlanet-society.org/"
+        }
+      ],
+      "values": {
+        "elevation_m": -120,
+        "slope_deg": 2,
+        "roughness_m": 2,
+        "rock_fraction": 0.25,
+        "temp_max_k": 321,
+        "temp_min_k": 295,
+        "temp_range_k": 14,
+        "illum_fraction": 0.48,
+        "ice_signal": 0,
+        "basalt_fraction": 0.7,
+        "albedo": 0.4,
+        "vegetation_ndvi": 0,
+        "precip_mm_yr": 50,
+        "radiation_index": 0.1,
+        "isolation_index": 0.86
+      },
+      "score": {
+        "mars-jezero": 79
+      }
+    }
+  ],
+  "provenance": {
+    "mock": true,
+    "generatedAt": "2026-11-14T21:32:19.731Z",
+    "processing": "MOCK DATA generated by scripts/mockData.ts from simple heuristics. Not real analysis. Site names and coordinates are approximate seeds from the product guide; descriptions are draft text to verify before publishing.",
+    "datasets": [
+      {
+        "name": "Natural Earth 110m land (land mask only)",
+        "url": "https://www.naturalearthdata.com/",
+        "notes": "Public domain"
+      }
+    ]
+  }
+}
