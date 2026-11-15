@@ -205,6 +205,9 @@ export function TargetScene({ target, sunAz, sunEl, exaggeration, groundView }: 
         else mat?.dispose();
       });
       renderer.dispose();
+      // dispose() frees GPU objects but not the context itself. Browsers cap live contexts (about 16) and
+      // evict the oldest, which would be the Cesium globe, so release it now like LabScene and BodyInset do.
+      renderer.forceContextLoss();
       renderer.domElement.remove();
       refs.current = null;
     };
