@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import type { EarthCellsFile, FeatureDef } from '../data/schemas';
+import type { EarthCellsFile, FeatureDef, Target } from '../data/schemas';
 import { haversineKm } from '../lib/geo';
 import { denormalize, normalize } from './normalize';
-import { breakdown, buildNormCells, cellGetter, matchLevel, nonMaxSuppress, scoreCells, scoreVector } from './score';
+import { breakdown, buildNormCells, cellGetter, matchLevel, nonMaxSuppress, queryFromTarget, scoreCells, scoreVector } from './score';
 import type { ParsedQuery } from './types';
 
 const feat = (key: string, min = 0, max = 1, scale: 'linear' | 'log' = 'linear'): FeatureDef => ({
@@ -74,6 +74,22 @@ describe('scoreVector', () => {
     expect(Math.round(s!.score)).toBe(100);
     expect(s!.confidence).toBeCloseTo(2 / 3);
     expect(s!.partial).toBe(true);
+  });
+  it('lowers confidence when the target has no value for some features', () => {
+    const feats = [feat('a'), feat('b'), feat('c'), feat('d')];
+    const target = { id: 't', name: 'T', body: 'mars', values: { a: 0.5, b: 0.5, c: 0.5, d: null } } as unknown as Target;
+    const query = queryFromTarget(target, feats);
+    expect(query.coverage).toBeCloseTo(3 / 4);
+    const s = scoreVector(() => 0.5, query);
+    expect(Math.round(s!.score)).toBe(100);
+    expect(s!.confidence).toBeCloseTo(3 / 4);
+  });
+  it('leaves confidence at 1 when the target covers every feature', () => {
+    const feats = [feat('a'), feat('b')];
+    const target = { id: 't', name: 'T', body: 'moon', values: { a: 0.5, b: 0.5 } } as unknown as Target;
+    const query = queryFromTarget(target, feats);
+    expect(query.coverage).toBeUndefined();
+    expect(scoreVector(() => 0.5, query)!.confidence).toBe(1);
   });
   it('ignores features with weight 0', () => {
     const s = scoreVector((k) => ({ a: 0.5, b: 1, c: 0.5 })[k] ?? null, q({ a: 0.5, b: 0, c: 0.5 }, { a: 2, b: 0, c: 2 }));

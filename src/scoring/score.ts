@@ -93,7 +93,9 @@ export function scoreVector(
     }
   }
   if (den === 0) return null;
-  const missingShare = 1 - den / total;
+  const coverage = query.coverage ?? 1;
+  // Features the target has no value for are not in `active`, so fold their share in here.
+  const missingShare = 1 - (den / total) * coverage;
   return {
     score: 100 * (1 - num / den),
     confidence: 1 - missingShare,
@@ -225,7 +227,11 @@ export function queryFromTarget(target: Target, features: FeatureDef[]): ParsedQ
     targets[fd.key] = n;
     weights[fd.key] = 2;
   }
-  return { body: target.body, targets, weights, required: [], notes: `Matching ${target.name}`, tags: [] };
+  const used = Object.keys(targets).length;
+  const query: ParsedQuery = { body: target.body, targets, weights, required: [], notes: `Matching ${target.name}`, tags: [] };
+  // Only record coverage when something was dropped, so complete targets are unchanged.
+  if (features.length > 0 && used < features.length) query.coverage = used / features.length;
+  return query;
 }
 
 export const cellGetter = (cells: NormCells, index: number) => (key: string) => {

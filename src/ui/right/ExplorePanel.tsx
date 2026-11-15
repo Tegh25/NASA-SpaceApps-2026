@@ -134,7 +134,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
               {score !== null ? 'Closeness across the measured conditions, out of 100.' : 'Choose a target on the left or describe an environment.'}
             </p>
             {analysis?.score && analysis.score.confidence < 0.75 && (
-              <p className="mt-1 text-xs text-[var(--mid)]">Partial data: {Math.round((1 - analysis.score.confidence) * 100)}% of the weight has no value here.</p>
+              <p className="mt-1 text-xs text-[var(--mid)]">Partial data: {Math.round((1 - analysis.score.confidence) * 100)}% of this comparison has no data (the site or the target lacks a value).</p>
             )}
           </div>
         </section>

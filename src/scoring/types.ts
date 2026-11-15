@@ -9,6 +9,12 @@ export interface ParsedQuery {
   required: FeatureKey[];
   notes: string;
   tags?: string[];
+  /**
+   * Share (0..1) of the features that the target actually has a value for. Set by target-first
+   * queries when some features are unknown (for example Mars temperature), so confidence can say so.
+   * Absent means every feature was used.
+   */
+  coverage?: number;
 }
 
 export const emptyQuery = (): ParsedQuery => ({

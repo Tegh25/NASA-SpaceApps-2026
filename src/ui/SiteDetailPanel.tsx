@@ -136,7 +136,7 @@ export function SiteDetailPanel({ id }: { id: string }) {
               />
             </div>
             {confidence < 0.75 && (
-              <p className="mb-2 text-xs text-[var(--mid)]">Partial data: {Math.round((1 - confidence) * 100)}% of the weight has no value here.</p>
+              <p className="mb-2 text-xs text-[var(--mid)]">Partial data: {Math.round((1 - confidence) * 100)}% of this comparison has no data (the site or the target lacks a value).</p>
             )}
             {view === 'table' ? (
               <FeatureTable rows={analysis.rows} features={data.features} siteRaw={site.raw} target={cmp.target} targetLabel={cmp.label} />
