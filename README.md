@@ -1,130 +1,133 @@
 # Terralog
 
-Find Earth places that resemble candidate Moon base sites and Mars landing sites. Built for the NASA Space Apps Challenge 2026, Toronto.
+**Find places on Earth that look like the Moon and Mars.**
 
-The full product spec is in [`docs/Terralog_PRODUCT_GUIDE.md`](docs/Terralog_PRODUCT_GUIDE.md).
+Terralog is a browser app and research pipeline built for the NASA Space Apps Challenge 2026 (Toronto), challenge "Permanent Moon Base Locations and Mars". It compares candidate Moon base regions and Mars landing sites with Earth terrain and climate, ranks the closest Earth matches, and lets you explore them on a globe, in a ground-level tour, and in a 3D side-by-side terrain lab.
 
-## What it does
+<!-- Screenshots: add from docs/screenshots/readme-home-mars.png, readme-explore.png, readme-mars-lab.png -->
 
-- A Cesium globe with curated analog sites. Click one to see why it matches a Moon or Mars target, where it falls short, and the per-feature comparison.
-- Plain-language search ("cold, dry, flat basaltic plain, no vegetation") turned into feature targets and weights, with a keyword fallback when the language model is unavailable. Scoring runs in the browser over every Earth land cell.
-- Fine-tune sliders with importance weights and "must match" filters. Results re-rank live.
-- Tour mode: walk or fly over the site on Cesium terrain or Google Photorealistic 3D Tiles, with a Moon or Mars Target View colour grade.
-- Target Viewer: a three.js heightmap of the Moon or Mars target with an adjustable sun.
-- Side-by-side compare page and a Method page with the formula, features and data provenance.
+## Features
 
-## Redesign (Survey Console)
+- **Globe of analog sites.** Pick Moon or Mars targets. Ranked cards show new candidates found by our pipeline and, separately, known analogs studied by others (used to check the method).
+- **Heat field.** A glow over the Earth land blocks we searched, showing the match to the selected target.
+- **Explainable matches.** Each site shows a match score, a per-feature comparison, a written reason it matches, and the gaps that remain (temperature, lighting, pressure).
+- **Search.** Describe a place in plain language ("cold, dry, flat basaltic plain") or use sliders, importance weights and "must match" filters. Results re-rank live in the browser. A keyword parser is the fallback when the language model is unavailable.
+- **Twin Terrain Lab.** An Earth block beside its Moon or Mars target at the same horizontal scale, with a slope fingerprint overlap, adjustable sun and vertical exaggeration.
+- **Tour.** Fly over or walk a site on Cesium terrain or Google Photorealistic 3D Tiles, with an optional Moon or Mars colour grade.
+- **Target Viewer and Compare.** A three.js heightmap of the target with a movable sun, and a side-by-side compare page.
+- **Method page.** The scoring formula, features, datasets and limitations.
 
-The app now runs as a precise survey instrument, with a hand-annotated layer on top. The globe is full-bleed. Solid hairline consoles hold the left rail (Moon and Mars targets, ranked candidate cards) and the right panel (Find, then Explore for a chosen site). Numbers are monospaced and tabular. The grease-pencil annotations, in a warm handwritten face, are used sparingly to point at the gap that matters.
+| Mars candidates on the globe | Site detail and "why it matches" |
+|---|---|
+| ![Globe with Mars targets](docs/screenshots/readme-home-mars.png) | ![Ngari site detail](docs/screenshots/readme-explore.png) |
 
-What changed:
+![Twin Terrain Lab: Chagai and Taftan vs Oxia Planum](docs/screenshots/readme-mars-lab.png)
 
-- **Layout and tokens.** Design tokens live in `src/index.css`, and `docs/DESIGN.md` documents them. Desktop uses a 320 px left rail, the globe, and a 400 px right panel. Below 768 px the globe is full screen, the cards become a snap carousel, and the right panel becomes a bottom sheet.
-- **Feature keys.** Sliders, the parser and scoring share one set of twelve keys: `slope_deg`, `roughness_m`, `relief_m`, `flat_frac`, `crater_density`, `shadow_frac`, `temp_mean_k`, `temp_max_k`, `ice_proxy`, `precip_mm_yr`, `vegetation_ndvi`, `snow_frac`. The keyword parser maps phrases to these keys (for example "cold" sets `temp_mean_k`, "snowy" sets `snow_frac`). Words such as "basalt" and "lava" only add a tag.
-- **Explanations.** `POST /api/explain` writes three or four sentences on why a site is an analog for a target, using only the numbers supplied. It falls back to curated text when there is no key, on timeout, or when the rate limit is reached.
-- **Tour HUD.** The tour shows the imagery fidelity actually loaded, a Target View toggle, and a clear Exit button. It never calls itself Google Street View.
-- **Method page.** Rewritten to describe the pipeline, datasets, the challenge resources used, and the limitations.
+More captures (mobile layout, tour, lunar-sun lab, morph view) are in [`docs/screenshots/`](docs/screenshots/).
 
-### Run it
+## Findings
 
-```bash
-npm install
-npm run dev        # http://localhost:5173, includes /api/parse and /api/explain
-npm test           # Vitest: scoring, keyword parser, API cores, clients
-npm run build      # type-check and production build
-```
+The discovery pipeline in `discovery/` scored 20 km blocks against the nine Artemis III south-pole regions (Moon) and 30 km blocks against four Mars sites (Jezero, Oxia Planum, Gale, Meridiani). Only places at least 150 km from any catalogued analog count as "new".
 
-### Environment variables
+| Target | Candidate | Notes |
+|---|---|---|
+| Moon | Ngari, western Tibet | Best match to Slater Plain; surface confirmed bare with Landsat and Sentinel-2 |
+| Moon | Pamir, near Muztagh Ata | Matches Mons Mouton Plateau; some sparse vegetation |
+| Moon | Southern Tibet (Tingri/Dinggye) | Matches Malapert Massif; conditional, glacier in one corner |
+| Mars | Chagai and Taftan, Pakistan-Iran border | Close to Oxia Planum in slope, relief and albedo |
+| Mars | Beishan Gobi, Gansu-Mongolia border | Close to Oxia Planum |
+| Mars | Gerze, northern Tibet | Wildcard, matches Jezero but less stable |
 
-| Name | Required | Where | Purpose |
-|---|---|---|---|
-| `CESIUM_ION_TOKEN` | optional | client, build time | Cesium World Terrain, imagery and Photorealistic 3D Tiles. Without it the globe uses NASA GIBS imagery and low-detail terrain. |
-| `BACKBOARD_API_KEY` | optional | server only | Powers `/api/parse` and `/api/explain`. Without it, search uses the keyword parser and explanations use the curated text. |
-| `LLM_NAME` | optional | server only | Model name for both endpoints. Defaults to `claude-sonnet-5-5`. |
+These are terrain and surface matches, not equivalence. No Earth block closes the Moon temperature or lighting gap, and none matches Mars pressure or thermal inertia. Mars terrain is only known at 200 m resolution, so Mars comparisons are indicative. A UI score is not proof of scientific equivalence. Place names are approximate, and "new" means only that nothing turned up in our catalogue and web searches. Details and caveats are in [`discovery/HANDOFF.md`](discovery/HANDOFF.md), [`discovery/FINDINGS.md`](discovery/FINDINGS.md) and [`discovery/mars/MARS_FINDINGS.md`](discovery/mars/MARS_FINDINGS.md).
 
-NASA GIBS needs no key. It is the fallback imagery when there is no Cesium token. The server-side key is read only by the Vercel functions and the dev middleware in `vite.config.ts`. It never reaches the browser.
+## How scoring works
 
-### Rebuild the data
+All scoring runs in the browser over precomputed Earth land cells (`public/data/earth_cells.json`). Sliders, the parser and the engine share twelve feature keys:
 
-The site data in `public/data/` is generated from the discovery outputs by a Python script. From the app folder, with the discovery virtual environment set up:
+`slope_deg`, `roughness_m`, `relief_m`, `flat_frac`, `crater_density`, `shadow_frac`, `temp_mean_k`, `temp_max_k`, `ice_proxy`, `precip_mm_yr`, `vegetation_ndvi`, `snow_frac`
 
-```bash
-../discovery/.venv/bin/python scripts/build_real_data.py     # first: cards, targets, images, heightmaps (wipes heightmaps/*.json)
-../discovery/.venv/bin/python scripts/build_twin_terrain.py  # second: Earth twins for the Twin Terrain Lab, adds `twin` to the cards
-```
+Each feature is normalised, compared with the target, and combined with user importance weights. Some features are one-sided (Earth is only penalised for being warmer than the Moon). See `src/scoring/` and the in-app Method page.
 
-The research outputs are committed under `discovery/` (override with `TERRALOG_DISC`). Raw DEM tiles and Moon crops are not in git (`TERRALOG_TILES`, `TERRALOG_RAW`); the Mars twins read Copernicus tiles remotely from the open AWS bucket when no local tile exists. See `data/README.md`.
+## Tech stack
 
-### Demo click path (60 to 90 seconds)
+Vite, React 19, TypeScript, Zustand, React Router, Tailwind CSS 4, Zod, Cesium, Three.js, Vitest. Serverless endpoints run on Vercel. The discovery pipeline is Python.
 
-1. **Land.** The globe shows three Moon cards in the left rail. Say: "Terralog finds Earth places that look like Moon and Mars sites."
-2. **Switch body.** Toggle to Mars: the computed candidates come first (Chagai and Taftan, Beishan Gobi, Gerze), then the known analogs.
-   **Mars twin lab moment.** Open Chagai and Taftan, press Twin terrain lab. The Earth block sits beside Oxia Planum at the same 200 m scale (30 km wide), with the slope fingerprint overlap. Say: "same slopes, different sky", then point at the gaps panel (93 kPa air against about 0.6 kPa on Mars) and the note that Mars terrain is only 200 m resolution. Back out, then toggle back to Moon.
-3. **Open a site.** Click Ngari. Read why it matches and the gaps in the explanation and the feature table, especially temperature and lighting.
-4. **Re-rank.** Open Find and drag the temperature slider. Watch the cards re-rank.
-5. **Enter the site.** Press Enter site, then switch to Target View to see the Moon grade.
-6. **Return.** Exit the tour, then go back to the globe.
-
-## Setup
+## Getting started
 
 Requires Node 20.19 or newer.
 
 ```bash
 npm install
-cp .env.example .env   # then fill in the values
+cp .env.example .env   # optional, see below
 npm run dev            # http://localhost:5173
 ```
 
-Environment variables are listed in the Redesign section above. The Backboard key is read only by the Vercel functions and the dev middleware in `vite.config.ts`.
+The app works with no keys at all.
+
+### Environment variables
+
+| Name | Required | Where | Purpose |
+|---|---|---|---|
+| `CESIUM_ION_TOKEN` | Optional | Client, build time | Cesium World Terrain and Photorealistic 3D Tiles. Without it the globe uses NASA GIBS imagery and low-detail terrain. |
+| `BACKBOARD_API_KEY` | Optional | Server only | Powers `/api/parse` (language search) and `/api/explain` ("why it matches"). Without it, search uses the keyword parser and explanations use curated text. |
+| `LLM_NAME` | Optional | Server only | Model name for both endpoints. Defaults to `claude-sonnet-5-5`. |
+
+The Backboard key is read only by the Vercel functions and the dev middleware in `vite.config.ts`, and never reaches the browser. Both endpoints validate input, rate limit, time out, and fall back gracefully.
 
 ### Scripts
 
 | Command | What it does |
 |---|---|
 | `npm run dev` | Dev server, including `/api/parse` and `/api/explain` |
+| `npm run typecheck` | TypeScript check |
+| `npm test` | Vitest unit tests (scoring, parser, schemas, API cores, URL state) |
 | `npm run build` | Type-check and production build to `dist/` |
-| `npm test` | Vitest unit tests (scoring, keyword parser, schemas, API sanitising, URL state) |
-| `npm run mock-data` | Regenerate the synthetic data files in `public/data` |
-| `npx tsx --env-file=.env scripts/compareModels.ts [models]` | Benchmark parser models through Backboard |
-
-## Deploying
-
-The app is a static Vite build plus one serverless function, set up for Vercel (`vercel.json`). Set `BACKBOARD_API_KEY` (and optionally `LLM_NAME` and `CESIUM_ION_TOKEN`) in the Vercel project, then deploy. `CESIUM_ION_TOKEN` must be present at build time.
+| `npm run mock-data` | **Overwrites `public/data/` with synthetic data. Back it up first; normally never run.** |
+| `npx tsx --env-file=.env scripts/compareModels.ts [models]` | Benchmark parser models |
 
 ## Data
 
-All data files live in `public/data/` and are validated with zod at startup. The schema is documented in [`data/README.md`](data/README.md) and in section 9 of the product guide.
+The app reads generated files from `public/data/`, validated with Zod at startup: `targets.json`, `features.json`, `earth_cells.json`, `featured_analogs.json` and `heightmaps/`. The schema is in [`data/README.md`](data/README.md). A file with `"mock": true` in its provenance is synthetic, and the app shows a "Demo data" notice while one is loaded.
 
-Files are rebuilt from the discovery outputs with `../discovery/.venv/bin/python scripts/build_real_data.py` (see Redesign above). A file marked `"mock": true` in its provenance block is still synthetic, and the app shows a "Demo data" notice while any such file is loaded.
+Rebuilding the data is a maintainer task that needs the Python discovery environment (`discovery/setup.sh`). Run the scripts in this order, and only on purpose, because the first one wipes the heightmap JSON that the second restores:
 
-## Language model choice
+```bash
+../discovery/.venv/bin/python scripts/build_real_data.py     # cards, targets, images, heightmaps
+../discovery/.venv/bin/python scripts/build_twin_terrain.py  # Earth twins for the Twin Terrain Lab
+```
 
-The parser calls Backboard's stateless message endpoint with Claude, JSON output, low thinking effort, and memory and web search off. We benchmarked `claude-haiku-5-5` against `claude-sonnet-5-5` on 25 test phrases (`scripts/compareModels.ts`) with the 6 s server timeout:
+Raw DEM tiles and Moon crops are not in git (`TERRALOG_TILES`, `TERRALOG_RAW`). The Mars twins read Copernicus tiles remotely from the open AWS bucket when no local tile exists.
 
-| Model | Correct parses | Timeouts (keyword fallback) | Median latency |
-|---|---|---|---|
-| `claude-sonnet-5-5` | 24 to 25 of 25 | 0 | 3.0 s |
-| `claude-haiku-5-5` | 19 to 20 of 25 | 1 to 2 | 4.3 s |
+## Deploying
 
-Haiku was slower in practice because it kept reasoning despite the low effort setting, and it once returned malformed JSON. We kept Sonnet as the default. `LLM_NAME` can switch models without code changes.
+A static Vite build plus two serverless functions, configured for Vercel in `vercel.json`. Set `BACKBOARD_API_KEY` and optionally `LLM_NAME` and `CESIUM_ION_TOKEN` (needed at build time) in the project settings. See [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 ## Project layout
 
 ```
-api/parse.ts              Vercel function for plain-language search
-api/explain.ts            Vercel function for "why it matches" explanations
-api/_lib/parseCore.ts     prompt, Backboard call, sanitising, rate limit
-api/_lib/explainCore.ts   explanation prompt, validation, rate limit, curated fallback
-src/scoring/              pure scoring engine (no DOM or Cesium)
-src/parse/                keyword parser and client with fallback
-src/data/                 zod schemas and loaders
-src/globe/                Cesium viewer, pins, globe view
-src/tour/                 tour controller, Target View, minimap
-src/target/               three.js Target Viewer and compare page
-src/ui/, src/pages/       panels, search, method page
-scripts/mockData.ts       synthetic data generator
+api/                  Vercel functions: parse.ts, explain.ts (logic in api/_lib/)
+src/scoring/          Pure scoring engine (no DOM or Cesium)
+src/parse/            Keyword parser and API clients with fallback
+src/data/             Zod schemas and loaders
+src/globe/            Cesium viewer, pins, heat field
+src/tour/             Tour controller, Target View, minimap
+src/lab/              Twin Terrain Lab (three.js)
+src/target/           Target Viewer and compare page
+src/ui/, src/pages/   Panels, search, home and method pages
+src/state/            Zustand store
+public/data/          Generated data pack
+scripts/              Data build scripts and model benchmark
+discovery/            Python research pipeline, results and findings
+docs/                 Product guide, design, deploy and QA notes, screenshots
 ```
+
+## Further reading
+
+- [`docs/Terralog_PRODUCT_GUIDE.md`](docs/Terralog_PRODUCT_GUIDE.md): product spec
+- [`docs/DESIGN.md`](docs/DESIGN.md): design tokens and layout
+- [`docs/DEPLOY.md`](docs/DEPLOY.md): deployment
+- [`discovery/README.md`](discovery/README.md) and [`discovery/mars/README.md`](discovery/mars/README.md): pipeline
 
 ## Attributions
 
-NASA PDS, LRO LOLA and Diviner, Mars MOLA, THEMIS and CRISM, Copernicus ERA5 and GLO-30, MODIS, Cesium ion, Google Photorealistic 3D Tiles, and Natural Earth. Terralog does not use Google Street View imagery.
+NASA PDS, LRO LOLA, Diviner and Mini-RF, Mars MOLA, THEMIS and TES, MODIS, Landsat; ESA Copernicus DEM GLO-30, Sentinel-2 and WorldCover; USGS HRSC+MOLA blended DEM and Artemis III region outlines; JAXA ALOS PALSAR-2; Cesium ion, NASA GIBS, Google Photorealistic 3D Tiles and Natural Earth. Terralog does not use Google Street View imagery.
