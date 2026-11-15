@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { Method } from './pages/Method';
 import { useApp } from './state/store';
 import { TourView } from './tour/TourView';
+import { ErrorBoundary } from './ui/kit/ErrorBoundary';
 import { GlassFilters } from './ui/kit/GlassFilters';
 import { CardSkeletons } from './ui/left/CardList';
 import { Logo } from './ui/left/Logo';
@@ -151,37 +152,39 @@ export default function App() {
         </div>
       )}
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/site/:id" element={<Home />} />
-        <Route path="/tour/:id" element={<TourView />} />
-        <Route
-          path="/target/:id"
-          element={
-            <Suspense fallback={<Loading label="Loading target viewer..." />}>
-              <TargetPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/compare/:siteId/:targetId"
-          element={
-            <Suspense fallback={<Loading label="Loading comparison..." />}>
-              <ComparePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/lab/:siteId"
-          element={
-            <Suspense fallback={<Loading label="Loading terrain lab..." />}>
-              <LabPage />
-            </Suspense>
-          }
-        />
-        <Route path="/method" element={<Method />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
+      <ErrorBoundary resetKey={pathname}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/site/:id" element={<Home />} />
+          <Route path="/tour/:id" element={<TourView />} />
+          <Route
+            path="/target/:id"
+            element={
+              <Suspense fallback={<Loading label="Loading target viewer..." />}>
+                <TargetPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/compare/:siteId/:targetId"
+            element={
+              <Suspense fallback={<Loading label="Loading comparison..." />}>
+                <ComparePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/lab/:siteId"
+            element={
+              <Suspense fallback={<Loading label="Loading terrain lab..." />}>
+                <LabPage />
+              </Suspense>
+            }
+          />
+          <Route path="/method" element={<Method />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 }
