@@ -1,15 +1,16 @@
+import { Mountain } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { CardModel } from '../../lib/cards';
 import { useApp } from '../../state/store';
 import { Badge } from '../kit/Badge';
-import { HandNote, PencilLoop } from '../kit/HandNote';
 import { ScoreRing } from '../kit/ScoreRing';
 
 interface Props {
   card: CardModel;
   index: number;
   selected: boolean;
-  best?: boolean;
+  /** 1-based rank among our new finds; shown as a small index. */
+  rank?: number;
   /** 'carousel' is the compact fixed-width variant used on mobile. */
   layout?: 'rail' | 'carousel';
 }
@@ -34,7 +35,7 @@ function Thumb({ src }: { src: string | null }) {
   );
 }
 
-export function LocationCard({ card, index, selected, best = false, layout = 'rail' }: Props) {
+export function LocationCard({ card, index, selected, rank, layout = 'rail' }: Props) {
   const navigate = useNavigate();
   const { search } = useLocation();
   const hover = useApp((s) => s.hover);
@@ -61,7 +62,10 @@ export function LocationCard({ card, index, selected, best = false, layout = 'ra
           <Thumb src={card.thumb} />
           <span className="relative block min-w-0 flex-1">
             <span className="block pr-11">
-              <span className="font-display block truncate text-[15px] font-medium leading-5 text-[var(--ink)]">{card.name}</span>
+              <span className="font-display flex items-baseline gap-1.5 text-[15px] font-medium leading-5 text-[var(--ink)]">
+                {rank !== undefined && <span className="num shrink-0 text-[11px] font-normal text-[var(--accent)]">{String(rank).padStart(2, '0')}</span>}
+                <span className="truncate">{card.name}</span>
+              </span>
               <span className="block truncate text-[12px] leading-4 text-[var(--dim)]">{card.region}</span>
             </span>
             <ScoreRing score={card.score} size={40} className="absolute right-0 top-0" />
@@ -79,18 +83,13 @@ export function LocationCard({ card, index, selected, best = false, layout = 'ra
               {card.shortfall}
             </span>
           )}
+          {card.hasTwin && (
+            <span title="3D terrain twin available" className="ml-auto flex shrink-0 items-center gap-1 text-[11px] leading-4 text-[var(--dim)]">
+              <Mountain size={12} aria-hidden /> 3D twin
+            </span>
+          )}
         </span>
       </button>
-      {selected && <PencilLoop />}
-      {selected && best && (
-        <HandNote
-          size={17}
-          delayMs={500}
-          className="pointer-events-none absolute -bottom-2.5 right-3 rotate-[-3deg] rounded-full bg-[rgba(8,13,22,0.8)] px-2"
-        >
-          best match
-        </HandNote>
-      )}
     </div>
   );
 }

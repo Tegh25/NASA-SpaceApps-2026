@@ -33,11 +33,12 @@ function bootLines(): string[] {
   if (!d) return lines;
   const moon = d.targets.filter((t) => t.body === 'moon').length;
   const mars = d.targets.filter((t) => t.body === 'mars').length;
-  const fresh = d.featured.filter((f) => f.kind === 'new').length;
+  const fresh = d.featured.filter((f) => f.kind === 'new' && f.body !== 'mars').length;
+  const freshMars = d.featured.filter((f) => f.kind === 'new' && f.body === 'mars').length;
   if (moon) lines.push(`${moon} Artemis III candidate regions fingerprinted`);
   lines.push(`${nf(d.cells.count)} Earth blocks of ${Math.round(d.cells.cellSizeDeg * 111)} x ${Math.round(d.cells.cellSizeDeg * 111)} km scored`);
-  if (fresh) lines.push(`${fresh} new candidate sites survived the novelty check`);
-  if (mars) lines.push(`Mars: ${mars} targets, literature analogs`);
+  if (fresh) lines.push(`${fresh} new Moon analog candidates passed the novelty check`);
+  if (mars) lines.push(`Mars: ${mars} landing sites, ${freshMars} new candidates`);
   return lines;
 }
 

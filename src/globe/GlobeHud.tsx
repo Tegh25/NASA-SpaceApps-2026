@@ -45,7 +45,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
     const tid = site?.featured?.analogFor[0];
     const target = tid ? data.targets.find((t) => t.id === tid) : null;
     if (!target) return null;
-    return `${target.body === 'moon' ? 'Moon' : 'Mars'} target vs this site: ${target.name}`;
+    return { name: target.name, body: target.body === 'moon' ? 'Moon' : 'Mars' };
   }, [data, selectedId]);
 
   const scale = cam.metersPerPx ? niceScale(cam.metersPerPx, 120) : null;
@@ -81,10 +81,14 @@ export function GlobeHud({ className = '' }: { className?: string }) {
       </svg>
 
       {/* Selected site chip */}
+      {/* Selected site's target. Top-left, on the same 16 px inset as the readout; desktop only
+          because the tablet drawer covers this corner of the globe. */}
       {chip && (
-        <div className="absolute left-1/2 top-4 hidden -translate-x-1/2 md:block">
-          <div className="glass-capsule max-w-[70vw] truncate px-4 py-1.5 text-xs text-[var(--accent)]" role="status">
-            {chip}
+        <div className="absolute left-4 top-4 hidden max-w-[calc(100%-200px)] xl:block">
+          <div className="glass-capsule flex h-9 items-center gap-2 truncate px-4 text-xs text-[var(--ink)]" role="status">
+            <span className="text-[var(--dim)]">Compared with</span>
+            <span className="truncate text-[var(--accent)]">{chip.name}</span>
+            <span className="num text-[var(--dim)]">{chip.body}</span>
           </div>
         </div>
       )}

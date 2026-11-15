@@ -1,4 +1,5 @@
 import type { FeatureDef, Target } from '../../data/schemas';
+import { featureSources, sourceLine } from '../../lib/provenance';
 import { targetRaw } from '../../lib/sites';
 import type { BreakdownRow } from '../../scoring/types';
 import { formatValue } from './format';
@@ -11,10 +12,11 @@ interface Props {
   siteRaw: (key: string) => number | null;
   target: Target | null;
   targetLabel: string;
+  body: 'moon' | 'mars';
 }
 
 /** Per-feature closeness bars: matches first, then differences. */
-export function MatchBars({ rows, features, siteRaw, target, targetLabel }: Props) {
+export function MatchBars({ rows, features, siteRaw, target, targetLabel, body }: Props) {
   const byKey = new Map(features.map((f) => [f.key, f]));
   const usable = rows
     .filter((r) => r.diff !== null && r.level && (r.weight > 0 || r.target !== null) && byKey.has(r.key))
@@ -26,6 +28,7 @@ export function MatchBars({ rows, features, siteRaw, target, targetLabel }: Prop
     const fd = byKey.get(r.key)!;
     const color = COLOR[r.level!];
     const close = Math.max(0, Math.min(1, 1 - r.diff!));
+    const src = sourceLine(featureSources(fd, body, target));
     return (
       <li className="py-1.5">
         <div className="flex items-baseline justify-between gap-3">
@@ -43,6 +46,7 @@ export function MatchBars({ rows, features, siteRaw, target, targetLabel }: Prop
         >
           <div className="h-full" style={{ width: `${Math.max(3, close * 100)}%`, background: color, boxShadow: `0 0 8px -1px ${color}`, transition: 'width 600ms var(--ease-out-quint)' }} />
         </div>
+        {src && <p className="mt-1 truncate text-[10.5px] leading-3 text-[var(--dim)]" title={src}>Source: {src}</p>}
       </li>
     );
   };

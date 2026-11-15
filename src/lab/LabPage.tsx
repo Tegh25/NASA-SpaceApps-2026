@@ -257,8 +257,7 @@ export default function LabPage() {
             <TriangleAlert size={15} className="mt-0.5 shrink-0 text-[var(--mid)]" aria-hidden />
             <span>
               Earth terrain twin not built yet. Showing the {bodyName} region on its own.
-              <span className="hand mt-0.5 block text-[17px]">the Earth half is on its way</span>
-            </span>
+                          </span>
           </div>
         )}
         {state.status === 'done' && earth && !moon && (
@@ -415,7 +414,7 @@ function FingerprintBody({
       )}
       {!hasEarth && <p className="text-[12px] text-[var(--mid)]">Earth terrain twin not built yet, so there is nothing to overlap.</p>}
       {!hasOther && <p className="text-[12px] text-[var(--mid)]">No {bodyName} elevation grid for {otherName}.</p>}
-      <p className="hand -rotate-1 text-[22px]">{note}</p>
+      <p className="border-l-2 border-[var(--accent)]/60 pl-3 text-[13px] leading-snug text-[var(--ink)]/90">{note}</p>
       {gaps.length > 0 && (
         <div>
           <h3 className="font-display mb-1 text-[13px]">What does not carry over</h3>
