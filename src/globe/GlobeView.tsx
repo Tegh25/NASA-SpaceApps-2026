@@ -283,6 +283,12 @@ export function GlobeView({ hidden, interactive }: Props) {
     applyOcclusionRef.current();
   }, [data, ready, selectedId, hoveredId, interactive]);
 
+  // Other routes (Compare, Tour, Lab) move the shared camera. Forget the last fly-in so that
+  // coming back to /site/:id flies to the site view again instead of keeping that camera.
+  useEffect(() => {
+    if (!interactive) flownRef.current = null;
+  }, [interactive]);
+
   // Camera: fly in to a tilted ~120 km view on selection, back out to orbit when cleared.
   useEffect(() => {
     const v = viewerRef.current;
