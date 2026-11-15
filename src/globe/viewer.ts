@@ -200,6 +200,8 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
     if (scene.moon) scene.moon.show = true;
     scene.requestRenderMode = false;
     scene.screenSpaceCameraController.minimumZoomDistance = 50;
+    // Keep tiles from the site fly-in around for Side by side, Walk and the trip back (default 100).
+    globe.tileCacheSize = 1000;
 
     // Subtle graticule, only visible far out.
     const grid = scene.primitives.add(buildGraticule()) as Cesium.PolylineCollection;

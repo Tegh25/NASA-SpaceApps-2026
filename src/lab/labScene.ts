@@ -210,6 +210,8 @@ export interface LabSceneOptions {
   /** 0..1 share of Earth block that is snow-capped, from catalogue values. */
   snowFrac: number;
   reducedMotion: boolean;
+  /** performance.now() time at which the intro scan may begin (the page waits 1 s after opening). */
+  scanAt?: number;
   onInteract: () => void;
   onT: (t: number) => void;
 }
@@ -606,7 +608,7 @@ export class LabScene {
     // intro scan
     const s = this.shared;
     if (!this.o.reducedMotion && s.uScan.value < 1.4) {
-      if (this.scanStart < 0) this.scanStart = now;
+      if (this.scanStart < 0) this.scanStart = Math.max(now, this.o.scanAt ?? now);
       const k = (now - this.scanStart) / 1800;
       s.uScan.value = lerp(-0.2, 1.3, ease(Math.min(1, Math.max(0, k))));
       if (k >= 1) s.uScan.value = 2;

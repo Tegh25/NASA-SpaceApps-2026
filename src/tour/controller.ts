@@ -24,6 +24,8 @@ export interface TourOptions {
   spawn: { lat: number; lon: number; heading: number };
   tileset: Cesium.Cesium3DTileset | null;
   onPointerLock: (locked: boolean) => void;
+  /** Terrain height at the spawn point, sampled ahead of time (globe/warm.ts). Lets the tour start without waiting. */
+  groundHint?: number;
 }
 
 /** First-person walk/fly controller driven from scene.preRender. */
@@ -59,6 +61,11 @@ export class TourController {
       mode: 'walk',
       flySpeed: 60,
     };
+    if (opts.groundHint !== undefined) {
+      this.pose.ground = opts.groundHint;
+      // Arrive just above the real ground instead of at a fixed 2.5 km: a short drop, fewer tiles to load.
+      this.pose.height = opts.groundHint + 600;
+    }
   }
 
   async start() {
@@ -76,7 +83,9 @@ export class TourController {
       });
     });
     this.pose.pitch = Cesium.Math.toRadians(-25);
-    await this.sampleGround(true);
+    // With a pre-sampled height, refine in the background; otherwise wait for the first sample.
+    if (this.opts.groundHint !== undefined) void this.sampleGround(true);
+    else await this.sampleGround(true);
     if (reduced) {
       this.pose.height = this.pose.ground + EYE_HEIGHT;
       this.dropping = false;

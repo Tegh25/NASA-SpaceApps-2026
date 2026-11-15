@@ -2,6 +2,7 @@ import { ArrowLeft, ChevronDown, ChevronUp, HelpCircle, MapPinned, Moon, Orbit, 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPhotorealTileset, HAS_ION, whenViewer } from '../globe/viewer';
+import { cachedGround, warmTour } from '../globe/warm';
 import { formatLatLon } from '../lib/geo';
 import { siteLookupState, useSiteAnalysis } from '../lib/useSite';
 import { useApp, type Fidelity, type TargetViewProfile } from '../state/store';
@@ -48,6 +49,9 @@ export function TourView() {
     (async () => {
       const v = await whenViewer();
       if (cancelled) return;
+      // Deep links skip the prefetch on site select; give the ground sample a short head start here.
+      if (cachedGround(siteKey) === undefined) await Promise.race([warmTour(siteKey, spawn), new Promise((r) => setTimeout(r, 1500))]);
+      if (cancelled) return;
       tileset = await getPhotorealTileset(v);
       if (cancelled) return;
       if (tileset) {
@@ -60,7 +64,7 @@ export function TourView() {
         setFidelity(HAS_ION ? 'terrain' : 'low');
       }
       tvRef.current = new TargetViewController(v);
-      controller = new TourController(v, { spawn, tileset, onPointerLock: setLocked });
+      controller = new TourController(v, { spawn, tileset, onPointerLock: setLocked, groundHint: cachedGround(siteKey) });
       setCtl(controller);
       await controller.start();
       if (cancelled) controller.stop();
