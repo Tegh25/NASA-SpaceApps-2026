@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPhotorealTileset, HAS_ION, whenViewer } from '../globe/viewer';
 import { formatLatLon } from '../lib/geo';
-import { useSiteAnalysis } from '../lib/useSite';
+import { siteLookupState, useSiteAnalysis } from '../lib/useSite';
 import { useApp, type Fidelity, type TargetViewProfile } from '../state/store';
 import { FeatureTable } from '../ui/FeatureTable';
 import { Chip, Segmented } from '../ui/common';
@@ -23,6 +23,7 @@ export function TourView() {
   const { id } = useParams();
   const info = useSiteAnalysis(id);
   const navigate = useNavigate();
+  const dataStatus = useApp((s) => s.status);
   const fidelity = useApp((s) => s.fidelity);
   const profile = useApp((s) => s.targetViewProfile);
   const { setFidelity, setTargetViewProfile } = useApp.getState();
@@ -99,10 +100,13 @@ export function TourView() {
   }, []);
 
   if (!info) {
+    const lookup = siteLookupState(dataStatus, false);
+    const message =
+      lookup === 'loading' ? 'Loading site...' : lookup === 'error' ? 'Could not load site data.' : 'Unknown site.';
     return (
       <div className="absolute inset-0 z-10 grid place-items-center">
         <div className="panel p-5">
-          <p className="mb-2">Loading site...</p>
+          <p className="mb-2" role={lookup === 'loading' ? 'status' : 'alert'}>{message}</p>
           <button type="button" className="underline" onClick={() => navigate('/')}>
             Back to the globe
           </button>

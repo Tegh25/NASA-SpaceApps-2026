@@ -3,8 +3,9 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { formatLatLon } from '../../lib/geo';
 import { GLOBAL_LIMITS, autoDescription, targetRaw } from '../../lib/sites';
-import { useSiteAnalysis } from '../../lib/useSite';
+import { siteLookupState, useSiteAnalysis } from '../../lib/useSite';
 import { explainSite, type ExplainRow } from '../../parse/explainClient';
+import { useApp } from '../../state/store';
 import { HandNote } from './HandNote';
 import { HeroImage, type HeroView } from './HeroImage';
 import { MatchBars } from './MatchBars';
@@ -38,13 +39,26 @@ function Badge({ children, tone = 'accent' }: { children: string; tone?: 'accent
 
 export function ExplorePanel({ siteId }: { siteId: string }) {
   const info = useSiteAnalysis(siteId);
+  const status = useApp((s) => s.status);
 
   if (!info) {
+    const lookup = siteLookupState(status, false);
     return (
       <div className="flex h-full flex-col gap-4 p-5">
         <BackLink />
-        <h2 className="font-display text-xl">Site not found</h2>
-        <p className="text-sm text-[var(--dim)]">That site is not in the current data. Go back and pick another candidate.</p>
+        {lookup === 'loading' ? (
+          <p className="text-sm text-[var(--dim)]" role="status">Loading site data</p>
+        ) : lookup === 'error' ? (
+          <>
+            <h2 className="font-display text-xl">Could not load site data</h2>
+            <p className="text-sm text-[var(--dim)]">Reload the page to try again.</p>
+          </>
+        ) : (
+          <>
+            <h2 className="font-display text-xl">Site not found</h2>
+            <p className="text-sm text-[var(--dim)]">That site is not in the current data. Go back and pick another candidate.</p>
+          </>
+        )}
       </div>
     );
   }
