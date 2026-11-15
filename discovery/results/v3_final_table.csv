@@ -1,0 +1,17 @@
+id,lat,lon,moon,composite,p_top40,terr,multi,crater,landing,light,ice,nearest_known_km,nearest_known,literature,rock,modis_ndvi,modis_snow,sar_hv,elev
+A1_andes_tres_cruces_s,-28.539,-69.285,Mons Mouton Plateau,0.497,1.0,0.35,0.28,0.84,0.24,0.39,0.0,42,Laguna Brava hydrothermal syst,adjacent use only,0.94,0.12,0.04,-26.5,4176
+A2_andes_agua_negra_n,-28.719,-69.387,Mons Mouton Plateau,0.533,1.0,0.44,0.34,1.0,0.17,0.46,0.0,63,Laguna Brava hydrothermal syst,adjacent use only,0.94,0.12,0.04,-27.3,4327
+C1_pamir,38.192,74.803,Mons Mouton Plateau,0.533,0.87,0.5,0.24,0.7,0.14,0.75,0.0,514,"Leh, Ladakh (ISRO LHAM Hab-1)",nothing found,0.91,0.17,0.05,-25.8,4338
+D1_ngari_w_tibet,32.461,81.532,Slater Plain,0.533,0.87,0.33,0.27,0.83,0.26,0.43,0.42,243,"Hanle, Ladakh",nothing found,0.9,0.12,0.07,-26.3,5109
+D2_ngari_zanda,31.551,80.632,Mons Mouton Plateau,0.537,0.86,0.42,0.24,0.74,0.28,0.61,0.0,208,"Hanle, Ladakh",nothing found,0.7,0.18,0.13,-26.2,5162
+D3_c_tibet,31.641,83.316,Slater Plain,0.54,0.66,0.26,0.15,0.72,0.21,0.54,0.44,319,"Lower Mustang, Nepal (Mars Aca",nothing found,0.45,0.2,0.26,-23.5,5329
+E1_kunlun_hohxil,36.731,91.112,Slater Plain,0.545,0.55,0.17,0.41,0.95,0.37,0.62,0.0,187,"Dalangtan playa, Qaidam Basin",adjacent use only,0.55,0.22,0.01,-25.5,4577
+B2_s_tibet,28.82,86.511,Mons Mouton Plateau,0.56,0.31,0.5,0.25,0.68,0.52,0.51,0.0,269,"Lower Mustang, Nepal (Mars Aca",nothing found,0.7,0.17,0.06,-22.5,5074
+F2_gobi_altai,45.641,94.384,Slater Plain,0.565,0.28,0.64,0.37,0.56,0.05,0.53,0.18,564,Northern Mongolia permafrost/d,nothing found,0.71,0.21,0.08,-24.7,2596
+B1_s_tibet_tingri,28.102,87.818,Malapert Massif,0.566,0.2,0.37,0.19,0.85,0.44,0.94,0.0,405,"Lower Mustang, Nepal (Mars Aca",nothing found,0.9,0.15,0.2,-21.4,5124
+B3_s_tibet_e,28.731,87.715,Nobile Rim 1,0.574,0.31,0.4,0.39,1.01,0.05,0.83,0.07,387,"Lower Mustang, Nepal (Mars Aca",nothing found,0.78,0.18,0.3,-20.4,5166
+G1_altyn_tagh_v1,36.641,84.67,Mons Mouton Plateau,0.577,0.13,0.43,0.46,0.95,0.74,0.44,0.0,405,"Ruoqiang, southern Taklimakan",nothing found,0.91,0.06,0.0,-27.7,4710
+D4_c_tibet,31.461,86.527,Mons Mouton,0.58,0.05,0.42,0.31,0.96,0.39,0.53,0.0,399,"Lower Mustang, Nepal (Mars Aca",nothing found,0.51,0.21,0.04,-24.3,5302
+A3_andes_n,-28.449,-69.591,Nobile Rim 1,0.581,0.08,0.43,0.39,1.04,0.17,1.02,0.0,51,Paso de Pircas Negras (Chile-A,adjacent use only,0.9,0.07,0.32,-24.9,4744
+F1_w_mongolia,46.91,91.783,de Gerlache Rim 2,0.593,0.03,0.45,0.29,0.59,0.49,0.82,0.0,654,Northern Mongolia permafrost/d,nothing found,0.48,0.26,0.11,-21.3,2936
+H1_e_greenland_v1,73.82,-23.684,Haworth,0.751,0.0,0.45,0.41,0.95,0.42,,1.49,879,"Station Nord, NE Greenland (lu",nothing found,0.86,0.22,0.96,-23.3,812
