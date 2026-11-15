@@ -13,6 +13,58 @@ The full product spec is in [`docs/Terralog_PRODUCT_GUIDE.md`](docs/Terralog_PRO
 - Target Viewer: a three.js heightmap of the Moon or Mars target with an adjustable sun.
 - Side-by-side compare page and a Method page with the formula, features and data provenance.
 
+## Redesign (Survey Console)
+
+The app now runs as a precise survey instrument, with a hand-annotated layer on top. The globe is full-bleed. Solid hairline consoles hold the left rail (Moon and Mars targets, ranked candidate cards) and the right panel (Find, then Explore for a chosen site). Numbers are monospaced and tabular. The grease-pencil annotations, in a warm handwritten face, are used sparingly to point at the gap that matters.
+
+What changed:
+
+- **Layout and tokens.** Design tokens live in `src/index.css`, and `docs/DESIGN.md` documents them. Desktop uses a 320 px left rail, the globe, and a 400 px right panel. Below 768 px the globe is full screen, the cards become a snap carousel, and the right panel becomes a bottom sheet.
+- **Feature keys.** Sliders, the parser and scoring share one set of twelve keys: `slope_deg`, `roughness_m`, `relief_m`, `flat_frac`, `crater_density`, `shadow_frac`, `temp_mean_k`, `temp_max_k`, `ice_proxy`, `precip_mm_yr`, `vegetation_ndvi`, `snow_frac`. The keyword parser maps phrases to these keys (for example "cold" sets `temp_mean_k`, "snowy" sets `snow_frac`). Words such as "basalt" and "lava" only add a tag.
+- **Explanations.** `POST /api/explain` writes three or four sentences on why a site is an analog for a target, using only the numbers supplied. It falls back to curated text when there is no key, on timeout, or when the rate limit is reached.
+- **Tour HUD.** The tour shows the imagery fidelity actually loaded, a Target View toggle, and a clear Exit button. It never calls itself Google Street View.
+- **Method page.** Rewritten to describe the pipeline, datasets, the challenge resources used, and the limitations.
+
+### Run it
+
+```bash
+npm install
+npm run dev        # http://localhost:5173, includes /api/parse and /api/explain
+npm test           # Vitest: scoring, keyword parser, API cores, clients
+npm run build      # type-check and production build
+```
+
+### Environment variables
+
+| Name | Required | Where | Purpose |
+|---|---|---|---|
+| `CESIUM_ION_TOKEN` | optional | client, build time | Cesium World Terrain, imagery and Photorealistic 3D Tiles. Without it the globe uses NASA GIBS imagery and low-detail terrain. |
+| `BACKBOARD_API_KEY` | optional | server only | Powers `/api/parse` and `/api/explain`. Without it, search uses the keyword parser and explanations use the curated text. |
+| `LLM_NAME` | optional | server only | Model name for both endpoints. Defaults to `claude-sonnet-5-5`. |
+
+NASA GIBS needs no key. It is the fallback imagery when there is no Cesium token. The server-side key is read only by the Vercel functions and the dev middleware in `vite.config.ts`. It never reaches the browser.
+
+### Rebuild the data
+
+The site data in `public/data/` is generated from the discovery outputs by a Python script. From the app folder, with the discovery virtual environment set up:
+
+```bash
+../discovery/.venv/bin/python scripts/build_real_data.py     # first: cards, targets, images, heightmaps (wipes heightmaps/*.json)
+../discovery/.venv/bin/python scripts/build_twin_terrain.py  # second: Earth twins for the Twin Terrain Lab, adds `twin` to the cards
+```
+
+The research outputs are committed under `discovery/` (override with `TERRALOG_DISC`). Raw DEM tiles and Moon crops are not in git (`TERRALOG_TILES`, `TERRALOG_RAW`); the Mars twins read Copernicus tiles remotely from the open AWS bucket when no local tile exists. See `data/README.md`.
+
+### Demo click path (60 to 90 seconds)
+
+1. **Land.** The globe shows three Moon cards in the left rail. Say: "Terralog finds Earth places that look like Moon and Mars sites."
+2. **Switch body.** Toggle to Mars: the computed candidates come first (Chagai and Taftan, Beishan Gobi, Gerze), then the known analogs.
+   **Mars twin lab moment.** Open Chagai and Taftan, press Twin terrain lab. The Earth block sits beside Oxia Planum at the same 200 m scale (30 km wide), with the slope fingerprint overlap. Say: "same slopes, different sky", then point at the gaps panel (93 kPa air against about 0.6 kPa on Mars) and the note that Mars terrain is only 200 m resolution. Back out, then toggle back to Moon.
+3. **Open a site.** Click Ngari. Read why it matches and the gaps in the explanation and the feature table, especially temperature and lighting.
+4. **Re-rank.** Open Find and drag the temperature slider. Watch the cards re-rank.
+5. **Enter the site.** Press Enter site, then switch to Target View to see the Moon grade.
+6. **Return.** Exit the tour, then go back to the globe.
+
 ## Setup
 
 Requires Node 20.19 or newer.
@@ -20,25 +72,16 @@ Requires Node 20.19 or newer.
 ```bash
 npm install
 cp .env.example .env   # then fill in the values
-npm run mock-data      # regenerates public/data (already committed)
 npm run dev            # http://localhost:5173
 ```
 
-### Environment variables
-
-| Name | Where | Purpose |
-|---|---|---|
-| `CESIUM_ION_TOKEN` | client (public, injected at build time) | Cesium World Terrain, imagery, Photorealistic 3D Tiles. Without it the globe falls back to bundled low-detail imagery. |
-| `BACKBOARD_API_KEY` | server only | Plain-language search parser. Without it search uses keyword matching. |
-| `LLM_NAME` | server only | Defaults to `claude-sonnet-5-5`. |
-
-The Backboard key is only read by `api/parse.ts` (Vercel function) and the dev middleware in `vite.config.ts`. It never reaches the browser.
+Environment variables are listed in the Redesign section above. The Backboard key is read only by the Vercel functions and the dev middleware in `vite.config.ts`.
 
 ### Scripts
 
 | Command | What it does |
 |---|---|
-| `npm run dev` | Dev server, including `/api/parse` |
+| `npm run dev` | Dev server, including `/api/parse` and `/api/explain` |
 | `npm run build` | Type-check and production build to `dist/` |
 | `npm test` | Vitest unit tests (scoring, keyword parser, schemas, API sanitising, URL state) |
 | `npm run mock-data` | Regenerate the synthetic data files in `public/data` |
@@ -46,13 +89,13 @@ The Backboard key is only read by `api/parse.ts` (Vercel function) and the dev m
 
 ## Deploying
 
-The app is a static Vite build plus one serverless function, set up for Vercel (`vercel.json`). Set the three environment variables in the Vercel project, then deploy. `CESIUM_ION_TOKEN` must be present at build time.
+The app is a static Vite build plus one serverless function, set up for Vercel (`vercel.json`). Set `BACKBOARD_API_KEY` (and optionally `LLM_NAME` and `CESIUM_ION_TOKEN`) in the Vercel project, then deploy. `CESIUM_ION_TOKEN` must be present at build time.
 
 ## Data
 
 All data files live in `public/data/` and are validated with zod at startup. The schema is documented in [`data/README.md`](data/README.md) and in section 9 of the product guide.
 
-The current files are **synthetic mock data** from `scripts/mockData.ts`. Every file is marked `"mock": true` in its provenance block, and the app shows a "Demo data" ribbon until real files replace them. Swapping in real data needs no code changes.
+Files are rebuilt from the discovery outputs with `../discovery/.venv/bin/python scripts/build_real_data.py` (see Redesign above). A file marked `"mock": true` in its provenance block is still synthetic, and the app shows a "Demo data" notice while any such file is loaded.
 
 ## Language model choice
 
@@ -65,20 +108,13 @@ The parser calls Backboard's stateless message endpoint with Claude, JSON output
 
 Haiku was slower in practice because it kept reasoning despite the low effort setting, and it once returned malformed JSON. We kept Sonnet as the default. `LLM_NAME` can switch models without code changes.
 
-## Demo script (60 to 90 seconds)
-
-1. Land on the globe: "Terralog finds Earth places that look like Moon and Mars sites."
-2. Click Haughton Crater: read the reasoning, point at the per-feature match and the "Falls short" list.
-3. Enter the site, walk a few seconds (W A S D, click to look around), toggle Target View to Moon.
-4. Exit, type "cold, dry, flat basaltic plain, no vegetation, remote", show the chips and ranked matches.
-5. Open Fine-tune, move a slider to show live re-ranking, mark one feature "Must match".
-6. Open Method: show data sources and the scoring formula.
-
 ## Project layout
 
 ```
 api/parse.ts              Vercel function for plain-language search
+api/explain.ts            Vercel function for "why it matches" explanations
 api/_lib/parseCore.ts     prompt, Backboard call, sanitising, rate limit
+api/_lib/explainCore.ts   explanation prompt, validation, rate limit, curated fallback
 src/scoring/              pure scoring engine (no DOM or Cesium)
 src/parse/                keyword parser and client with fallback
 src/data/                 zod schemas and loaders

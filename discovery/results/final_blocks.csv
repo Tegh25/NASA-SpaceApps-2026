@@ -1,0 +1,21 @@
+id,lat,lon,best_moon,source
+A1_andes_tres_cruces_s,-28.54,-69.28,MP/G2/HW,v3 per-moon top
+A2_andes_agua_negra_n,-28.72,-69.39,N2/MM,v3 per-moon top
+A3_andes_n,-28.45,-69.59,MA/N1,v3 per-moon top
+B1_s_tibet_tingri,28.1,87.82,MA/CB/N1,v3 per-moon top
+B2_s_tibet,28.82,86.51,N2/G2/MP,v3 per-moon top
+B3_s_tibet_e,28.73,87.72,N1/MA,v3 per-moon top
+C1_pamir,38.19,74.8,N2/MP/HW,v3 per-moon top
+D1_ngari_w_tibet,32.46,81.53,SP/HW,v3 per-moon top
+D2_ngari_zanda,31.55,80.63,MP,v3 per-moon top
+D3_c_tibet,31.64,83.32,SP,v3 per-moon top
+D4_c_tibet,31.46,86.53,MM,v3 per-moon top
+E1_kunlun_hohxil,36.73,91.11,SP,v3 per-moon top
+F1_w_mongolia,46.91,91.78,G2,v3 per-moon top
+F2_gobi_altai,45.64,94.38,SP,v3 overall top
+G1_altyn_tagh_v1,36.64,84.67,MM/MP,v1 pick
+H1_e_greenland_v1,73.82,-23.68,SP,v1 pick (only block with circling-sun days)
+CTRL_known_mauna_kea,19.82,-155.47,-,control: known analog
+CTRL_neg_amazon,-3.5,-62.0,-,control: negative forest
+CTRL_neg_iowa,42.0,-93.5,-,control: negative farmland
+CTRL_known_dry_valleys,-77.52,161.85,-,control: known analog (ice)

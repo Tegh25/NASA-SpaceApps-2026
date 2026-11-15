@@ -1,0 +1,11 @@
+score,blocks_in_known_zones,AUC_inzone_vs_outside
+terrain only,9,0.77
+composite (no surface),9,0.824
+multiscale,9,0.845
+craters,9,0.692
+landing,9,0.641
+lighting,9,0.439
+thermal,9,0.728
+ice,9,0.643
+sun,9,0.5
+geology,9,0.453

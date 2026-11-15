@@ -1,88 +1,165 @@
-import { BookOpen } from 'lucide-react';
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { HAS_ION } from '../globe/viewer';
+import { SlidersHorizontal, X, BookOpen } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { BodyInset } from '../fx/BodyInset';
+import { HeatLegend } from '../fx/HeatLegend';
+import { Intro } from '../fx/Intro';
+import { GlobeHud } from '../globe/GlobeHud';
+import { activeBody, useCards } from '../lib/cards';
 import { useUrlSync } from '../lib/urlState';
 import { useApp } from '../state/store';
-import { FineTuneDrawer } from '../ui/FineTuneDrawer';
-import { Legend } from '../ui/Legend';
-import { ResultsList } from '../ui/ResultsList';
-import { SearchBar } from '../ui/SearchBar';
-import { SiteDetailPanel } from '../ui/SiteDetailPanel';
+import { Glass } from '../ui/kit/Glass';
+import { RightPanel } from '../ui/right/RightPanel';
+import { BodyToggle } from '../ui/left/BodyToggle';
+import { BottomSheet } from '../ui/left/BottomSheet';
+import { CardSkeletons } from '../ui/left/CardList';
+import { GlobeNotes } from '../ui/left/GlobeNotes';
+import { LeftRail } from '../ui/left/LeftRail';
+import { LocationCard } from '../ui/left/LocationCard';
+import { Logo } from '../ui/left/Logo';
+import { useBreakpoint } from '../ui/left/useBreakpoint';
 
-export function Logo() {
+export { Logo };
+
+function MobileCarousel({ selectedId }: { selectedId: string | null }) {
+  const status = useApp((s) => s.status);
+  const { cards } = useCards();
   return (
-    <Link to="/" onClick={() => useApp.getState().goHome()} className="flex items-center gap-2.5" aria-label="Terralog home">
-      <img src="/favicon.svg" alt="" className="h-8 w-8" />
-      <span>
-        <span className="block text-lg font-semibold leading-none tracking-tight">Terralog</span>
-        <span className="mt-0.5 hidden text-xs text-[var(--muted)] lg:block">Find Earth's Moon and Mars lookalikes.</span>
-      </span>
-    </Link>
+    <div
+      className="scroll-thin flex snap-x snap-mandatory gap-2 overflow-x-auto px-3 pb-1"
+      role="region"
+      aria-label="Candidate locations"
+    >
+      {status !== 'ready' ? (
+        <div className="w-[min(82vw,320px)] shrink-0">
+          <CardSkeletons n={1} />
+        </div>
+      ) : (
+        cards.map((c, i) => <LocationCard key={c.id} card={c} index={i} selected={selectedId === c.id} layout="carousel" />)
+      )}
+    </div>
   );
 }
 
 export function Home() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { search } = useLocation();
   const select = useApp((s) => s.select);
   const status = useApp((s) => s.status);
+  const body = useApp((s) => activeBody(s.query.body));
+  const setBody = useApp((s) => s.setBody);
+  const bp = useBreakpoint();
+  const [findOpen, setFindOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  // On phones, picking a site opens the sheet so the explore content and Enter button are reachable.
+  useEffect(() => {
+    if (id) setSheetOpen(true);
+  }, [id]);
+  const [sheetH, setSheetH] = useState(0);
   useUrlSync();
 
   useEffect(() => {
     select(id ?? null);
   }, [id, select, status]);
 
+  // Default body is the Moon unless the URL asked for something else.
+  useEffect(() => {
+    if (status !== 'ready') return;
+    const st = useApp.getState();
+    if (st.query.body === 'either' && !new URLSearchParams(window.location.search).get('body')) setBody('moon');
+  }, [status, setBody]);
+
+  const selectedId = id ?? null;
+  const closeDrawer = () => {
+    setFindOpen(false);
+    if (selectedId) navigate({ pathname: '/', search });
+  };
+
   return (
-    <div className="pointer-events-none absolute inset-0 z-10">
-      <header className="pointer-events-auto absolute inset-x-2 top-2 md:inset-x-4 md:top-4">
-        <div className="mb-2 flex items-center justify-between md:hidden">
-          <Logo />
-          <Link to="/method" className="panel px-3 py-1.5 text-sm">
-            Method
-          </Link>
-        </div>
-        <div className="flex items-start gap-4">
-          <div className="hidden shrink-0 pt-1.5 md:block md:w-[330px]">
-            <Logo />
-          </div>
-          <div className="min-w-0 flex-1 md:max-w-[720px] min-[1500px]:mx-auto">
-            <SearchBar />
-          </div>
-          <div className="hidden shrink-0 items-center gap-2 pt-1.5 md:flex">
-            {!HAS_ION && (
-              <span className="panel px-2.5 py-1 text-[11px] text-[var(--mid)]" title="No Cesium ion token configured">
-                Low detail
-              </span>
-            )}
-            <Link to="/method" className="panel flex items-center gap-1.5 px-3 py-1.5 text-sm hover:bg-white/10">
-              <BookOpen size={15} aria-hidden /> Method
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <FineTuneDrawer />
-
-      {/* Results: left sidebar on desktop, bottom sheet on mobile */}
-      <div
-        className={`absolute bottom-2 left-2 right-2 max-h-[42vh] md:bottom-24 md:left-4 md:right-auto md:top-[88px] md:max-h-none md:w-[330px] lg:top-[84px] ${
-          id ? 'hidden md:flex' : 'flex'
-        } flex-col justify-start`}
-      >
-        <ResultsList />
-      </div>
-
-      {id && (
-        <div className="absolute inset-0 flex md:inset-auto md:bottom-4 md:right-4 md:top-[132px] md:w-[400px] lg:top-[84px]">
-          <div className="flex w-full flex-col bg-[var(--bg)]/60 md:bg-transparent">
-            <SiteDetailPanel id={id} />
-          </div>
+    <div data-body={body} className="pointer-events-none absolute inset-0 z-10">
+      {bp !== 'mobile' && (
+        <div className="pointer-events-auto absolute bottom-3 left-3 top-3 z-20">
+          <LeftRail selectedId={selectedId} />
         </div>
       )}
 
-      <div className="absolute bottom-4 left-4 hidden md:block">
-        <Legend />
+      {/* Middle column: the globe shows through; HUD and pencil notes sit on top. */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 md:left-[344px] xl:right-[424px]">
+        <GlobeHud />
+        <GlobeNotes selectedId={selectedId} />
+        <Intro />
+        {bp === 'desktop' && <BodyInset />}
+        {bp === 'desktop' && !selectedId && <HeatLegend className="absolute bottom-[104px] left-4" />}
+        {bp === 'tablet' && !selectedId && !findOpen && (
+          <button
+            type="button"
+            onClick={() => setFindOpen(true)}
+            aria-label="Open find panel"
+            className="glass-capsule pointer-events-auto absolute left-4 top-4 flex h-9 items-center gap-2 px-4 text-[13px] text-[var(--ink)]"
+          >
+            <SlidersHorizontal size={14} aria-hidden /> Find
+          </button>
+        )}
       </div>
+
+      {bp === 'desktop' && (
+        <Glass as="aside" className="pointer-events-auto absolute bottom-3 right-3 top-3 w-[400px]" aria-label="Find and explore">
+          <RightPanel siteId={selectedId} />
+        </Glass>
+      )}
+
+      {bp === 'tablet' && (
+        <div
+          className="pointer-events-auto absolute inset-y-3 right-3 z-30 w-[400px] max-w-[calc(100%-332px-24px)]"
+          style={{
+            transform: selectedId || findOpen ? 'none' : 'translateX(calc(100% + 24px))',
+            transition: 'transform 250ms var(--ease-out-quint)',
+            visibility: selectedId || findOpen ? 'visible' : 'hidden',
+          }}
+          aria-hidden={!(selectedId || findOpen)}
+        >
+          <button
+            type="button"
+            onClick={closeDrawer}
+            aria-label="Close panel"
+            className="glass-capsule absolute -left-12 top-1 z-10 grid h-9 w-9 place-items-center text-[var(--dim)] hover:text-[var(--ink)]"
+          >
+            <X size={16} aria-hidden />
+          </button>
+          <Glass className="h-full" aria-label="Find and explore">
+            <RightPanel siteId={selectedId} />
+          </Glass>
+        </div>
+      )}
+
+      {bp === 'mobile' && (
+        <>
+          <header className="pointer-events-auto absolute inset-x-2 top-2 z-20">
+            <div className="glass flex items-center justify-between gap-2 !rounded-[22px] px-3 py-2">
+              <Logo tagline={false} />
+              <div className="flex items-center gap-2">
+                <BodyToggle className="w-[150px]" />
+                <Link
+                  to="/method"
+                  aria-label="Method"
+                  className="glass-capsule grid h-9 w-9 place-items-center text-[var(--ink)]"
+                >
+                  <BookOpen size={15} aria-hidden />
+                </Link>
+              </div>
+            </div>
+          </header>
+          {!selectedId && !sheetOpen && (
+            <div className="pointer-events-auto absolute inset-x-0 z-20" style={{ bottom: sheetH + 16 }}>
+              <MobileCarousel selectedId={selectedId} />
+            </div>
+          )}
+          <BottomSheet expanded={sheetOpen} onExpandedChange={setSheetOpen} onHeight={setSheetH}>
+            <RightPanel siteId={selectedId} />
+          </BottomSheet>
+        </>
+      )}
     </div>
   );
 }

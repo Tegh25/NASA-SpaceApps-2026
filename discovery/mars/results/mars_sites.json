@@ -1,0 +1,631 @@
+{
+ "jezero": {
+  "terrain": {
+   "slope_hist": [
+    0.21471,
+    0.29747,
+    0.17053,
+    0.07987,
+    0.04249,
+    0.03147,
+    0.02871,
+    0.02529,
+    0.02258,
+    0.01733,
+    0.01529,
+    0.01231,
+    0.01071,
+    0.00813,
+    0.00582,
+    0.00489,
+    0.00347,
+    0.00227,
+    0.00231,
+    0.00151,
+    0.00169,
+    0.00067,
+    0.00049,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "slope_p50": 1.94650701258786,
+   "slope_p90": 8.3649982614163,
+   "rough_p50": 1.7503162937892023,
+   "relief_m": 831.7025469215821,
+   "elev_mean_m": -2435.9354077192643,
+   "elev_min_m": -2736.478935732525,
+   "elev_max_m": -1523.4907913892055,
+   "frac_slope_lt15": 0.9827111111111111,
+   "pixel_m": 200.0,
+   "shape": [
+    150,
+    150
+   ],
+   "dem_source": "USGS Astrogeology Mars HRSC+MOLA blended DEM global 200 m v2 (Mars_HRSC_MOLA_BlendDEM_Global_200mp_v2.tif), resampled bilinear to local 200 m grid; sphere R=3396190 m"
+  },
+  "context": {
+   "thermal_inertia": {
+    "value": {
+     "dayside_mean_tiu": 304.3,
+     "dayside_median_tiu": 293.0,
+     "nightside_mean_tiu": 308.1,
+     "nightside_median_tiu": 300.5,
+     "dayside_range_tiu": [
+      164.0,
+      512.0
+     ],
+     "nightside_range_tiu": [
+      210.0,
+      443.0
+     ]
+    },
+    "class": "A",
+    "source_url": "https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_night_2007.img",
+    "note": "Putzig & Mellon 2007 apparent TI (TES bolometer, 20 ppd ~3 km, int16 MSB, units tiu) sampled by HTTP range read of the 30x30 km window (144 px; interpolated pixels masked out with global_ti_msk_*_2007.img). Day file: https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_day_2007.img. Apparent TI, not a true bulk TI; 3 km pixels average over heterogeneous terrain."
+   },
+   "albedo": {
+    "value": {
+     "mean": 0.1778,
+     "min": 0.166,
+     "max": 0.1946,
+     "centre_pixel": 0.1681
+    },
+    "class": "A",
+    "source_url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_TES_Albedo_mosaic_global_7410m.tif",
+    "note": "TES Lambert albedo, USGS 7410 m (8 ppd) mosaic; mean over 30 px covering the 30x30 km window. Product = Christensen et al. 2001 (PDS GLOBAL_ALBEDO_8PPD)."
+   },
+   "dci": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Ruff & Christensen 2002 DCI only available to me as a colorized image (https://www.mars.asu.edu/data/tes_ruffdust, 16 ppd, 3.5 km); no numeric raster found open/no-login, and colour-bar inversion not attempted."
+   },
+   "T_mean_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open global raster of TES annual-mean surface temperature found; not available as a number I saw in a source. Left null (could be taken from Mars Climate Database / REMS / MEDA papers later)."
+   },
+   "T_diurnal_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Not found as a quotable site value; see T_mean note."
+   },
+   "pressure_mbar": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No quoted site pressure found. Rough barometric ESTIMATE only (NOT a sourced value; assumes P0=6.1 mbar at MOLA datum, scale height ~10.8 km, my DEM mean elev -2436 m): ~7.6 mbar."
+   },
+   "rock_abundance": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open numeric TES rock-abundance raster found (ASU lists only a colorized Viking IRTM rock map, https://www.mars.asu.edu/data). Not sampled."
+   },
+   "thermal_inertia_literature": {
+    "value": "180 (sand dune) to 605 (bedrock) tiu in situ MEDA traverse; agrees with THEMIS 100 m",
+    "class": "C",
+    "source_url": "https://digital.inta.es/entities/publication/399c1608-d291-4e31-a254-f530673bd909/full",
+    "note": "Martinez et al. 2023 JGR Planets, doi 10.1029/2022JE007537 (abstract-level via search snippet; full text not retrieved)"
+   },
+   "minerals": {
+    "value": [
+     "Mg-rich carbonate",
+     "olivine",
+     "Fe/Mg smectite (saponite/nontronite) on western fan",
+     "low-Ca pyroxene"
+    ],
+    "class": "C",
+    "source_url": "https://ui.adsabs.harvard.edu/abs/2015JGRE..120..775G",
+    "note": "Goudge et al. 2015 CRISM mapping (abstract-level via search); Ehlmann 2008 for Nili Fossae carbonate; also https://arxiv.org/pdf/1801.09841"
+   }
+  },
+  "terrain_20m_ctx": {
+   "slope_hist": [
+    0.1377,
+    0.22594,
+    0.16133,
+    0.10392,
+    0.0715,
+    0.05292,
+    0.04139,
+    0.03346,
+    0.02697,
+    0.0223,
+    0.01928,
+    0.01647,
+    0.01422,
+    0.01252,
+    0.01091,
+    0.00916,
+    0.00767,
+    0.00665,
+    0.00582,
+    0.00478,
+    0.00377,
+    0.00297,
+    0.00231,
+    0.00182,
+    0.00135,
+    0.00088,
+    0.00067,
+    0.00045,
+    0.00033,
+    0.00021,
+    0.00014,
+    7e-05,
+    5e-05,
+    3e-05,
+    2e-05,
+    1e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "slope_p50": 2.8139387219972845,
+   "slope_p90": 11.18869650716859,
+   "rough_p50": 0.13820272731823757,
+   "relief_m": 798.8228637695308,
+   "elev_mean_m": -2434.205479747667,
+   "pixel_m": 20.0,
+   "nan_frac": 0.0,
+   "dem_source": "USGS/JPL M20_JezeroCrater_CTXDEM_20m.tif (CTX stereo DEM, Equirectangular std parallel 18.4663), 1500x1500 px window at 20 m"
+  }
+ },
+ "oxia": {
+  "terrain": {
+   "slope_hist": [
+    0.80169,
+    0.15231,
+    0.0252,
+    0.01276,
+    0.00462,
+    0.00213,
+    0.0008,
+    0.00022,
+    0.00013,
+    0.00013,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "slope_p50": 0.4916821171847562,
+   "slope_p90": 1.4175065469451211,
+   "rough_p50": 0.2926793741514411,
+   "relief_m": 117.08132172826572,
+   "elev_mean_m": -3094.8502412336125,
+   "elev_min_m": -3169.9610346333475,
+   "elev_max_m": -2983.0731378364717,
+   "frac_slope_lt15": 1.0,
+   "pixel_m": 200.0,
+   "shape": [
+    150,
+    150
+   ],
+   "dem_source": "USGS Astrogeology Mars HRSC+MOLA blended DEM global 200 m v2 (Mars_HRSC_MOLA_BlendDEM_Global_200mp_v2.tif), resampled bilinear to local 200 m grid; sphere R=3396190 m"
+  },
+  "context": {
+   "thermal_inertia": {
+    "value": {
+     "dayside_mean_tiu": 383.5,
+     "dayside_median_tiu": 374.0,
+     "nightside_mean_tiu": 424.5,
+     "nightside_median_tiu": 422.0,
+     "dayside_range_tiu": [
+      298.0,
+      556.0
+     ],
+     "nightside_range_tiu": [
+      355.0,
+      514.0
+     ]
+    },
+    "class": "A",
+    "source_url": "https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_night_2007.img",
+    "note": "Putzig & Mellon 2007 apparent TI (TES bolometer, 20 ppd ~3 km, int16 MSB, units tiu) sampled by HTTP range read of the 30x30 km window (121 px; interpolated pixels masked out with global_ti_msk_*_2007.img). Day file: https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_day_2007.img. Apparent TI, not a true bulk TI; 3 km pixels average over heterogeneous terrain."
+   },
+   "albedo": {
+    "value": {
+     "mean": 0.1951,
+     "min": 0.1885,
+     "max": 0.2038,
+     "centre_pixel": 0.1925
+    },
+    "class": "A",
+    "source_url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_TES_Albedo_mosaic_global_7410m.tif",
+    "note": "TES Lambert albedo, USGS 7410 m (8 ppd) mosaic; mean over 30 px covering the 30x30 km window. Product = Christensen et al. 2001 (PDS GLOBAL_ALBEDO_8PPD)."
+   },
+   "dci": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Ruff & Christensen 2002 DCI only available to me as a colorized image (https://www.mars.asu.edu/data/tes_ruffdust, 16 ppd, 3.5 km); no numeric raster found open/no-login, and colour-bar inversion not attempted."
+   },
+   "T_mean_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open global raster of TES annual-mean surface temperature found; not available as a number I saw in a source. Left null (could be taken from Mars Climate Database / REMS / MEDA papers later)."
+   },
+   "T_diurnal_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Not found as a quotable site value; see T_mean note."
+   },
+   "pressure_mbar": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No quoted site pressure found. Rough barometric ESTIMATE only (NOT a sourced value; assumes P0=6.1 mbar at MOLA datum, scale height ~10.8 km, my DEM mean elev -3095 m): ~8.1 mbar."
+   },
+   "rock_abundance": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open numeric TES rock-abundance raster found (ASU lists only a colorized Viking IRTM rock map, https://www.mars.asu.edu/data). Not sampled."
+   },
+   "minerals": {
+    "value": [
+     "Fe/Mg-rich clays (smectite)",
+     "possible carbonate or other clay mixture (2.5 um feature)",
+     "olivine-like 1 um absorption in bluish bedrock"
+    ],
+    "class": "C",
+    "source_url": "https://boris.unibe.ch/156503",
+    "note": "Mandon et al. 2021 Astrobiology (HiRISE/CRISM/CaSSIS), abstract-level via search; geological context Quantin-Nataf et al. 2021"
+   }
+  }
+ },
+ "gale": {
+  "terrain": {
+   "slope_hist": [
+    0.00916,
+    0.02862,
+    0.04471,
+    0.05276,
+    0.06009,
+    0.0632,
+    0.05942,
+    0.05747,
+    0.05773,
+    0.05742,
+    0.05787,
+    0.05893,
+    0.06276,
+    0.06653,
+    0.05533,
+    0.04502,
+    0.03827,
+    0.03004,
+    0.02627,
+    0.01889,
+    0.0144,
+    0.01124,
+    0.00924,
+    0.00587,
+    0.00356,
+    0.002,
+    0.0012,
+    0.0008,
+    0.00076,
+    0.00036,
+    9e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "slope_p50": 10.150117847501715,
+   "slope_p90": 17.79747109847972,
+   "rough_p50": 2.5640998905279235,
+   "relief_m": 4371.00986924353,
+   "elev_mean_m": -1785.2113667268584,
+   "elev_min_m": -4488.127947051893,
+   "elev_max_m": 488.0215741992037,
+   "frac_slope_lt15": 0.792,
+   "pixel_m": 200.0,
+   "shape": [
+    150,
+    150
+   ],
+   "dem_source": "USGS Astrogeology Mars HRSC+MOLA blended DEM global 200 m v2 (Mars_HRSC_MOLA_BlendDEM_Global_200mp_v2.tif), resampled bilinear to local 200 m grid; sphere R=3396190 m"
+  },
+  "context": {
+   "thermal_inertia": {
+    "value": {
+     "dayside_mean_tiu": 203.6,
+     "dayside_median_tiu": 201.0,
+     "nightside_mean_tiu": 234.3,
+     "nightside_median_tiu": 230.0,
+     "dayside_range_tiu": [
+      74.0,
+      402.0
+     ],
+     "nightside_range_tiu": [
+      93.0,
+      383.0
+     ]
+    },
+    "class": "A",
+    "source_url": "https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_night_2007.img",
+    "note": "Putzig & Mellon 2007 apparent TI (TES bolometer, 20 ppd ~3 km, int16 MSB, units tiu) sampled by HTTP range read of the 30x30 km window (144 px; interpolated pixels masked out with global_ti_msk_*_2007.img). Day file: https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_day_2007.img. Apparent TI, not a true bulk TI; 3 km pixels average over heterogeneous terrain."
+   },
+   "albedo": {
+    "value": {
+     "mean": 0.2277,
+     "min": 0.215,
+     "max": 0.2425,
+     "centre_pixel": 0.2211
+    },
+    "class": "A",
+    "source_url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_TES_Albedo_mosaic_global_7410m.tif",
+    "note": "TES Lambert albedo, USGS 7410 m (8 ppd) mosaic; mean over 25 px covering the 30x30 km window. Product = Christensen et al. 2001 (PDS GLOBAL_ALBEDO_8PPD)."
+   },
+   "dci": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Ruff & Christensen 2002 DCI only available to me as a colorized image (https://www.mars.asu.edu/data/tes_ruffdust, 16 ppd, 3.5 km); no numeric raster found open/no-login, and colour-bar inversion not attempted."
+   },
+   "T_mean_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open global raster of TES annual-mean surface temperature found; not available as a number I saw in a source. Left null (could be taken from Mars Climate Database / REMS / MEDA papers later)."
+   },
+   "T_diurnal_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Not found as a quotable site value; see T_mean note."
+   },
+   "pressure_mbar": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No quoted site pressure found. Rough barometric ESTIMATE only (NOT a sourced value; assumes P0=6.1 mbar at MOLA datum, scale height ~10.8 km, my DEM mean elev -1785 m): ~7.2 mbar."
+   },
+   "rock_abundance": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open numeric TES rock-abundance raster found (ASU lists only a colorized Viking IRTM rock map, https://www.mars.asu.edu/data). Not sampled."
+   },
+   "thermal_inertia_literature": {
+    "value": "265-375 tiu from REMS diurnal fits, first 100 sols (Hamilton et al. 2014); other sites 280-445 tiu",
+    "class": "C",
+    "source_url": "https://meetingorganizer.copernicus.org/EGU2014/EGU2014-3134.pdf",
+    "note": "Search-snippet level only; attribution to specific URL not verified against full text"
+   },
+   "minerals": {
+    "value": [
+     "Fe/Mg phyllosilicates (smectite/nontronite) on floor, walls and lower Mount Sharp",
+     "sulfates (upper units)",
+     "hematite (Vera Rubin ridge)",
+     "OMEGA hydration 2-3 wt% H2O"
+    ],
+    "class": "C",
+    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7539960",
+    "note": "Milliken et al. 2010, Fraeman et al. 2016 as summarised in search results (abstract-level); also https://ntrs.nasa.gov/api/citations/20205001823/downloads/Rampe_etal_VRR_mineralogy_main_text_revised_tracked_changes_accepted.docx.pdf"
+   }
+  }
+ },
+ "meridiani": {
+  "terrain": {
+   "slope_hist": [
+    0.47578,
+    0.28222,
+    0.13418,
+    0.05418,
+    0.02676,
+    0.01191,
+    0.00533,
+    0.00369,
+    0.00231,
+    0.00124,
+    0.00076,
+    0.00062,
+    0.00018,
+    0.0004,
+    0.00022,
+    4e-05,
+    0.00018,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "slope_p50": 1.0681180211590995,
+   "slope_p90": 3.1052665908229997,
+   "rough_p50": 1.0053848465707906,
+   "relief_m": 91.34377846675079,
+   "elev_mean_m": -1397.1098702208717,
+   "elev_min_m": -1620.6070630493864,
+   "elev_max_m": -1294.0496203494681,
+   "frac_slope_lt15": 0.9997777777777778,
+   "pixel_m": 200.0,
+   "shape": [
+    150,
+    150
+   ],
+   "dem_source": "USGS Astrogeology Mars HRSC+MOLA blended DEM global 200 m v2 (Mars_HRSC_MOLA_BlendDEM_Global_200mp_v2.tif), resampled bilinear to local 200 m grid; sphere R=3396190 m"
+  },
+  "context": {
+   "thermal_inertia": {
+    "value": {
+     "dayside_mean_tiu": 143.6,
+     "dayside_median_tiu": 144.5,
+     "nightside_mean_tiu": 189.6,
+     "nightside_median_tiu": 190.0,
+     "dayside_range_tiu": [
+      96.0,
+      186.0
+     ],
+     "nightside_range_tiu": [
+      133.0,
+      236.0
+     ]
+    },
+    "class": "A",
+    "source_url": "https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_night_2007.img",
+    "note": "Putzig & Mellon 2007 apparent TI (TES bolometer, 20 ppd ~3 km, int16 MSB, units tiu) sampled by HTTP range read of the 30x30 km window (132 px; interpolated pixels masked out with global_ti_msk_*_2007.img). Day file: https://pds-geosciences.wustl.edu/mgs/mgs-m-tes-5-timap-v1/mgst_9001/data/global_ti_day_2007.img. Apparent TI, not a true bulk TI; 3 km pixels average over heterogeneous terrain."
+   },
+   "albedo": {
+    "value": {
+     "mean": 0.1321,
+     "min": 0.1232,
+     "max": 0.1405,
+     "centre_pixel": 0.1283
+    },
+    "class": "A",
+    "source_url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_TES_Albedo_mosaic_global_7410m.tif",
+    "note": "TES Lambert albedo, USGS 7410 m (8 ppd) mosaic; mean over 25 px covering the 30x30 km window. Product = Christensen et al. 2001 (PDS GLOBAL_ALBEDO_8PPD)."
+   },
+   "dci": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Ruff & Christensen 2002 DCI only available to me as a colorized image (https://www.mars.asu.edu/data/tes_ruffdust, 16 ppd, 3.5 km); no numeric raster found open/no-login, and colour-bar inversion not attempted."
+   },
+   "T_mean_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open global raster of TES annual-mean surface temperature found; not available as a number I saw in a source. Left null (could be taken from Mars Climate Database / REMS / MEDA papers later)."
+   },
+   "T_diurnal_K": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "Not found as a quotable site value; see T_mean note."
+   },
+   "pressure_mbar": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No quoted site pressure found. Rough barometric ESTIMATE only (NOT a sourced value; assumes P0=6.1 mbar at MOLA datum, scale height ~10.8 km, my DEM mean elev -1397 m): ~6.9 mbar."
+   },
+   "rock_abundance": {
+    "value": null,
+    "class": "C",
+    "source_url": null,
+    "note": "No open numeric TES rock-abundance raster found (ASU lists only a colorized Viking IRTM rock map, https://www.mars.asu.edu/data). Not sampled."
+   },
+   "thermal_inertia_literature": {
+    "value": "TES 200 / THEMIS 190 tiu bulk at landing location; TES 170-240 over hematite unit (Christensen & Ruff 2004)",
+    "class": "C",
+    "source_url": "https://ntrs.nasa.gov/api/citations/20050169539/downloads/20050169539.pdf",
+    "note": "Search-snippet level; mapping of the numbers to this exact URL not verified (other hits: https://pubs.usgs.gov/publication/70028845)"
+   },
+   "minerals": {
+    "value": [
+     "crystalline gray hematite (TES)",
+     "sulfate-rich sedimentary rocks (Arvidson 2006)",
+     "olivine-rich basaltic sands"
+    ],
+    "class": "C",
+    "source_url": "https://pubs.usgs.gov/publication/70028845",
+    "note": "Search-snippet level (Christensen et al. 2001; Arvidson et al. 2006 https://ui.adsabs.harvard.edu/abs/2006JGRE..11112S08A)"
+   }
+  }
+ },
+ "_meta": {
+  "note": "Mars data only. DEM = USGS HRSC+MOLA blend 200 m v2. Class A=sampled by us from open raster, C=literature/not found.",
+  "window_km": 30
+ }
+}
