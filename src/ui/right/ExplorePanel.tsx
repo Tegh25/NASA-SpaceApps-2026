@@ -140,7 +140,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
         </section>
 
         <WhySection
-          key={`${siteId}:${curated.length}`}
+          key={`${siteId}:${curated}`}
           curated={curated}
           input={{ siteName: site.name, region: site.region, targetName: cmp?.label ?? target?.name ?? bodyName, body, rows: rowsForAi, curated }}
         />
