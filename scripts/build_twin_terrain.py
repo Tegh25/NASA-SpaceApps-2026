@@ -28,8 +28,15 @@ import rasterio
 from scipy import ndimage as ndi
 
 APP = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DISC = os.environ.get("TERRALOG_DISC") or os.path.abspath(os.path.join(APP, "..", "discovery"))
-TILES = os.path.join(DISC, "data", "earth")
+# Prefer the discovery/ folder committed in this repo; fall back to a sibling checkout.
+_IN_REPO = os.path.join(APP, "discovery")
+DISC = os.environ.get("TERRALOG_DISC") or (
+    _IN_REPO if os.path.isdir(os.path.join(_IN_REPO, "results")) else os.path.abspath(os.path.join(APP, "..", "discovery"))
+)
+# Raw DEM tiles (~9 GB) are not in git: TERRALOG_TILES, else <DISC>/data/earth, else ../discovery/data/earth.
+_tile_candidates = [os.environ.get("TERRALOG_TILES"), os.path.join(DISC, "data", "earth"),
+                    os.path.abspath(os.path.join(APP, "..", "discovery", "data", "earth"))]
+TILES = next((t for t in _tile_candidates if t and os.path.isdir(t)), _tile_candidates[1])
 DATA = os.path.join(APP, "public", "data")
 IMG = os.path.join(APP, "public", "img")
 N, MPP = 256, 40.0

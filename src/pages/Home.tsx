@@ -2,6 +2,7 @@ import { SlidersHorizontal, X, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BodyInset } from '../fx/BodyInset';
+import { HeatLegend } from '../fx/HeatLegend';
 import { Intro } from '../fx/Intro';
 import { GlobeHud } from '../globe/GlobeHud';
 import { activeBody, useCards } from '../lib/cards';
@@ -85,6 +86,7 @@ export function Home() {
         <GlobeNotes selectedId={selectedId} />
         <Intro />
         {bp === 'desktop' && <BodyInset />}
+        {bp === 'desktop' && !selectedId && <HeatLegend className="absolute bottom-[104px] left-4" />}
         {bp === 'tablet' && !selectedId && !findOpen && (
           <button
             type="button"

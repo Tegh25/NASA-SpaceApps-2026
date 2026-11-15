@@ -21,7 +21,11 @@ import numpy as np
 import pandas as pd
 
 APP = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DISC = os.environ.get("TERRALOG_DISC") or os.path.abspath(os.path.join(APP, "..", "discovery"))
+# Prefer the discovery/ folder committed in this repo; fall back to a sibling checkout.
+_IN_REPO = os.path.join(APP, "discovery")
+DISC = os.environ.get("TERRALOG_DISC") or (
+    _IN_REPO if os.path.isdir(os.path.join(_IN_REPO, "results")) else os.path.abspath(os.path.join(APP, "..", "discovery"))
+)
 RES = os.path.join(DISC, "results")
 MARS = os.path.join(DISC, "mars")
 OUT = os.path.join(APP, "public", "data")
