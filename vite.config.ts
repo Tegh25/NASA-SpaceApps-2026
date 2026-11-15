@@ -18,39 +18,37 @@ function devApi(env: Record<string, string>): Plugin {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(body));
       };
-      const readBody = async (req: IncomingMessage): Promise<unknown> => {
-        let raw = '';
-        for await (const chunk of req) raw += chunk;
-        try {
-          return JSON.parse(raw);
-        } catch {
-          return null; /* handled by validation */
-        }
+      /** POST-only JSON endpoint with a body cap, content-type check and a catch-all 500, so dev behaves like a hardened function. */
+      const route = (path: string, handle: (body: unknown, req: IncomingMessage) => Promise<{ status: number; body: unknown }>) => {
+        server.middlewares.use(path, async (req: IncomingMessage, res: ServerResponse) => {
+          try {
+            if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
+            const { readJsonBody } = await server.ssrLoadModule('/api/_lib/http.ts');
+            const parsed = await readJsonBody(req, req.headers['content-type']);
+            if (!parsed.ok) return send(res, parsed.status, { error: parsed.error });
+            const result = await handle(parsed.body, req);
+            send(res, result.status, result.body);
+          } catch (e) {
+            server.config.logger.error(`[dev-api] ${path} failed: ${(e as Error).message}`);
+            if (!res.headersSent) send(res, 500, { fallback: true, reason: 'server_error' });
+          }
+        });
       };
 
-      server.middlewares.use('/api/parse', async (req: IncomingMessage, res: ServerResponse) => {
-        if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
-        const body = await readBody(req);
+      route('/api/parse', async (body, req) => {
         const { handleParse, featureFetcher, resolveOrigin } = await server.ssrLoadModule('/api/_lib/parseCore.ts');
         const origin = resolveOrigin(req.headers.host, 'http');
-        if (!origin) return send(res, 400, { error: 'Invalid host header.' });
-        const result = await handleParse(body, req.socket.remoteAddress ?? 'local', {
+        if (!origin) return { status: 400, body: { error: 'Invalid host header.' } };
+        return handleParse(body, req.socket.remoteAddress ?? 'local', {
           apiKey: env.BACKBOARD_API_KEY,
           model: env.LLM_NAME,
           fetchFeatures: featureFetcher(origin),
         });
-        send(res, result.status, result.body);
       });
 
-      server.middlewares.use('/api/explain', async (req: IncomingMessage, res: ServerResponse) => {
-        if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
-        const body = await readBody(req);
+      route('/api/explain', async (body, req) => {
         const { handleExplain } = await server.ssrLoadModule('/api/_lib/explainCore.ts');
-        const result = await handleExplain(body, req.socket.remoteAddress ?? 'local', {
-          apiKey: env.BACKBOARD_API_KEY,
-          model: env.LLM_NAME,
-        });
-        send(res, result.status, result.body);
+        return handleExplain(body, req.socket.remoteAddress ?? 'local', { apiKey: env.BACKBOARD_API_KEY, model: env.LLM_NAME });
       });
     },
   };
