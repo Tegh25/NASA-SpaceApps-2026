@@ -7,6 +7,7 @@ import { Home } from './pages/Home';
 import { Method } from './pages/Method';
 import { useApp } from './state/store';
 import { TourView } from './tour/TourView';
+import { GlassFilters } from './ui/kit/GlassFilters';
 import { CardSkeletons } from './ui/left/CardList';
 import { Logo } from './ui/left/Logo';
 
@@ -83,9 +84,10 @@ export default function App() {
 
   return (
     <div className="relative h-full w-full overflow-hidden">
+      <GlassFilters />
       <div
         className={`absolute inset-y-0 ${
-          isCompare ? 'left-0 right-1/2 hidden md:block' : interactive ? 'left-0 right-0 md:left-[320px] lg:right-[400px]' : 'left-0 right-0'
+          isCompare ? 'left-0 right-1/2 hidden md:block' : 'left-0 right-0'
         }`}
       >
         <GlobeView hidden={!isGlobeRoute} interactive={interactive} />

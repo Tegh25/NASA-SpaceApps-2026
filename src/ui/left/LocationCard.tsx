@@ -16,7 +16,7 @@ interface Props {
 
 function Thumb({ src }: { src: string | null }) {
   return (
-    <span className="relative block h-16 w-16 shrink-0 overflow-hidden rounded-[2px] border border-[var(--rule)] bg-[var(--void)]">
+    <span className="relative block h-16 w-16 shrink-0 overflow-hidden rounded-[12px] border border-white/15 bg-[var(--void)]">
       {src ? (
         <>
           <img src={src} alt="" loading="lazy" draggable={false} className="h-full w-full object-cover" />
@@ -54,11 +54,8 @@ export function LocationCard({ card, index, selected, best = false, layout = 'ra
         onBlur={() => hover(null)}
         aria-label={`${card.name}, ${card.region}${card.score !== null ? `, match score ${card.score}` : ''}`}
         aria-current={selected ? 'true' : undefined}
-        className={`group relative block w-full rounded-[3px] border p-2.5 text-left transition-[background-color,border-color,box-shadow] duration-200 ${
-          selected
-            ? 'glow-active border-[var(--accent)] bg-[var(--deck)]'
-            : 'border-[var(--rule)] bg-[color-mix(in_srgb,var(--deck)_45%,transparent)] hover:border-[color-mix(in_srgb,var(--accent)_60%,var(--rule))] hover:bg-[var(--deck)]'
-        }`}
+        data-selected={selected ? '' : undefined}
+        className={`glass-thin group relative block w-full p-2.5 text-left ${carousel ? 'glass-blur' : ''}`}
       >
         <span className="flex gap-2.5">
           <Thumb src={card.thumb} />
@@ -76,7 +73,7 @@ export function LocationCard({ card, index, selected, best = false, layout = 'ra
           {card.shortfall && (
             <span
               title={`Falls short: ${card.shortfall}`}
-              className="num min-w-0 truncate rounded-[2px] border border-[color-mix(in_srgb,var(--bad)_45%,transparent)] bg-[color-mix(in_srgb,var(--bad)_12%,transparent)] px-1.5 py-[1px] text-[11px] leading-4 text-[var(--bad)]"
+              className="num min-w-0 truncate rounded-full border border-[color-mix(in_srgb,var(--bad)_45%,transparent)] bg-[color-mix(in_srgb,var(--bad)_14%,transparent)] px-2 py-[1px] text-[11px] leading-4 text-[#ff8a9a]"
             >
               <span className="sr-only">Falls short: </span>
               {card.shortfall}
@@ -89,7 +86,7 @@ export function LocationCard({ card, index, selected, best = false, layout = 'ra
         <HandNote
           size={17}
           delayMs={500}
-          className="pointer-events-none absolute -bottom-2.5 right-3 rotate-[-3deg] bg-[var(--hull)] px-1"
+          className="pointer-events-none absolute -bottom-2.5 right-3 rotate-[-3deg] rounded-full bg-[rgba(8,13,22,0.8)] px-2"
         >
           best match
         </HandNote>

@@ -24,7 +24,7 @@ function niceScale(metersPerPx: number, maxPx: number): { px: number; label: str
 }
 
 const btn =
-  'pointer-events-auto grid h-8 w-8 place-items-center text-[var(--ink)] transition-colors duration-200 hover:bg-[var(--deck)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:-outline-offset-2';
+  'pointer-events-auto grid h-9 w-9 place-items-center rounded-full text-[var(--ink)] transition-colors duration-200 hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:-outline-offset-2';
 
 function Tick({ className }: { className: string }) {
   return (
@@ -52,8 +52,8 @@ export function GlobeHud({ className = '' }: { className?: string }) {
   const surface = cam.mode === 'surface';
 
   const seg = (active: boolean) =>
-    `pointer-events-auto h-8 px-3 text-xs transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:-outline-offset-2 ${
-      active ? 'bg-[var(--accent)] text-[var(--void)] font-medium' : 'text-[var(--dim)] hover:text-[var(--ink)]'
+    `pointer-events-auto h-8 rounded-full px-3.5 text-xs transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:-outline-offset-2 ${
+      active ? 'bg-[var(--accent)] text-[var(--void)] font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_0_14px_-3px_var(--accent)]' : 'text-[var(--ink)]/80 hover:text-[var(--ink)]'
     }`;
 
   return (
@@ -83,7 +83,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
       {/* Selected site chip */}
       {chip && (
         <div className="absolute left-1/2 top-20 md:top-4 -translate-x-1/2">
-          <div className="panel max-w-[70vw] truncate px-3 py-1.5 text-xs text-[var(--accent)]" role="status">
+          <div className="glass-capsule max-w-[70vw] truncate px-4 py-1.5 text-xs text-[var(--accent)]" role="status">
             {chip}
           </div>
         </div>
@@ -91,7 +91,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
 
       {/* Controls */}
       <div className="absolute right-4 top-20 md:top-4 flex flex-col items-end gap-2">
-        <div className="panel pointer-events-auto flex overflow-hidden" role="group" aria-label="View mode">
+        <div className="glass-capsule pointer-events-auto flex p-[3px]" role="group" aria-label="View mode">
           <button type="button" className={seg(!surface)} aria-pressed={!surface} aria-label="Orbit view" onClick={() => setMode('orbit')}>
             Orbit
           </button>
@@ -99,7 +99,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
             Surface
           </button>
         </div>
-        <div className="panel pointer-events-auto flex flex-col divide-y divide-[var(--rule)] overflow-hidden" role="group" aria-label="Zoom">
+        <div className="glass-capsule pointer-events-auto flex flex-col p-[3px]" role="group" aria-label="Zoom">
           <button type="button" className={btn} aria-label="Zoom in" onClick={zoomIn}>
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" strokeWidth="1.5" fill="none">
               <path d="M7 1V13M1 7H13" />
@@ -113,7 +113,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
         </div>
         <button
           type="button"
-          className="panel pointer-events-auto grid h-10 w-10 place-items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+          className="glass-capsule pointer-events-auto grid h-11 w-11 place-items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           aria-label={`Compass, heading ${Math.round(cam.headingDeg)} degrees. Reset north`}
           onClick={resetNorth}
         >
@@ -125,7 +125,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
       </div>
 
       {/* Readout */}
-      <div className="panel num absolute bottom-4 hidden md:block left-4 max-w-[calc(100%-2rem)] px-3 py-2 text-[11px] leading-relaxed text-[var(--ink)]" aria-live="off">
+      <div className="glass-capsule num absolute bottom-4 left-4 hidden max-w-[calc(100%-2rem)] !rounded-[18px] px-4 py-2.5 text-[11px] leading-relaxed text-[var(--ink)] md:block" aria-live="off">
         <div>
           {hemi(cam.lat, 'N', 'S')}
           {'  '}

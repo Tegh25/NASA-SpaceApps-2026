@@ -19,7 +19,7 @@ function BackLink() {
     <Link
       to={{ pathname: '/', search }}
       aria-label="Back to find"
-      className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-[var(--rule-hi)] text-[var(--dim)] transition-colors hover:border-[var(--accent)] hover:text-[var(--ink)]"
+      className="glass-capsule grid h-9 w-9 shrink-0 place-items-center text-[var(--dim)] hover:text-[var(--ink)]"
     >
       <ArrowLeft size={18} aria-hidden />
     </Link>
@@ -29,7 +29,7 @@ function BackLink() {
 function Badge({ children, tone = 'accent' }: { children: string; tone?: 'accent' | 'mid' }) {
   const c = tone === 'mid' ? 'var(--mid)' : 'var(--accent)';
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-sm border px-2 py-0.5 text-xs" style={{ color: c, borderColor: `color-mix(in srgb, ${c} 50%, transparent)` }}>
+    <span className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs" style={{ color: c, borderColor: `color-mix(in srgb, ${c} 50%, transparent)`, background: `color-mix(in srgb, ${c} 14%, transparent)` }}>
       <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: c }} />
       {children}
     </span>
@@ -89,7 +89,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
 
   return (
     <div className="flex h-full min-h-0 flex-col" key={siteId}>
-      <header className="rise-in flex shrink-0 items-start gap-3 border-b border-[var(--rule)] px-4 pb-3 pt-4" style={idx(0)}>
+      <header className="rise-in flex shrink-0 items-start gap-3 border-b border-white/10 px-4 pb-3 pt-4" style={idx(0)}>
         <BackLink />
         <div className="min-w-0 flex-1">
           <h2 className="font-display text-[20px] leading-tight">{site.name}</h2>
@@ -112,7 +112,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
           {score !== null ? (
             <ScoreRing score={score} />
           ) : (
-            <div className="num grid h-[76px] w-[76px] place-items-center rounded-full border border-[var(--rule-hi)] text-sm text-[var(--faint)]">n/a</div>
+            <div className="num glass-capsule grid h-[76px] w-[76px] place-items-center text-sm text-[var(--faint)]">n/a</div>
           )}
           <div className="min-w-0">
             <p className="font-display text-base leading-tight">{cmp ? `vs ${cmp.label}` : 'No comparison yet'}</p>
@@ -161,7 +161,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
           <section className="rise-in" style={idx(6)} aria-labelledby="cav-h">
             <h3 id="cav-h" className="mb-2 font-display text-[15px]">Read before presenting</h3>
             {literature && (
-              <p className="mb-2 rounded-sm border border-[var(--mid)]/50 px-3 py-2 text-xs text-[var(--mid)]">
+              <p className="mb-2 rounded-[12px] border border-[var(--mid)]/50 bg-[var(--mid)]/10 px-3 py-2 text-xs text-[var(--mid)]">
                 Values from the literature, not computed from Earth observation data.
               </p>
             )}
@@ -182,14 +182,14 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
         </details>
       </div>
 
-      <footer className="no-print relative shrink-0 border-t border-[var(--rule)] bg-[var(--hull)] px-4 pb-4 pt-5">
-        <HandNote className="absolute -top-[30px] right-[92px]">{`walk it at ${heightM} m eye height`}</HandNote>
+      <footer className="no-print relative shrink-0 border-t border-white/10 bg-black/25 px-4 pb-4 pt-7">
+        <HandNote className="absolute top-1 right-[84px]">{`walk it at ${heightM} m eye height`}</HandNote>
         <div className="flex items-center justify-between gap-3">
           <div className="flex flex-col gap-2">
             {target && (
               <Link
                 to={`/compare/${site.id}/${target.id}`}
-                className="flex items-center gap-2 rounded-sm border border-[var(--rule-hi)] px-3 py-1.5 text-[13px] text-[var(--dim)] transition-colors hover:border-[var(--accent)] hover:text-[var(--ink)]"
+                className="glass-capsule flex items-center gap-2 px-3.5 py-1.5 text-[13px] text-[var(--ink)]/85 hover:text-[var(--ink)]"
               >
                 <Columns2 size={14} aria-hidden /> Compare
               </Link>
@@ -197,7 +197,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
             {target && (
               <Link
                 to={`/target/${target.id}`}
-                className="flex items-center gap-2 rounded-sm border border-[var(--rule-hi)] px-3 py-1.5 text-[13px] text-[var(--dim)] transition-colors hover:border-[var(--accent)] hover:text-[var(--ink)]"
+                className="glass-capsule flex items-center gap-2 px-3.5 py-1.5 text-[13px] text-[var(--ink)]/85 hover:text-[var(--ink)]"
               >
                 <Orbit size={14} aria-hidden /> Target view
               </Link>
@@ -208,7 +208,7 @@ export function ExplorePanel({ siteId }: { siteId: string }) {
             aria-label={`Enter site: ${site.name}`}
             className="group flex flex-col items-center gap-1"
           >
-            <span className="glow-active grid h-16 w-16 place-items-center rounded-full bg-[var(--accent)] text-[var(--void)] transition-transform duration-200 group-hover:scale-105">
+            <span className="glass-drop grid h-16 w-16 place-items-center">
               <Footprints size={26} aria-hidden />
             </span>
             <span className="text-xs text-[var(--ink)]">Enter site</span>
