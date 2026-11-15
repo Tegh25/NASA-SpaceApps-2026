@@ -118,8 +118,24 @@ export function decodeHeightmap(path: string, hm: Heightmap): Float32Array {
   return elev;
 }
 
-export async function loadHeightmap(path: string): Promise<{ hm: Heightmap; elev: Float32Array; isMock: boolean }> {
-  const json = (await fetchJson(path)) as { provenance?: Provenance };
-  const hm = validate(path, HeightmapSchema, json);
-  return { hm, elev: decodeHeightmap(path, hm), isMock: !!json.provenance?.mock };
+export type LoadedHeightmap = { hm: Heightmap; elev: Float32Array; isMock: boolean };
+
+/**
+ * Decoded heightmaps by path. Prefetching on site select fills this, so the Lab and Side by side
+ * open without a download. Callers treat the arrays as read-only. Failures are not kept.
+ */
+const heightmapCache = new Map<string, Promise<LoadedHeightmap>>();
+
+export function loadHeightmap(path: string): Promise<LoadedHeightmap> {
+  let p = heightmapCache.get(path);
+  if (!p) {
+    p = (async () => {
+      const json = (await fetchJson(path)) as { provenance?: Provenance };
+      const hm = validate(path, HeightmapSchema, json);
+      return { hm, elev: decodeHeightmap(path, hm), isMock: !!json.provenance?.mock };
+    })();
+    p.catch(() => heightmapCache.delete(path));
+    heightmapCache.set(path, p);
+  }
+  return p;
 }

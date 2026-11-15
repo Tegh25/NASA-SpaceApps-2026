@@ -12,6 +12,7 @@ type LoadState =
   | { status: 'done'; earth: Loaded | null; moon: Loaded | null; earthErr?: string; moonErr?: string };
 
 const SAND = '#D9B882';
+const SCAN_DELAY_MS = 1000;
 
 function load(path: string | undefined): Promise<Loaded> {
   if (!path) return Promise.reject(new Error('No heightmap path'));
@@ -98,6 +99,8 @@ export default function LabPage() {
 
   const hostRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<LabScene | null>(null);
+  // The intro scan starts 1 s after the page opens (sooner never; later only if the grids load slowly).
+  const openedAt = useRef(performance.now());
   const [webglError, setWebglError] = useState(false);
 
   useEffect(() => {
@@ -113,6 +116,7 @@ export default function LabPage() {
         body,
         snowFrac: Number(featured?.values?.snow_frac ?? 0) || 0,
         reducedMotion: reduced,
+        scanAt: openedAt.current + SCAN_DELAY_MS,
         onInteract: () => setAutoOrbit(false),
         onT: (v) => setT(v),
       });

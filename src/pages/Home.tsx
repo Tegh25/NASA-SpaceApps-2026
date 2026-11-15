@@ -2,6 +2,7 @@ import { SlidersHorizontal, X, BookOpen } from 'lucide-react';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { activeBody, useCards } from '../lib/cards';
+import { prefetchSite } from '../lib/prefetch';
 import { useUrlSync } from '../lib/urlState';
 import { useApp } from '../state/store';
 import { Glass } from '../ui/kit/Glass';
@@ -59,6 +60,13 @@ export function Home() {
   useEffect(() => {
     select(id ?? null);
   }, [id, select, status]);
+
+  // Picking a site warms the Walk, Side by side and Lab views for it.
+  const data = useApp((s) => s.data);
+  useEffect(() => {
+    if (!data || !id) return;
+    return prefetchSite(data, id);
+  }, [data, id]);
 
   // Default body is the Moon unless the URL asked for something else.
   useEffect(() => {

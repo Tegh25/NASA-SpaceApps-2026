@@ -36,8 +36,10 @@ export default function ComparePage() {
     if (!site) return;
     whenViewer().then((v) => {
       v.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(site.lon, site.lat - 0.12, 9000),
-        orientation: { heading: 0, pitch: Cesium.Math.toRadians(-32), roll: 0 },
+        // A steeper look (was 9 km at -32 deg) keeps the horizon out of view, so Cesium loads a
+        // fraction of the tiles and the half-screen globe fills in within a few seconds.
+        destination: Cesium.Cartesian3.fromDegrees(site.lon, site.lat - 0.1, 16000),
+        orientation: { heading: 0, pitch: Cesium.Math.toRadians(-55), roll: 0 },
         duration: 1.2,
       });
     });

@@ -200,6 +200,8 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
     if (scene.moon) scene.moon.show = true;
     scene.requestRenderMode = false;
     scene.screenSpaceCameraController.minimumZoomDistance = 50;
+    // Keep tiles from the site fly-in around for Side by side, Walk and the trip back (default 100).
+    globe.tileCacheSize = 1000;
 
     // Subtle graticule, only visible far out.
     const grid = scene.primitives.add(buildGraticule()) as Cesium.PolylineCollection;
@@ -224,22 +226,26 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
   return creating;
 }
 
-let photoreal: Cesium.Cesium3DTileset | null = null;
-let photorealFailed = false;
+let photoreal: Promise<Cesium.Cesium3DTileset | null> | null = null;
 
-/** Google Photorealistic 3D Tiles via Cesium ion. Returns null when unavailable. */
-export async function getPhotorealTileset(v: Cesium.Viewer): Promise<Cesium.Cesium3DTileset | null> {
-  if (!HAS_ION || photorealFailed) return null;
-  if (photoreal) return photoreal;
-  try {
-    const ts = await Cesium.createGooglePhotorealistic3DTileset();
-    ts.show = false;
-    v.scene.primitives.add(ts);
-    photoreal = ts;
-    return ts;
-  } catch (e) {
-    console.warn('[Terralog] Photorealistic 3D Tiles unavailable, falling back to terrain.', e);
-    photorealFailed = true;
-    return null;
-  }
+/**
+ * Google Photorealistic 3D Tiles via Cesium ion. Returns null when unavailable. The request itself is
+ * cached, so the site prefetch and the tour share one tileset even when their calls overlap.
+ */
+export function getPhotorealTileset(v: Cesium.Viewer): Promise<Cesium.Cesium3DTileset | null> {
+  if (!HAS_ION) return Promise.resolve(null);
+  photoreal ??= (async () => {
+    try {
+      const ts = await Cesium.createGooglePhotorealistic3DTileset();
+      ts.show = false;
+      v.scene.primitives.add(ts);
+      return ts;
+    } catch (e) {
+      console.warn('[Terralog] Photorealistic 3D Tiles unavailable, falling back to terrain.', e);
+      // Allow a later tour to try again (the failure may be a dropped connection).
+      setTimeout(() => (photoreal = null), 0);
+      return null;
+    }
+  })();
+  return photoreal;
 }

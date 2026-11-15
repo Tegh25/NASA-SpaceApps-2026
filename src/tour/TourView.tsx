@@ -2,6 +2,7 @@ import { ArrowLeft, ChevronDown, ChevronUp, HelpCircle, MapPinned, Moon, Orbit, 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPhotorealTileset, HAS_ION, whenViewer } from '../globe/viewer';
+import { cachedGround, warmTour } from '../globe/warm';
 import { formatLatLon } from '../lib/geo';
 import { siteLookupState, useSiteAnalysis } from '../lib/useSite';
 import { useApp, type Fidelity, type TargetViewProfile } from '../state/store';
@@ -48,20 +49,23 @@ export function TourView() {
     (async () => {
       const v = await whenViewer();
       if (cancelled) return;
-      tileset = await getPhotorealTileset(v);
-      if (cancelled) return;
-      if (tileset) {
-        tileset.show = true;
+      // Fly in straight away. The photoreal tiles and the ground sample load alongside the flight
+      // (both are usually warm already from the site prefetch) instead of in front of it.
+      if (cachedGround(siteKey) === undefined) void warmTour(siteKey, spawn);
+      setFidelity(HAS_ION ? 'terrain' : 'low');
+      tvRef.current = new TargetViewController(v);
+      controller = new TourController(v, { spawn, tileset: null, onPointerLock: setLocked, groundHint: cachedGround(siteKey) });
+      setCtl(controller);
+      void getPhotorealTileset(v).then((ts) => {
+        if (cancelled || !ts || !controller) return;
+        tileset = ts;
+        ts.show = true;
         // Keep terrain + satellite underneath: photoreal coverage is sparse in remote
         // places like the Tibetan plateau, and hiding the globe left black holes.
         v.scene.globe.show = true;
         setFidelity('photoreal');
-      } else {
-        setFidelity(HAS_ION ? 'terrain' : 'low');
-      }
-      tvRef.current = new TargetViewController(v);
-      controller = new TourController(v, { spawn, tileset, onPointerLock: setLocked });
-      setCtl(controller);
+        controller.setTileset(ts);
+      });
       await controller.start();
       if (cancelled) controller.stop();
     })();
