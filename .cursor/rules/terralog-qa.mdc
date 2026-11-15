@@ -1,0 +1,19 @@
+---
+description: Terralog architecture, data-safety, and QA guardrails for all Cursor agents.
+alwaysApply: true
+---
+# Terralog project guardrails
+
+- This repository combines a Python research/discovery pipeline (`discovery/`), generated app data (`public/data/`), and a Vite + React + TypeScript application using Zustand, Cesium, Three.js, Zod, and Vercel API functions.
+- Before changing code, read `AGENT_HANDOFF.md` and the relevant source/tests. For data work also read `data/README.md`, `discovery/HANDOFF.md`, and `discovery/mars/MARS_FINDINGS.md`.
+- The primary PR under QA is PR #2: head branch `integration`, base branch `main`. Do not silently switch to `main` or rewrite the PR branch.
+- Existing baseline commands are `npm run typecheck`, `npm test`, and `npm run build`. Run the narrowest relevant test first, then all three before declaring a fix verified.
+- `npm run mock-data` overwrites the real `public/data/` pack. Never run it unless the owner explicitly requests it and the data is backed up.
+- `scripts/build_real_data.py` runs before `scripts/build_twin_terrain.py`; the first wipes heightmap JSON and regenerates featured cards, while the second restores the twin data. Never run either as an incidental QA step.
+- Do not run full discovery pipelines, remote downloads, or destructive data-generation scripts for routine bug triage. Prefer static inspection and small synthetic fixtures.
+- `BACKBOARD_API_KEY` is server-only. Never copy secret values into code, prompts, logs, tests, screenshots, or reports. Test missing-key/fallback paths with mocked providers.
+- `CESIUM_ION_TOKEN` is optional; the no-token NASA GIBS fallback is a required supported path. Do not make tests require external API credentials.
+- Keep API tests deterministic: mock `fetch`, clocks, and provider responses. Do not call live NASA, Backboard, Cesium, or data-hosting services in unit tests.
+- Reviewers/auditors report findings; one coordinating agent owns source edits. Do not have multiple agents edit the same files concurrently.
+- Every bug fix should include a regression test where practical. Report commands actually executed and their exact outcomes; never claim a browser or performance check passed when it was not run.
+- For scientific comparisons, preserve the documented resolution/provenance limitations. A UI score is not proof of scientific equivalence.
