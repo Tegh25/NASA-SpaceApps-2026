@@ -52,7 +52,9 @@ export async function explainSite(input: ExplainInput): Promise<ExplainResult> {
     const json = (await res.json()) as { text?: unknown; mode?: unknown };
     if (typeof json.text !== 'string' || !json.text.trim()) return curated;
     const result: ExplainResult = json.mode === 'llm' ? { text: json.text.trim(), mode: 'llm' } : { text: json.text, mode: 'curated' };
-    cache.set(key, result);
+    // Only cache real LLM text. A curated reply means the server fell back (rate limit, timeout, no key),
+    // and caching it would pin the fallback for the whole session even after the server recovers.
+    if (result.mode === 'llm') cache.set(key, result);
     return result;
   } catch {
     return curated;
