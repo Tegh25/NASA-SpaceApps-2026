@@ -1,18 +1,19 @@
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { GlobeView } from './globe/GlobeView';
 import { useGlobeHealth } from './globe/health';
-import { hasWebGL2 } from './globe/viewer';
+import { hasWebGL2 } from './lib/webgl';
 import { Home } from './pages/Home';
-import { Method } from './pages/Method';
 import { useApp } from './state/store';
-import { TourView } from './tour/TourView';
 import { ErrorBoundary } from './ui/kit/ErrorBoundary';
 import { GlassFilters } from './ui/kit/GlassFilters';
 import { CardSkeletons } from './ui/left/CardList';
 import { Logo } from './ui/left/Logo';
 
+// Cesium (~1 MB gzipped) and three.js load in their own chunks so the rails paint first.
+const GlobeView = lazy(() => import('./globe/GlobeView').then((m) => ({ default: m.GlobeView })));
+const TourView = lazy(() => import('./tour/TourView').then((m) => ({ default: m.TourView })));
+const Method = lazy(() => import('./pages/Method').then((m) => ({ default: m.Method })));
 const TargetPage = lazy(() => import('./target/TargetPage'));
 const ComparePage = lazy(() => import('./target/ComparePage'));
 const LabPage = lazy(() => import('./lab/LabPage'));
@@ -123,7 +124,9 @@ export default function App() {
           isCompare ? 'left-0 right-1/2 hidden md:block' : 'left-0 right-0'
         }`}
       >
-        <GlobeView hidden={!isGlobeRoute} interactive={interactive} />
+        <Suspense fallback={null}>
+          <GlobeView hidden={!isGlobeRoute} interactive={interactive} />
+        </Suspense>
       </div>
       {status === 'loading' && interactive && <BootSkeleton />}
       <GlobeFailureNotice />
@@ -156,7 +159,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/site/:id" element={<Home />} />
-          <Route path="/tour/:id" element={<TourView />} />
+          <Route
+            path="/tour/:id"
+            element={
+              <Suspense fallback={<Loading label="Loading ground view..." />}>
+                <TourView />
+              </Suspense>
+            }
+          />
           <Route
             path="/target/:id"
             element={
@@ -181,7 +191,14 @@ export default function App() {
               </Suspense>
             }
           />
-          <Route path="/method" element={<Method />} />
+          <Route
+            path="/method"
+            element={
+              <Suspense fallback={<Loading label="Loading method..." />}>
+                <Method />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<Home />} />
         </Routes>
       </ErrorBoundary>

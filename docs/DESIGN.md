@@ -1,6 +1,6 @@
 # Terralog redesign: "Survey Console"
 
-The brief (REDESIGN_PROMPT.md) asks for futuristic mission control. Our twist, so it is not another dark SaaS dashboard: the app is an **instrument with a hand-annotated layer**. Precise hairline consoles, mono numbers and a living globe, and on top of that a "grease-pencil" layer in a warm chalk-yellow handwritten face (Caveat) that circles the selected site, scribbles the gap ("still 130 K too warm"), and arrows to the Enter button. It is our teammate's hand sketch, made real. Use the pencil layer sparingly: one or two notes per screen, never for core data.
+The brief (REDESIGN_PROMPT.md) asks for futuristic mission control. The app is a quiet **instrument**: hairline consoles, mono numbers and a living globe. The earlier hand-drawn "grease-pencil" layer (Caveat notes, pencil loops) was removed in the 2026-11-15 polish pass because it read as cartoonish; status is carried by section headers, badges and plain labels instead. Every claim in the Explore panel names the dataset it came from (`src/lib/provenance.ts`).
 
 ## Tokens (defined in `src/index.css`, use the CSS variables)
 
@@ -14,10 +14,9 @@ The brief (REDESIGN_PROMPT.md) asks for futuristic mission control. Our twist, s
 | `--moon` | #9EE7F2 | Moon accent (silver-cyan) |
 | `--mars` | #FF7A3D | Mars accent (ember) |
 | `--accent` | follows `data-body="moon|mars"` on any ancestor | rings, pins, slider fill, focus, active glow |
-| `--pencil` | #F3E3A2 | hand annotations only (`.hand`) |
 | `--good` / `--mid` / `--bad` | #4FE0B0 / #F2C14E / #FF5D73 | match, partial, gap |
 
-Type: `font-display` (Space Grotesk) for headings and logo; Inter body; `.num` (JetBrains Mono, tabular, slashed zero) for **every** number and coordinate; `.hand` (Caveat) for annotations. Sentence case everywhere. No ALL-CAPS eyebrow labels, no "→" on buttons, no middle-dot meta strings.
+Type: `font-display` (Space Grotesk) for headings and logo; Inter body; `.num` (JetBrains Mono, tabular, slashed zero) for **every** number and coordinate. Sentence case everywhere. No ALL-CAPS eyebrow labels, no "→" on buttons, no middle-dot meta strings.
 
 Utility classes: `.console` (solid panel with two accent corner brackets), `.notch` (cut top-right corner, use on the right panel and hero only), `.panel` (glass, only where it floats over the globe), `.texture`, `.grid-paper`, `.glow-active`, `.rise-in` (set `style={{'--i': n}}` for stagger), `.draw` (SVG stroke draw-on, set `--len`), `input.metric` (themed range; set `style={{'--fill': '40%'}}`).
 
@@ -52,7 +51,7 @@ Refraction: `<Glass>` measures itself (ResizeObserver, debounced), paints a roun
 
 Sheen: `GlassFilters` (mounted once in App) sets `--mx/--my` and `data-hot` on `[data-sheen]` elements under the pointer, rAF-throttled; disabled for touch (`hover: none`) and reduced motion.
 
-Fallbacks: `prefers-reduced-transparency` swaps every glass class to the solid hull; `prefers-reduced-motion` removes the sheen and blob stretch. Pencil (Caveat) notes sit on top of glass unchanged.
+Fallbacks: `prefers-reduced-transparency` swaps every glass class to the solid hull; `prefers-reduced-motion` removes the sheen and blob stretch.
 
 ## File ownership during the build (parallel agents; do not edit others' files)
 - Data: `scripts/build_real_data.py`, `public/data/*`, `public/img/*`, `src/data/realData.test.ts`, `data/README.md`.

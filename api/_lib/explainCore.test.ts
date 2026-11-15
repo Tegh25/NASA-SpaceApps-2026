@@ -43,10 +43,19 @@ describe('handleExplain', () => {
     expect(r.body).toMatchObject({ text: valid.curated, mode: 'curated' });
   });
 
-  it('rate limits at 10 requests per minute per IP', async () => {
-    const env = { apiKey: undefined };
+  it('rate limits LLM calls at 10 requests per minute per IP', async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ content: 'ok' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const env = { apiKey: 'test-key' };
     for (let i = 0; i < 10; i++) await handleExplain(valid, 'explain-rl', env);
     const r = await handleExplain(valid, 'explain-rl', env);
     expect(r.body).toMatchObject({ mode: 'curated', reason: 'rate_limited' });
+    expect(fetchMock).toHaveBeenCalledTimes(10);
+  });
+
+  it('never counts toward the limit when no key is set (curated text is free)', async () => {
+    for (let i = 0; i < 15; i++) await handleExplain(valid, 'explain-nokey-rl', { apiKey: undefined });
+    const r = await handleExplain(valid, 'explain-nokey-rl', { apiKey: undefined });
+    expect(r.body).toMatchObject({ mode: 'curated', reason: 'not_configured' });
   });
 });

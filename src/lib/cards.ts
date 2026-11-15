@@ -22,6 +22,8 @@ export interface CardModel {
   thumb: string | null;
   status?: string;
   valueSource?: 'computed' | 'literature';
+  /** Has Earth/target heightmaps for the Twin terrain lab. */
+  hasTwin?: boolean;
 }
 
 export type ActiveBody = 'moon' | 'mars';
@@ -95,6 +97,7 @@ function toCard(f: FeaturedSite, body: ActiveBody, score: number | null): CardMo
     thumb: f.images?.eo ?? f.images?.twin ?? f.images?.target ?? null,
     status: f.status,
     valueSource: f.valueSource,
+    hasTwin: !!f.twin,
   };
 }
 

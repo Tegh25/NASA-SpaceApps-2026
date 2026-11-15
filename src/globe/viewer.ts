@@ -15,13 +15,7 @@ const ready = new Promise<Cesium.Viewer>((r) => (resolveReady = r));
 /** Resolves once the shared viewer exists (it is created by GlobeView). */
 export const whenViewer = () => ready;
 
-export function hasWebGL2(): boolean {
-  try {
-    return !!document.createElement('canvas').getContext('webgl2');
-  } catch {
-    return false;
-  }
-}
+export { hasWebGL2 } from '../lib/webgl';
 
 export const getViewer = () => viewer;
 
@@ -40,7 +34,36 @@ function gibsProvider(path: string, ext: string, maxLevel: number, credit: strin
   });
 }
 
-/** NASA GIBS Blue Marble (no key needed). Used as the base layer in every configuration. */
+/**
+ * Cesium's bundled Natural Earth II tiles, served from our own origin. Instant, cacheable and never
+ * rate limited, so the globe always has a surface even if a remote tile server throttles us.
+ */
+const localBaseProvider = () => Cesium.TileMapServiceImageryProvider.fromUrl(Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII'));
+
+/**
+ * Remote tile servers (NASA GIBS, ion) can answer 429 or 5xx when a page is reloaded many times.
+ * After a handful of failed tiles the layer hides itself instead of retrying forever.
+ */
+const failedLayers = new WeakSet<Cesium.ImageryLayer>();
+const layerFailed = (l: Cesium.ImageryLayer) => failedLayers.has(l);
+
+function guard(layer: Cesium.ImageryLayer, name: string, maxErrors = 6): Cesium.ImageryLayer {
+  let errors = 0;
+  const hook = (p: Cesium.ImageryProvider) =>
+    p.errorEvent.addEventListener((err: Cesium.TileProviderError) => {
+      err.retry = false;
+      if (++errors === maxErrors) {
+        failedLayers.add(layer);
+        layer.show = false;
+        console.warn(`[Terralog] ${name} tiles are failing (rate limited or offline); hiding that layer.`);
+      }
+    });
+  if (layer.ready) hook(layer.imageryProvider);
+  else layer.readyEvent.addEventListener((p) => hook(p));
+  return layer;
+}
+
+/** NASA GIBS Blue Marble (no key needed). Drawn over the local base when there is no ion token. */
 export const blueMarbleProvider = () =>
   gibsProvider('BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8', 'jpeg', 8, 'Imagery: NASA EOSDIS GIBS / Blue Marble');
 /** MODIS true colour, fixed date; sharper than Blue Marble when zoomed in (keyless only). */
@@ -92,12 +115,14 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
   if (viewer) return viewer;
   if (creating) return creating;
   creating = (async () => {
-    // Fast keyless first layer in every configuration.
-    const baseLayer = new Cesium.ImageryLayer(blueMarbleProvider(), {});
+    // Local first layer in every configuration: paints immediately, never throttled.
+    const baseLayer = Cesium.ImageryLayer.fromProviderAsync(localBaseProvider(), {});
     let terrain: Cesium.Terrain | undefined;
     if (HAS_ION) {
       Cesium.Ion.defaultAccessToken = ION_TOKEN;
       terrain = Cesium.Terrain.fromWorldTerrain();
+      // ion can throttle repeated reloads; the globe then stays on the smooth ellipsoid.
+      terrain.errorEvent.addEventListener((e) => console.warn('[Terralog] World Terrain unavailable, using a smooth globe.', e));
     } else {
       console.warn('[Terralog] CESIUM_ION_TOKEN is not set. Using NASA GIBS imagery and no terrain.');
     }
@@ -128,19 +153,22 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
     let worldLayer: Cesium.ImageryLayer | null = null;
     let modisLayer: Cesium.ImageryLayer | null = null;
     if (HAS_ION) {
-      worldLayer = Cesium.ImageryLayer.fromWorldImagery({});
+      worldLayer = guard(Cesium.ImageryLayer.fromWorldImagery({}), 'Cesium ion imagery');
       v.imageryLayers.add(worldLayer);
     } else {
-      modisLayer = new Cesium.ImageryLayer(modisProvider(), { alpha: 1 });
+      const blueMarble = guard(new Cesium.ImageryLayer(blueMarbleProvider(), {}), 'NASA GIBS Blue Marble');
+      blueMarble.brightness = 1.15;
+      blueMarble.saturation = 1.1;
+      v.imageryLayers.add(blueMarble);
+      modisLayer = guard(new Cesium.ImageryLayer(modisProvider(), { alpha: 1 }), 'NASA GIBS MODIS');
       modisLayer.show = false;
       v.imageryLayers.add(modisLayer);
     }
-    const night = new Cesium.ImageryLayer(blackMarbleProvider(), {});
+    const night = guard(new Cesium.ImageryLayer(blackMarbleProvider(), {}), 'NASA GIBS Black Marble');
     // Lighting is off, so blend the city lights over the day imagery as a subtle glow.
     night.alpha = 0.35;
     v.imageryLayers.add(night);
-    baseLayer.brightness = 1.15;
-    baseLayer.saturation = 1.1;
+    baseLayer.brightness = 1.1;
     if (worldLayer) worldLayer.nightAlpha = 0.5;
 
     // Lighting and atmosphere.
@@ -178,9 +206,9 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
     const syncByHeight = () => {
       const h = v.camera.positionCartographic.height;
       grid.show = h > 2.5e6;
-      if (modisLayer) modisLayer.show = h < 4e6;
+      if (modisLayer && !layerFailed(modisLayer)) modisLayer.show = h < 4e6;
       night.alpha = h > 8e6 ? 0.35 : h > 3e6 ? (0.35 * (h - 3e6)) / 5e6 : 0;
-      night.show = night.alpha > 0.01;
+      if (!layerFailed(night)) night.show = night.alpha > 0.01;
     };
     v.camera.changed.addEventListener(syncByHeight);
     v.camera.percentageChanged = 0.01;

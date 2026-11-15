@@ -74,8 +74,8 @@ export async function handleExplain(input: unknown, ip: string, env: ExplainEnv)
   if (!parsed.success) return { status: 400, body: { error: 'Invalid explain request.' } };
   const curated = { text: parsed.data.curated, mode: 'curated' as const };
 
-  if (explainRateLimited(ip)) return { status: 200, body: { ...curated, reason: 'rate_limited' } };
   if (!env.apiKey) return { status: 200, body: { ...curated, reason: 'not_configured' } };
+  if (explainRateLimited(ip)) return { status: 200, body: { ...curated, reason: 'rate_limited' } };
 
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);

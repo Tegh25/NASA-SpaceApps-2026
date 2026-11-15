@@ -62,7 +62,7 @@ export function MetricSlider({ fd, value, tick, onChange, onClear }: Props) {
           <>
             <span
               aria-hidden
-              className="hand pointer-events-none absolute top-0 whitespace-nowrap text-[14px]"
+              className="num pointer-events-none absolute top-0 whitespace-nowrap text-[10.5px] leading-3 text-[var(--accent)]"
               style={{ left: tickLeft, transform: `translateX(${labelShift})` }}
             >
               {tick.label}

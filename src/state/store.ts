@@ -66,6 +66,7 @@ export function isSearchActive(q: ParsedQuery): boolean {
 let recomputeTimer: ReturnType<typeof setTimeout> | null = null;
 /** Bumped by every query-changing action. A pending text parse that no longer holds the latest value is dropped. */
 let querySeq = 0;
+let loadInFlight: Promise<void> | null = null;
 
 export const useApp = create<AppState>((set, get) => {
   const recompute = () => {
@@ -110,15 +111,22 @@ export const useApp = create<AppState>((set, get) => {
     fidelity: 'low',
 
     load: async () => {
+      // StrictMode and remounts call this twice; one fetch is enough.
+      if (get().status === 'ready' || loadInFlight) return loadInFlight ?? undefined;
       set({ status: 'loading', error: null });
-      try {
-        const data = await loadAppData();
-        set({ data, status: 'ready' });
-        recompute();
-      } catch (e) {
-        console.error(e);
-        set({ status: 'error', error: (e as Error).message });
-      }
+      loadInFlight = (async () => {
+        try {
+          const data = await loadAppData();
+          set({ data, status: 'ready' });
+          recompute();
+        } catch (e) {
+          console.error(e);
+          set({ status: 'error', error: (e as Error).message });
+        } finally {
+          loadInFlight = null;
+        }
+      })();
+      return loadInFlight;
     },
 
     search: async (text) => {

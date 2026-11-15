@@ -1,10 +1,6 @@
 import { SlidersHorizontal, X, BookOpen } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { BodyInset } from '../fx/BodyInset';
-import { HeatLegend } from '../fx/HeatLegend';
-import { Intro } from '../fx/Intro';
-import { GlobeHud } from '../globe/GlobeHud';
 import { activeBody, useCards } from '../lib/cards';
 import { useUrlSync } from '../lib/urlState';
 import { useApp } from '../state/store';
@@ -13,13 +9,14 @@ import { RightPanel } from '../ui/right/RightPanel';
 import { BodyToggle } from '../ui/left/BodyToggle';
 import { BottomSheet } from '../ui/left/BottomSheet';
 import { CardSkeletons } from '../ui/left/CardList';
-import { GlobeNotes } from '../ui/left/GlobeNotes';
 import { LeftRail } from '../ui/left/LeftRail';
 import { LocationCard } from '../ui/left/LocationCard';
 import { Logo } from '../ui/left/Logo';
 import { useBreakpoint } from '../ui/left/useBreakpoint';
 
 export { Logo };
+
+const GlobeOverlays = lazy(() => import('../globe/GlobeOverlays'));
 
 function MobileCarousel({ selectedId }: { selectedId: string | null }) {
   const status = useApp((s) => s.status);
@@ -84,13 +81,11 @@ export function Home() {
         </div>
       )}
 
-      {/* Middle column: the globe shows through; HUD and pencil notes sit on top. */}
+      {/* Middle column: the globe shows through; the HUD sits on top. */}
       <div className="pointer-events-none absolute inset-y-0 left-0 right-0 md:left-[344px] xl:right-[424px]">
-        <GlobeHud />
-        <GlobeNotes selectedId={selectedId} />
-        <Intro />
-        {bp === 'desktop' && <BodyInset />}
-        {bp === 'desktop' && !selectedId && <HeatLegend className="absolute bottom-[104px] left-4" />}
+        <Suspense fallback={null}>
+          <GlobeOverlays desktop={bp === 'desktop'} selectedId={selectedId} />
+        </Suspense>
         {bp === 'tablet' && !selectedId && !findOpen && (
           <button
             type="button"
