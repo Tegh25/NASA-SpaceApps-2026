@@ -1,0 +1,37 @@
+id,name,lat,lon,kind
+neg_amazon,Amazon forest,-3.50,-62.00,negative
+neg_congo,Congo forest,0.50,20.00,negative
+neg_borneo,Borneo forest,0.50,114.50,negative
+neg_paris,Paris,48.86,2.35,negative
+neg_toronto,Toronto,43.70,-79.40,negative
+neg_iowa,Iowa farmland,42.00,-93.50,negative
+neg_nl,Netherlands farmland,52.30,5.50,negative
+neg_ganges,Ganges plain,26.50,82.00,negative
+neg_ukraine,Ukraine farmland,49.50,32.00,negative
+neg_olympic,Olympic Peninsula forest,47.80,-123.60,negative
+haughton,Haughton crater Devon Is.,75.38,-89.67,known
+yungay,Yungay Atacama,-24.08,-69.95,known
+wright_valley,Wright Valley Dry Valleys,-77.52,161.85,known
+rio_tinto,Rio Tinto,37.72,-6.56,known
+bockfjorden,Bockfjorden Svalbard,79.43,13.33,known
+lost_hammer,Lost Hammer Axel Heiberg,79.08,-90.21,known
+pilbara,Dresser Fm Pilbara,-21.15,119.43,known
+dallol,Dallol Danakil,14.24,40.30,known
+lonar,Lonar crater,19.98,76.51,known
+lambahraun,Lambahraun Iceland,64.43,-20.55,known
+dumont,Dumont Dunes,35.68,-116.22,known
+mdrs,MDRS Hanksville,38.41,-110.79,known
+ramon,Makhtesh Ramon,30.60,34.80,known
+lava_beds,Lava Beds NM,41.71,-121.51,known
+mistastin,Mistastin crater,55.88,-63.31,known
+sudbury,Sudbury,46.60,-81.18,known
+ries,Noerdlinger Ries,48.88,10.57,known
+lanzarote,La Corona Lanzarote,29.17,-13.45,known
+black_point,Black Point lava flow,35.69,-111.44,known
+cinder_lake,Cinder Lake crater field,35.29,-111.48,known
+meteor,Meteor Crater,35.03,-111.02,known
+mauna_kea,Mauna Kea PISCES,19.82,-155.47,known
+craters_moon,Craters of the Moon,43.42,-113.52,known
+hiseas,HI-SEAS Mauna Loa,19.60,-155.51,known
+dome_c,Concordia Dome C,-75.10,123.33,known
+salda,Lake Salda,37.55,29.68,known
