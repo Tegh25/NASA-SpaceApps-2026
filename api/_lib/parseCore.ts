@@ -19,7 +19,7 @@ interface FeatureLite {
 export interface ParseEnv {
   apiKey?: string;
   model?: string;
-  fetchFeatures: () => Promise<FeatureLite[]>;
+  fetchFeatures: (signal?: AbortSignal) => Promise<FeatureLite[]>;
 }
 
 export interface ParseResult {
@@ -124,7 +124,7 @@ export async function handleParse(input: unknown, ip: string, env: ParseEnv): Pr
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const features = await env.fetchFeatures();
+    const features = await env.fetchFeatures(ctrl.signal);
     const model = env.model || DEFAULT_MODEL;
     const res = await fetch(BACKBOARD_URL, {
       method: 'POST',
@@ -155,14 +155,35 @@ export async function handleParse(input: unknown, ip: string, env: ParseEnv): Pr
   }
 }
 
-let featureCache: { at: number; list: FeatureLite[] } | null = null;
+const FEATURE_TTL_MS = 300_000;
+// Keyed by origin so a preview, production and localhost in one warm process never share a list.
+const featureCache = new Map<string, { at: number; list: FeatureLite[] }>();
+
+/** Clears the feature cache. Exported for tests. */
+export function resetFeatureCache() {
+  featureCache.clear();
+}
+
+/**
+ * Builds a safe self-origin from request headers, or null if they look wrong. The Host header is client
+ * controlled, so accept only a plain host[:port] and an http/https scheme. Anything else would let a
+ * request make the server fetch an arbitrary URL.
+ */
+export function resolveOrigin(host: string | undefined, proto: string | undefined): string | null {
+  if (!host || !/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?(:\d{1,5})?$/i.test(host)) return null;
+  const scheme = (proto ?? 'https').split(',')[0].trim().toLowerCase();
+  if (scheme !== 'http' && scheme !== 'https') return null;
+  return `${scheme}://${host}`;
+}
+
 export function featureFetcher(origin: string) {
-  return async () => {
-    if (featureCache && Date.now() - featureCache.at < 300_000) return featureCache.list;
-    const res = await fetch(`${origin}/data/features.json`);
+  return async (signal?: AbortSignal) => {
+    const hit = featureCache.get(origin);
+    if (hit && Date.now() - hit.at < FEATURE_TTL_MS) return hit.list;
+    const res = await fetch(`${origin}/data/features.json`, { signal });
     if (!res.ok) throw new Error('features.json unavailable');
     const json = (await res.json()) as { features: FeatureLite[] };
-    featureCache = { at: Date.now(), list: json.features };
+    featureCache.set(origin, { at: Date.now(), list: json.features });
     return json.features;
   };
 }

@@ -31,8 +31,9 @@ function devApi(env: Record<string, string>): Plugin {
       server.middlewares.use('/api/parse', async (req: IncomingMessage, res: ServerResponse) => {
         if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
         const body = await readBody(req);
-        const { handleParse, featureFetcher } = await server.ssrLoadModule('/api/_lib/parseCore.ts');
-        const origin = `http://${req.headers.host}`;
+        const { handleParse, featureFetcher, resolveOrigin } = await server.ssrLoadModule('/api/_lib/parseCore.ts');
+        const origin = resolveOrigin(req.headers.host, 'http');
+        if (!origin) return send(res, 400, { error: 'Invalid host header.' });
         const result = await handleParse(body, req.socket.remoteAddress ?? 'local', {
           apiKey: env.BACKBOARD_API_KEY,
           model: env.LLM_NAME,
