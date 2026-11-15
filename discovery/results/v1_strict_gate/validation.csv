@@ -1,0 +1,37 @@
+id,name,kind,lat,lon,best_moon,terrain_dist,pctile_vs_pool,slope_p50,rough_p50,relief_m,passes_relief_300,mat_C,precip_mm,bare,snow,trees_crops_built,gate_pass,group,would_surface
+neg_amazon,Amazon forest,negative,-3.5,-62.0,Mons Mouton Plateau,1.767,6.3,2.3,1.07,21,False,26.6,2719,0.0,0.0,1.0,False,negative,False
+neg_congo,Congo forest,negative,0.5,20.0,Mons Mouton Plateau,1.761,6.5,2.9,1.33,38,False,25.6,2011,0.0,0.0,1.0,False,negative,False
+neg_borneo,Borneo forest,negative,0.5,114.5,Nobile Rim 1,0.999,37.9,12.0,1.97,794,True,24.6,3907,0.0,0.0,1.0,False,negative,False
+neg_paris,Paris,negative,48.86,2.35,Mons Mouton Plateau,1.497,13.3,2.6,1.18,92,False,11.0,640,0.0,0.0,0.96,False,negative,False
+neg_toronto,Toronto,negative,43.7,-79.4,Mons Mouton Plateau,1.354,18.9,1.7,0.83,120,False,7.8,838,0.0,0.0,0.79,False,negative,False
+neg_iowa,Iowa farmland,negative,42.0,-93.5,Mons Mouton Plateau,1.995,3.2,0.8,0.24,40,False,9.0,863,0.0,0.0,0.89,False,negative,False
+neg_nl,Netherlands farmland,negative,52.3,5.5,Mons Mouton Plateau,2.039,2.8,0.4,0.26,28,False,9.6,817,0.0,0.0,0.6,False,negative,False
+neg_ganges,Ganges plain,negative,26.5,82.0,Mons Mouton Plateau,2.044,2.8,1.0,0.6,9,False,25.3,1017,0.0,0.0,0.96,False,negative,False
+neg_ukraine,Ukraine farmland,negative,49.5,32.0,Mons Mouton Plateau,2.137,2.2,0.0,0.0,37,False,7.5,543,0.0,0.0,0.48,False,negative,False
+neg_olympic,Olympic Peninsula forest,negative,47.8,-123.6,Nobile Rim 1,1.898,4.6,28.5,3.07,1185,True,5.5,2705,0.13,0.05,0.68,False,negative,False
+haughton,Haughton crater Devon Is.,known,75.38,-89.67,Mons Mouton Plateau,1.014,36.9,4.6,0.82,189,False,-17.6,183,0.46,0.0,0.0,False,mars/ice,False
+yungay,Yungay Atacama,known,-24.08,-69.95,Mons Mouton Plateau,1.245,24.0,2.9,0.37,351,True,16.6,0,1.0,0.0,0.0,True,mars,False
+wright_valley,Wright Valley Dry Valleys,known,-77.52,161.85,Nobile Rim 2,0.442,92.6,13.4,0.7,1508,True,-23.5,87,,,,False,mars/ice,False
+rio_tinto,Rio Tinto,known,37.72,-6.56,Mons Mouton Plateau,1.211,25.8,9.1,1.79,293,False,16.1,591,0.04,0.0,0.41,False,mars,False
+bockfjorden,Bockfjorden Svalbard,known,79.43,13.33,Slater Plain,0.808,52.0,6.8,0.56,899,True,-9.0,522,0.33,0.37,0.0,False,mars,False
+lost_hammer,Lost Hammer Axel Heiberg,known,79.08,-90.21,Nobile Rim 1,0.567,78.1,16.0,1.42,1025,True,-20.1,141,0.52,0.11,0.0,False,mars/ice,False
+pilbara,Dresser Fm Pilbara,known,-21.15,119.43,Mons Mouton Plateau,1.449,15.3,4.4,1.49,109,False,27.2,325,0.0,0.0,0.01,False,mars,False
+dallol,Dallol Danakil,known,14.24,40.3,Mons Mouton Plateau,2.107,2.3,0.2,0.09,38,False,27.1,316,1.0,0.0,0.0,True,mars,False
+lonar,Lonar crater,known,19.98,76.51,Mons Mouton Plateau,1.724,7.0,1.4,0.32,100,False,26.3,848,0.0,0.0,0.87,False,mars,False
+lambahraun,Lambahraun Iceland,known,64.43,-20.55,Mons Mouton Plateau,1.071,33.3,3.3,0.51,483,True,1.0,1088,0.48,0.04,0.0,False,mars,False
+dumont,Dumont Dunes,known,35.68,-116.22,Mons Mouton Plateau,1.337,19.5,2.1,0.21,450,True,20.1,99,1.0,0.0,0.0,True,mars,False
+mdrs,MDRS Hanksville,known,38.41,-110.79,Mons Mouton Plateau,1.188,27.1,2.7,0.78,159,False,11.7,168,0.95,0.0,0.01,True,mars,False
+ramon,Makhtesh Ramon,known,30.6,34.8,Mons Mouton Plateau,1.061,33.9,5.0,1.3,366,True,18.3,139,0.99,0.0,0.01,True,mars,False
+lava_beds,Lava Beds NM,known,41.71,-121.51,Slater Plain,0.74,58.4,2.9,0.73,739,True,7.6,441,0.13,0.0,0.41,False,moon/mars,False
+mistastin,Mistastin crater,known,55.88,-63.31,Mons Mouton Plateau,1.518,12.6,1.6,0.43,156,False,-5.0,746,0.0,0.0,0.18,False,moon,False
+sudbury,Sudbury,known,46.6,-81.18,Mons Mouton Plateau,1.297,21.1,2.1,0.86,109,False,3.4,881,0.0,0.0,0.83,False,moon,False
+ries,Noerdlinger Ries,known,48.88,10.57,Mons Mouton Plateau,1.747,6.6,1.2,0.27,87,False,8.2,767,0.0,0.0,0.81,False,moon,False
+lanzarote,La Corona Lanzarote,known,29.17,-13.45,Mons Mouton Plateau,1.517,12.6,0.0,0.0,412,True,19.3,154,0.11,0.0,0.01,False,moon/mars,False
+black_point,Black Point lava flow,known,35.69,-111.44,Mons Mouton Plateau,1.523,12.5,1.2,0.22,332,True,13.4,207,0.64,0.0,0.0,True,moon,False
+cinder_lake,Cinder Lake crater field,known,35.29,-111.48,Mons Mouton Plateau,1.035,35.5,3.5,0.66,380,True,10.3,419,0.04,0.0,0.6,False,moon,False
+meteor,Meteor Crater,known,35.03,-111.02,Mons Mouton Plateau,1.69,7.6,1.0,0.13,227,False,12.3,334,0.24,0.0,0.01,False,moon,False
+mauna_kea,Mauna Kea PISCES,known,19.82,-155.47,Mons Mouton,0.135,100.0,12.3,0.99,1925,True,13.8,1476,0.45,0.0,0.02,False,moon,False
+craters_moon,Craters of the Moon,known,43.42,-113.52,Mons Mouton Plateau,1.279,22.1,1.5,0.46,342,True,5.8,346,0.59,0.0,0.02,False,moon,False
+hiseas,HI-SEAS Mauna Loa,known,19.6,-155.51,Slater Plain,0.582,75.9,5.2,0.54,1503,True,12.4,1137,0.9,0.0,0.02,True,ops,True
+dome_c,Concordia Dome C,known,-75.1,123.33,Mons Mouton Plateau,2.392,0.9,0.5,0.35,5,False,-36.6,45,,,,False,ops/ice,False
+salda,Lake Salda,known,37.55,29.68,Mons Mouton Plateau,0.692,62.7,7.8,0.99,513,True,11.1,549,0.02,0.0,0.46,False,mars-jezero,False
