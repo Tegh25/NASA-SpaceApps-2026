@@ -16,34 +16,41 @@ interface Rule {
 
 const DEFAULT_WEIGHT: Weight = 2;
 
-/** Phrase dictionary (product guide section 7.3). Phrases are matched longest first. */
+/**
+ * Phrase dictionary, keyed to the feature registry in docs/DESIGN.md. Phrases are matched longest first.
+ * Words with no matching feature (basalt, lava) only add a tag and are not reported as unknown.
+ */
 export const KEYWORD_RULES: Rule[] = [
-  { phrases: ['cold', 'freezing', 'frigid'], patch: { targets: { temp_min_k: 0.1 }, weights: { temp_min_k: 3 } } },
+  { phrases: ['cold', 'freezing', 'frigid'], patch: { targets: { temp_mean_k: 0.1 }, weights: { temp_mean_k: 3 } } },
   { phrases: ['hot', 'scorching'], patch: { targets: { temp_max_k: 0.9 }, weights: { temp_max_k: 2 } } },
-  { phrases: ['steep', 'cliff', 'rim', 'crater wall'], patch: { targets: { slope_deg: 0.8 }, weights: { slope_deg: 3 } } },
-  { phrases: ['flat', 'plain', 'plains', 'smooth'], patch: { targets: { slope_deg: 0.1, roughness_m: 0.1 } } },
-  { phrases: ['rocky', 'boulders'], patch: { targets: { rock_fraction: 0.8 } } },
+  { phrases: ['steep', 'cliff', 'cliffs', 'rim', 'crater wall'], patch: { targets: { slope_deg: 0.8 }, weights: { slope_deg: 3 } } },
+  {
+    phrases: ['flat', 'plain', 'plains', 'smooth'],
+    patch: { targets: { slope_deg: 0.1, roughness_m: 0.1, flat_frac: 0.9 } },
+  },
+  { phrases: ['rough', 'rugged', 'rocky', 'boulders', 'boulder'], patch: { targets: { roughness_m: 0.8 } } },
   {
     phrases: ['ice', 'frozen', 'permafrost', 'water'],
-    patch: { targets: { ice_signal: 0.8 }, weights: { ice_signal: 3 } },
+    patch: { targets: { ice_proxy: 0.8 }, weights: { ice_proxy: 3 } },
   },
   { phrases: ['dry', 'arid', 'desert'], patch: { targets: { precip_mm_yr: 0 }, weights: { precip_mm_yr: 3 } } },
   {
     phrases: ['no vegetation', 'barren', 'bare'],
     patch: { targets: { vegetation_ndvi: 0 }, weights: { vegetation_ndvi: 3 }, required: ['vegetation_ndvi'] },
   },
-  { phrases: ['volcanic', 'basalt', 'basaltic', 'lava'], patch: { targets: { basalt_fraction: 0.8 }, weights: { basalt_fraction: 2 } } },
-  { phrases: ['remote', 'isolated'], patch: { targets: { isolation_index: 0.9 } } },
-  { phrases: ['shadow', 'dark', 'polar night'], patch: { targets: { illum_fraction: 0.1 } } },
-  { phrases: ['sunlit', 'bright', 'sun-drenched'], patch: { targets: { illum_fraction: 0.9 } } },
+  { phrases: ['snow', 'snowy'], patch: { targets: { snow_frac: 0.8 } } },
+  { phrases: ['no snow'], patch: { targets: { snow_frac: 0 } } },
+  { phrases: ['shadow', 'shadowed', 'dark', 'polar night'], patch: { targets: { shadow_frac: 0.8 } } },
+  { phrases: ['sunlit', 'bright', 'sun-drenched'], patch: { targets: { shadow_frac: 0.05 } } },
+  { phrases: ['crater', 'cratered'], patch: { targets: { crater_density: 0.8 }, weights: { crater_density: 2 } } },
   {
-    phrases: ['lava tube', 'cave'],
-    patch: { targets: { basalt_fraction: 0.8 }, weights: { basalt_fraction: 2 }, tags: ['lava_tube'] },
+    phrases: ['mountain', 'mountains', 'highland', 'highlands', 'high relief'],
+    patch: { targets: { relief_m: 0.8 } },
   },
+  { phrases: ['basalt', 'basaltic', 'volcanic', 'lava'], patch: { tags: ['basalt'] } },
+  { phrases: ['lava tube', 'cave'], patch: { tags: ['lava_tube'] } },
   { phrases: ['moon', 'lunar'], patch: { body: 'moon' } },
   { phrases: ['mars', 'martian'], patch: { body: 'mars' } },
-  { phrases: ['crater'], patch: { targets: { slope_deg: 0.6 }, weights: { slope_deg: 2 } } },
-  { phrases: ['mountain', 'high altitude', 'highland', 'highlands'], patch: { targets: { elevation_m: 0.75 } } },
 ];
 
 const STOPWORDS = new Set(

@@ -1,203 +1,442 @@
 {
-  "targets": [
-    {
-      "id": "moon-shackleton-rim",
-      "body": "moon",
-      "name": "Shackleton Crater rim",
-      "lat": -89.9,
-      "lon": 129,
-      "summary": "Ridge at the lunar south pole next to permanently shadowed terrain.",
-      "whyItMatters": "Parts of the rim see sunlight for most of the year, which helps solar power and thermal stability. The crater floor next to it stays in permanent shadow and may hold water ice. That pairing of light and possible ice is why it is a leading Artemis candidate.",
-      "values": {
-        "elevation_m": 1900,
-        "slope_deg": 12,
-        "roughness_m": 8,
-        "rock_fraction": 0.15,
-        "temp_max_k": 220,
-        "temp_min_k": 70,
-        "temp_range_k": 90,
-        "illum_fraction": 0.85,
-        "ice_signal": 0.7,
-        "basalt_fraction": 0.05,
-        "albedo": 0.2,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 0,
-        "radiation_index": 1,
-        "isolation_index": 0.8
-      },
-      "heightmap": "heightmaps/moon-shackleton-rim.json",
-      "sources": [
-        "LOLA 20 m south polar DEM (mock values)",
-        "Diviner (mock values)"
-      ]
-    },
-    {
-      "id": "moon-malapert-massif",
-      "body": "moon",
-      "name": "Malapert massif",
-      "lat": -86,
-      "lon": 0,
-      "summary": "Tall south polar mountain with long sunlit periods and a view of Earth.",
-      "whyItMatters": "Its summit is high enough to catch sunlight for long stretches and to keep direct line of sight to Earth for communication. Nearby shadowed craters could supply volatiles.",
-      "values": {
-        "elevation_m": 5000,
-        "slope_deg": 15,
-        "roughness_m": 10,
-        "rock_fraction": 0.2,
-        "temp_max_k": 230,
-        "temp_min_k": 80,
-        "temp_range_k": 100,
-        "illum_fraction": 0.75,
-        "ice_signal": 0.4,
-        "basalt_fraction": 0.05,
-        "albedo": 0.18,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 0,
-        "radiation_index": 1,
-        "isolation_index": 0.5
-      },
-      "heightmap": "heightmaps/moon-malapert-massif.json",
-      "sources": [
-        "LOLA (mock values)",
-        "Diviner (mock values)"
-      ]
-    },
-    {
-      "id": "moon-mare-tranquillitatis",
-      "body": "moon",
-      "name": "Mare Tranquillitatis plain",
-      "lat": 8.5,
-      "lon": 31.4,
-      "summary": "Flat basaltic lava plain on the near side.",
-      "whyItMatters": "Mare plains are smooth, well mapped and made of basalt, which is useful for construction material studies. The near side keeps constant line of sight to Earth. Lava tube skylights have been seen in this mare.",
-      "values": {
-        "elevation_m": -1900,
-        "slope_deg": 2,
-        "roughness_m": 1.5,
-        "rock_fraction": 0.05,
-        "temp_max_k": 390,
-        "temp_min_k": 95,
-        "temp_range_k": 280,
-        "illum_fraction": 0.5,
-        "ice_signal": 0.02,
-        "basalt_fraction": 0.95,
-        "albedo": 0.07,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 0,
-        "radiation_index": 1,
-        "isolation_index": 0.3
-      },
-      "heightmap": "heightmaps/moon-mare-tranquillitatis.json",
-      "sources": [
-        "LOLA (mock values)",
-        "Diviner (mock values)",
-        "LROC (mock values)"
-      ]
-    },
-    {
-      "id": "mars-jezero",
-      "body": "mars",
-      "name": "Jezero Crater",
-      "lat": 18.4,
-      "lon": 77.5,
-      "summary": "Ancient lake basin with a river delta, explored by Perseverance.",
-      "whyItMatters": "Jezero once held a lake fed by a river that built a delta. Delta and lakebed sediments are good places to look for signs of past life, which is why Perseverance was sent there.",
-      "values": {
-        "elevation_m": -2500,
-        "slope_deg": 4,
-        "roughness_m": 3,
-        "rock_fraction": 0.2,
-        "temp_max_k": 270,
-        "temp_min_k": 180,
-        "temp_range_k": 80,
-        "illum_fraction": 0.5,
-        "ice_signal": 0.1,
-        "basalt_fraction": 0.6,
-        "albedo": 0.2,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 0,
-        "radiation_index": 0.7,
-        "isolation_index": 0.6
-      },
-      "heightmap": "heightmaps/mars-jezero.json",
-      "sources": [
-        "MOLA (mock values)",
-        "CRISM (mock values)"
-      ]
-    },
-    {
-      "id": "mars-gale",
-      "body": "mars",
-      "name": "Gale Crater",
-      "lat": -5.4,
-      "lon": 137.8,
-      "summary": "Large crater with a layered central mound, explored by Curiosity.",
-      "whyItMatters": "The central mound, Aeolis Mons, exposes kilometres of layered sediment that record changes in the Martian climate. Curiosity found evidence of an ancient habitable lake environment.",
-      "values": {
-        "elevation_m": -4500,
-        "slope_deg": 8,
-        "roughness_m": 5,
-        "rock_fraction": 0.25,
-        "temp_max_k": 290,
-        "temp_min_k": 180,
-        "temp_range_k": 90,
-        "illum_fraction": 0.5,
-        "ice_signal": 0.05,
-        "basalt_fraction": 0.5,
-        "albedo": 0.2,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 0,
-        "radiation_index": 0.7,
-        "isolation_index": 0.6
-      },
-      "heightmap": "heightmaps/mars-gale.json",
-      "sources": [
-        "MOLA (mock values)",
-        "RAD (mock values)"
-      ]
-    },
-    {
-      "id": "mars-arcadia-ice",
-      "body": "mars",
-      "name": "Arcadia Planitia (ice-rich mid-latitudes)",
-      "lat": 40,
-      "lon": -165,
-      "summary": "Low plains with shallow buried ice, a candidate for human landings.",
-      "whyItMatters": "Radar and fresh impact craters show water ice close to the surface at mid-latitudes. Flat, low terrain helps landing, and accessible ice could supply water and propellant.",
-      "values": {
-        "elevation_m": -3800,
-        "slope_deg": 2,
-        "roughness_m": 1.5,
-        "rock_fraction": 0.08,
-        "temp_max_k": 250,
-        "temp_min_k": 150,
-        "temp_range_k": 70,
-        "illum_fraction": 0.5,
-        "ice_signal": 0.85,
-        "basalt_fraction": 0.5,
-        "albedo": 0.22,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 0,
-        "radiation_index": 0.7,
-        "isolation_index": 0.6
-      },
-      "heightmap": "heightmaps/mars-arcadia-ice.json",
-      "sources": [
-        "SHARAD (mock values)",
-        "MOLA (mock values)"
-      ]
-    }
-  ],
-  "provenance": {
-    "mock": true,
-    "generatedAt": "2026-11-14T21:32:18.931Z",
-    "processing": "MOCK DATA generated by scripts/mockData.ts from simple heuristics. Not real analysis.",
-    "datasets": [
-      {
-        "name": "Natural Earth 110m land (land mask only)",
-        "url": "https://www.naturalearthdata.com/",
-        "notes": "Public domain"
-      }
-    ]
+ "targets": [
+  {
+   "id": "moon-slater-plain",
+   "body": "moon",
+   "name": "Slater Plain",
+   "code": "SP",
+   "lat": -87.256,
+   "lon": 125.218,
+   "summary": "Gentle, cratered terrain near the south pole with the flattest ground of the nine regions.",
+   "whyItMatters": "Slater Plain has the highest landing-flat share of the nine Artemis III candidate regions (62 % of the area under 10 degrees), the coldest-after-Haworth annual mean (110 K) and ice stable in 56 % of the area in Diviner data. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 8.33,
+    "roughness_m": 0.759,
+    "relief_m": 1180.0,
+    "flat_frac": 0.618,
+    "crater_density": 0.142,
+    "shadow_frac": 0.034,
+    "temp_mean_k": 110.0,
+    "temp_max_k": 232.0,
+    "ice_proxy": 0.565,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_SP.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-slater-plain.json"
+  },
+  {
+   "id": "moon-haworth",
+   "body": "moon",
+   "name": "Haworth",
+   "code": "HW",
+   "lat": -86.635,
+   "lon": -23.672,
+   "summary": "Floor of Haworth crater, a permanently shadowed basin with the coldest average temperature.",
+   "whyItMatters": "Haworth has the lowest annual mean temperature of the nine regions (105 K) and the most crater-like pits (0.21 per km2). Ice is stable within the top metre over about 64 % of it. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 9.98,
+    "roughness_m": 0.898,
+    "relief_m": 2250.0,
+    "flat_frac": 0.502,
+    "crater_density": 0.206,
+    "shadow_frac": 0.045,
+    "temp_mean_k": 105.2,
+    "temp_max_k": 245.0,
+    "ice_proxy": 0.642,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_HW.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-haworth.json"
+  },
+  {
+   "id": "moon-mons-mouton",
+   "body": "moon",
+   "name": "Mons Mouton",
+   "code": "MM",
+   "lat": -85.409,
+   "lon": 30.837,
+   "summary": "Rugged massif with a mix of gentle and steep ground and about 2.2 km of relief.",
+   "whyItMatters": "Mons Mouton (256 km2 here) has a median slope of 11.4 degrees, 2.2 km of relief and ice-stable ground over about 46 % of it. Mauna Kea scored closest to it on terrain in our validation run. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 11.38,
+    "roughness_m": 0.959,
+    "relief_m": 2158.0,
+    "flat_frac": 0.421,
+    "crater_density": 0.152,
+    "shadow_frac": 0.058,
+    "temp_mean_k": 118.3,
+    "temp_max_k": 255.0,
+    "ice_proxy": 0.47,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_MM.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-mons-mouton.json"
+  },
+  {
+   "id": "moon-nobile-rim-2",
+   "body": "moon",
+   "name": "Nobile Rim 2",
+   "code": "N2",
+   "lat": -83.976,
+   "lon": 57.961,
+   "summary": "Rim of Nobile crater, moderate slopes and 2.3 km of relief.",
+   "whyItMatters": "Nobile Rim 2 has a median slope of 11 degrees, a mean temperature of 126 K and 2.3 km of relief. Ice is stable over about a third of it. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 11.05,
+    "roughness_m": 0.728,
+    "relief_m": 2296.0,
+    "flat_frac": 0.441,
+    "crater_density": 0.113,
+    "shadow_frac": 0.107,
+    "temp_mean_k": 125.8,
+    "temp_max_k": 249.8,
+    "ice_proxy": 0.343,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_N2.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-nobile-rim-2.json"
+  },
+  {
+   "id": "moon-de-gerlache-rim-2",
+   "body": "moon",
+   "name": "de Gerlache Rim 2",
+   "code": "G2",
+   "lat": -88.142,
+   "lon": -63.662,
+   "summary": "Rim of de Gerlache crater, moderate slope with 2.8 km of relief, close to the pole.",
+   "whyItMatters": "de Gerlache Rim 2 sits near 88 degrees south, with a median slope of 12.5 degrees, 2.8 km of relief and a 135 K annual mean. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 12.46,
+    "roughness_m": 0.903,
+    "relief_m": 2811.0,
+    "flat_frac": 0.338,
+    "crater_density": 0.132,
+    "shadow_frac": 0.028,
+    "temp_mean_k": 134.6,
+    "temp_max_k": 261.9,
+    "ice_proxy": 0.245,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_G2.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-de-gerlache-rim-2.json"
+  },
+  {
+   "id": "moon-malapert-massif",
+   "body": "moon",
+   "name": "Malapert Massif",
+   "code": "MA",
+   "lat": -85.925,
+   "lon": -1.205,
+   "summary": "Steep isolated massif, the roughest relief outside the plateau region.",
+   "whyItMatters": "Malapert Massif has a median slope of 17.7 degrees, 3.1 km of relief and few shadowed pixels at 1.5 degrees sun elevation (0.7 %), because the summit sees the Sun for long periods. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 17.74,
+    "roughness_m": 1.11,
+    "relief_m": 3130.0,
+    "flat_frac": 0.169,
+    "crater_density": 0.102,
+    "shadow_frac": 0.007,
+    "temp_mean_k": 142.3,
+    "temp_max_k": 277.0,
+    "ice_proxy": 0.227,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_MA.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-malapert-massif.json"
+  },
+  {
+   "id": "moon-cabeus-b",
+   "body": "moon",
+   "name": "Peak near Cabeus B",
+   "code": "CB",
+   "lat": -83.552,
+   "lon": -68.416,
+   "summary": "Steep peak next to Cabeus B, the steepest and warmest of the nine regions.",
+   "whyItMatters": "The peak near Cabeus B has the steepest median slope (19.2 degrees), only 8 % of the area flatter than 10 degrees and the warmest annual mean of the set (153 K). One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 19.22,
+    "roughness_m": 0.935,
+    "relief_m": 3238.0,
+    "flat_frac": 0.076,
+    "crater_density": 0.035,
+    "shadow_frac": 0.007,
+    "temp_mean_k": 153.0,
+    "temp_max_k": 287.7,
+    "ice_proxy": 0.299,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_CB.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-cabeus-b.json"
+  },
+  {
+   "id": "moon-nobile-rim-1",
+   "body": "moon",
+   "name": "Nobile Rim 1",
+   "code": "N1",
+   "lat": -85.423,
+   "lon": 36.19,
+   "summary": "Steep rim of Nobile crater with 4.4 km of relief.",
+   "whyItMatters": "Nobile Rim 1 has a median slope of 17.7 degrees and the largest relief of the single-block regions (4.4 km). Annual mean temperature is 128 K. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 17.68,
+    "roughness_m": 1.21,
+    "relief_m": 4419.0,
+    "flat_frac": 0.206,
+    "crater_density": 0.105,
+    "shadow_frac": 0.033,
+    "temp_mean_k": 128.0,
+    "temp_max_k": 270.4,
+    "ice_proxy": 0.359,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_N1.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-nobile-rim-1.json"
+  },
+  {
+   "id": "moon-mons-mouton-plateau",
+   "body": "moon",
+   "name": "Mons Mouton Plateau",
+   "code": "MP",
+   "lat": -84.291,
+   "lon": 27.427,
+   "summary": "Large plateau region of about 4,450 km2 covering the Mons Mouton plateau.",
+   "whyItMatters": "Mons Mouton Plateau is the only broad region (about 4,450 km2). Median slope is 11 degrees, relief 5.1 km, annual mean 141 K and 0.18 crater-like pits per km2. One of the nine Artemis III candidate landing regions near the lunar south pole.",
+   "values": {
+    "slope_deg": 10.98,
+    "roughness_m": 0.887,
+    "relief_m": 5122.0,
+    "flat_frac": 0.448,
+    "crater_density": 0.178,
+    "shadow_frac": 0.082,
+    "temp_mean_k": 141.0,
+    "temp_max_k": 260.5,
+    "ice_proxy": 0.205,
+    "precip_mm_yr": 0,
+    "vegetation_ndvi": 0,
+    "snow_frac": 0
+   },
+   "imagery": "/img/moon_MP.webp",
+   "sources": [
+    "LRO LOLA LDEM_80S_40M (40 m south polar DEM)",
+    "LRO Diviner polar resource products (PRP)",
+    "USGS Artemis III candidate region outlines"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/moon-mons-mouton-plateau.json"
+  },
+  {
+   "id": "mars-jezero",
+   "body": "mars",
+   "name": "Jezero crater",
+   "code": "JZ",
+   "lat": 18.44,
+   "lon": 77.45,
+   "summary": "Ancient river-delta lake basin, landing site of Perseverance. Terrain at 200 m scale.",
+   "whyItMatters": "Jezero held a lake with a delta around 3.5 billion years ago. Orbital spectra show Mg-rich carbonate, olivine and clays. Perseverance landed here in 2021. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "values": {
+    "slope_deg": 1.95,
+    "roughness_m": 1.75,
+    "relief_m": 832.0,
+    "flat_frac": 0.93,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": null,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "imagery": "/img/mars_jezero.webp",
+   "sources": [
+    "USGS HRSC+MOLA blended DEM 200 m (v2)",
+    "MGS TES thermal inertia and albedo (context, not scored)"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/mars-jezero.json"
+  },
+  {
+   "id": "mars-gale",
+   "body": "mars",
+   "name": "Gale crater",
+   "code": "GL",
+   "lat": -5.4,
+   "lon": 137.8,
+   "summary": "Crater with a 5 km layered mound, landing site of Curiosity. Terrain at 200 m scale.",
+   "whyItMatters": "Gale contains Mount Sharp, with clay and sulfate layers recording a wetter-to-drier transition. Curiosity landed here in 2012. The 30 km window includes the steep mound, so slope and relief are high. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "values": {
+    "slope_deg": 10.15,
+    "roughness_m": 2.56,
+    "relief_m": 4371.0,
+    "flat_frac": 0.491,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": null,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "imagery": "/img/mars_gale.webp",
+   "sources": [
+    "USGS HRSC+MOLA blended DEM 200 m (v2)",
+    "MGS TES thermal inertia and albedo (context, not scored)"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/mars-gale.json"
+  },
+  {
+   "id": "mars-meridiani",
+   "body": "mars",
+   "name": "Meridiani Planum",
+   "code": "MR",
+   "lat": -1.95,
+   "lon": -5.53,
+   "summary": "Very flat plain with hematite and sulfate-rich rock, landing site of Opportunity. Terrain at 200 m scale.",
+   "whyItMatters": "Meridiani is a very flat plain (median slope about 1 degree). Opportunity found sulfate-rich sedimentary rock and hematite spherules here in 2004. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "values": {
+    "slope_deg": 1.07,
+    "roughness_m": 1.01,
+    "relief_m": 91.0,
+    "flat_frac": 0.998,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": null,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "imagery": "/img/mars_meridiani.webp",
+   "sources": [
+    "USGS HRSC+MOLA blended DEM 200 m (v2)",
+    "MGS TES thermal inertia and albedo (context, not scored)"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/mars-meridiani.json"
+  },
+  {
+   "id": "mars-oxia",
+   "body": "mars",
+   "name": "Oxia Planum",
+   "code": "OX",
+   "lat": 18.28,
+   "lon": -24.63,
+   "summary": "Flat clay-bearing plain, chosen landing site for the Rosalind Franklin rover. Terrain at 200 m scale.",
+   "whyItMatters": "Oxia Planum has Fe/Mg-rich clays over a very flat plain (median slope under 1 degree), which is why it was chosen for ESA's ExoMars rover. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "values": {
+    "slope_deg": 0.49,
+    "roughness_m": 0.293,
+    "relief_m": 117.0,
+    "flat_frac": 1.0,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": null,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "imagery": "/img/mars_oxia.webp",
+   "sources": [
+    "USGS HRSC+MOLA blended DEM 200 m (v2)",
+    "MGS TES thermal inertia and albedo (context, not scored)"
+   ],
+   "valueSource": "computed",
+   "heightmap": "heightmaps/mars-oxia.json"
   }
+ ],
+ "provenance": {
+  "mock": false,
+  "datasets": [
+   {
+    "name": "LRO LOLA LDEM_80S_40M",
+    "version": "40 m south polar DEM",
+    "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm",
+    "notes": "Moon slope, roughness, relief, crater-like pits, landing share, shadow structure."
+   },
+   {
+    "name": "LRO Diviner polar resource products (PRP)",
+    "version": "south polar",
+    "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm",
+    "notes": "Annual mean and maximum temperature, ice-stability fractions per region."
+   },
+   {
+    "name": "HRSC+MOLA blended DEM, 200 m",
+    "version": "v2",
+    "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m",
+    "notes": "Mars terrain fingerprints at 200 m, so comparisons to 40 m Earth blocks are indicative only."
+   }
+  ],
+  "processing": "Moon: nine Artemis III south-polar candidate regions; terrain from LOLA 40 m with the same code as the Earth blocks, temperature and ice from Diviner region medians, precipitation, NDVI and snow set to 0 by definition. Mars: four rover landing sites, terrain only, at 200 m (slope, roughness, relief, share under 10 degrees); everything else is null. Coordinates are the well-known landing locations.",
+  "generatedAt": "2026-11-15",
+  "run": "Terralog discovery run, 2026-11-14/15"
+ }
 }

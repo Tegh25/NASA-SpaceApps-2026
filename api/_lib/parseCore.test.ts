@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { buildSystemPrompt, extractJson, handleParse, rateLimited, sanitize } from './parseCore';
 
-const keys = new Set(['slope_deg', 'temp_min_k']);
+const keys = new Set(['slope_deg', 'temp_mean_k']);
 
 describe('parseCore', () => {
   it('extracts JSON from fenced or double-braced output', () => {
@@ -14,15 +14,15 @@ describe('parseCore', () => {
     const q = sanitize(
       {
         body: 'moon',
-        targets: { slope_deg: 1.4, bogus: 0.5, temp_min_k: -1 },
-        weights: { slope_deg: 7, temp_min_k: 1.6 },
-        required: ['slope_deg', 'bogus', 'ice_signal'],
+        targets: { slope_deg: 1.4, bogus: 0.5, temp_mean_k: -1 },
+        weights: { slope_deg: 7, temp_mean_k: 1.6 },
+        required: ['slope_deg', 'bogus', 'ice_proxy'],
         notes: 'x',
       },
       keys,
     );
-    expect(q.targets).toEqual({ slope_deg: 1, temp_min_k: 0 });
-    expect(q.weights).toEqual({ slope_deg: 3, temp_min_k: 2 });
+    expect(q.targets).toEqual({ slope_deg: 1, temp_mean_k: 0 });
+    expect(q.weights).toEqual({ slope_deg: 3, temp_mean_k: 2 });
     expect(q.required).toEqual(['slope_deg']);
   });
 

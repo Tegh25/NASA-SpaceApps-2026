@@ -1,629 +1,1360 @@
 {
-  "featured": [
-    {
-      "id": "devon-island-haughton",
-      "name": "Haughton Crater, Devon Island",
-      "region": "Nunavut, Canada",
-      "lat": 75.37,
-      "lon": -89.68,
-      "analogFor": [
-        "moon-shackleton-rim",
-        "mars-arcadia-ice"
-      ],
-      "headline": "Polar desert impact crater with ground ice.",
-      "description": "Haughton is a roughly 20 km wide impact crater on one of the largest uninhabited islands on Earth. It sits in a cold, dry polar desert with permafrost and very little plant cover. Research teams have used it for decades to rehearse Moon and Mars field operations.",
-      "matches": [
-        "Cold, dry polar desert",
-        "Impact crater morphology",
-        "Ground ice in permafrost",
-        "Very remote"
-      ],
-      "shortfalls": [
-        "Thin vegetation and liquid water in summer",
-        "Sun sets for months in winter instead of grazing the horizon"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": 75.37,
-          "lon": -89.68,
-          "heading": 90,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": 75.37,
-            "lon": -89.68,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": 75.382,
-            "lon": -89.68,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": 75.37,
-            "lon": -89.63248955052273,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "Haughton-Mars Project (NASA)",
-          "url": "https://www.nasa.gov/general/haughton-mars-project/"
-        }
-      ],
-      "values": {
-        "elevation_m": 250,
-        "slope_deg": 7,
-        "roughness_m": 6,
-        "rock_fraction": 0.45,
-        "temp_max_k": 285,
-        "temp_min_k": 228,
-        "temp_range_k": 6,
-        "illum_fraction": 0.49,
-        "ice_signal": 0.8,
-        "basalt_fraction": 0.03,
-        "albedo": 0.3,
-        "vegetation_ndvi": 0.04,
-        "precip_mm_yr": 130,
-        "radiation_index": 0.14,
-        "isolation_index": 0.97
-      },
-      "score": {
-        "moon-shackleton-rim": 71,
-        "mars-arcadia-ice": 72
-      }
+ "featured": [
+  {
+   "id": "earth-ngari-tibet",
+   "name": "Ngari, western Tibet (approx.)",
+   "region": "Ngari, western Tibet",
+   "lat": 32.461,
+   "lon": 81.532,
+   "analogFor": [
+    "moon-slater-plain",
+    "moon-haworth"
+   ],
+   "headline": "Cold, dry Tibetan plateau block whose slopes and relief match Slater Plain.",
+   "description": "A 20 by 20 km block on the high plateau of western Tibet (Zanda to Gerze area), at 5,100 m elevation. Its slope histogram and relief track Slater Plain, and Landsat and Sentinel-2 imagery confirm the ground is mostly bare rock and sand. The place name is approximate: the block was found by terrain statistics, not by name, so check it on a map before quoting it.",
+   "matches": [
+    "Median slope 8.5 deg vs 8.3 deg at Slater Plain",
+    "Relief 952 m vs 1180 m",
+    "Roughness 0.81 m vs 0.76 m",
+    "Landing-flat share 57 % vs 62 %",
+    "Close on: landing-slope share, multi-scale roughness, terrain statistics, ice proxy, shadow structure under a low sun"
+   ],
+   "shortfalls": [
+    "Mean surface temperature 277 K vs 110 K, about 167 K warmer",
+    "No circling-sun days (0 per year) vs the polar Moon's near-continuous low Sun",
+    "Crater-like pits 0.003 per km2 vs 0.142",
+    "Earth gravity, atmosphere, and no regolith",
+    "Weak on: crater-like pits"
+   ],
+   "values": {
+    "slope_deg": 8.54,
+    "roughness_m": 0.807,
+    "relief_m": 952.0,
+    "flat_frac": 0.572,
+    "crater_density": 0.0025,
+    "shadow_frac": 0.079,
+    "temp_mean_k": 277.2,
+    "temp_max_k": 314.3,
+    "ice_proxy": 0.454,
+    "precip_mm_yr": 99.0,
+    "vegetation_ndvi": 0.124,
+    "snow_frac": 0.07
+   },
+   "tour": {
+    "spawn": {
+     "lat": 32.461,
+     "lon": 81.532,
+     "heading": 90,
+     "heightM": 1.7
     },
-    {
-      "id": "atacama-yungay",
-      "name": "Yungay, Atacama Desert",
-      "region": "Antofagasta, Chile",
-      "lat": -24.1,
-      "lon": -70,
-      "analogFor": [
-        "mars-jezero",
-        "mars-gale"
-      ],
-      "headline": "One of the driest places on Earth.",
-      "description": "The Yungay area of the Atacama receives almost no rain, and its soils hold very little life. Strong sunlight and oxidising salts in the soil echo conditions on the Martian surface. Rover and life-detection instruments are regularly tested here.",
-      "matches": [
-        "Hyper-arid, almost no rain",
-        "No vegetation",
-        "Oxidised, salty soils",
-        "High solar exposure"
-      ],
-      "shortfalls": [
-        "Warm compared with Mars",
-        "Thick atmosphere filters ultraviolet light"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": -24.1,
-          "lon": -70,
-          "heading": 0,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": -24.1,
-            "lon": -70,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": -24.088,
-            "lon": -70,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": -24.1,
-            "lon": -69.9868541293706,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "Mars-like soils in the Atacama Desert (Science, 2003)",
-          "url": "https://www.science.org/doi/10.1126/science.1089143"
-        }
-      ],
-      "values": {
-        "elevation_m": 1000,
-        "slope_deg": 4,
-        "roughness_m": 3,
-        "rock_fraction": 0.4,
-        "temp_max_k": 312,
-        "temp_min_k": 272,
-        "temp_range_k": 24,
-        "illum_fraction": 0.47,
-        "ice_signal": 0,
-        "basalt_fraction": 0.2,
-        "albedo": 0.32,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 1,
-        "radiation_index": 0.12,
-        "isolation_index": 0.82
-      },
-      "score": {
-        "mars-jezero": 81,
-        "mars-gale": 80
-      }
-    },
-    {
-      "id": "wright-valley-dry-valleys",
-      "name": "Wright Valley, McMurdo Dry Valleys",
-      "region": "Victoria Land, Antarctica",
-      "lat": -77.5,
-      "lon": 161.8,
-      "analogFor": [
-        "mars-arcadia-ice",
-        "moon-shackleton-rim"
-      ],
-      "headline": "Ice-free polar valley with buried ice and extreme cold.",
-      "description": "The Dry Valleys are among the coldest and driest ice-free places on Earth. Strong winds remove snow, leaving bare rock, sand and ice-cemented ground. Patterned ground and buried ice here resemble features seen in the Martian mid-latitudes.",
-      "matches": [
-        "Extreme cold",
-        "Hyper-arid and ice-free",
-        "Buried ground ice",
-        "No vegetation"
-      ],
-      "shortfalls": [
-        "Seasonal meltwater streams",
-        "Much warmer than the lunar poles"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": -77.5,
-          "lon": 161.8,
-          "heading": 270,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": -77.5,
-            "lon": 161.8,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": -77.488,
-            "lon": 161.8,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": -77.5,
-            "lon": 161.85544271578416,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "McMurdo Dry Valleys LTER",
-          "url": "https://mcm.lternet.edu/"
-        }
-      ],
-      "values": {
-        "elevation_m": 300,
-        "slope_deg": 10,
-        "roughness_m": 9,
-        "rock_fraction": 0.55,
-        "temp_max_k": 280,
-        "temp_min_k": 210,
-        "temp_range_k": 8,
-        "illum_fraction": 0.48,
-        "ice_signal": 0.85,
-        "basalt_fraction": 0.15,
-        "albedo": 0.25,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 10,
-        "radiation_index": 0.22,
-        "isolation_index": 1
-      },
-      "score": {
-        "mars-arcadia-ice": 75,
-        "moon-shackleton-rim": 74
-      }
-    },
-    {
-      "id": "askja-iceland",
-      "name": "Askja caldera",
-      "region": "Highlands, Iceland",
-      "lat": 65.03,
-      "lon": -16.75,
-      "analogFor": [
-        "moon-mare-tranquillitatis",
-        "mars-jezero"
-      ],
-      "headline": "Barren basaltic volcanic field where Apollo crews trained.",
-      "description": "Askja is a volcanic caldera surrounded by fresh lava and pumice with almost no plant cover. Apollo astronauts trained here in the 1960s to recognise volcanic geology. Basaltic surfaces and lava flows make it a strong compositional match for lunar maria.",
-      "matches": [
-        "Basaltic lava and tephra",
-        "Bare, unvegetated ground",
-        "Volcanic landforms"
-      ],
-      "shortfalls": [
-        "Frequent rain and snow",
-        "Much smaller temperature swings than the Moon"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": 65.03,
-          "lon": -16.75,
-          "heading": 180,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": 65.03,
-            "lon": -16.75,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": 65.042,
-            "lon": -16.75,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": 65.03,
-            "lon": -16.721573658270884,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "Apollo geology training in Iceland",
-          "url": "https://www.lpi.usra.edu/lunar/missions/apollo/apollo_training/"
-        }
-      ],
-      "values": {
-        "elevation_m": 1100,
-        "slope_deg": 6,
-        "roughness_m": 5,
-        "rock_fraction": 0.5,
-        "temp_max_k": 288,
-        "temp_min_k": 250,
-        "temp_range_k": 7,
-        "illum_fraction": 0.48,
-        "ice_signal": 0.35,
-        "basalt_fraction": 0.95,
-        "albedo": 0.1,
-        "vegetation_ndvi": 0.04,
-        "precip_mm_yr": 450,
-        "radiation_index": 0.14,
-        "isolation_index": 0.88
-      },
-      "score": {
-        "moon-mare-tranquillitatis": 64,
-        "mars-jezero": 74
-      }
-    },
-    {
-      "id": "kilauea-hawaii",
-      "name": "Kīlauea summit and Kaʻū Desert",
-      "region": "Hawaiʻi, United States",
-      "lat": 19.42,
-      "lon": -155.29,
-      "analogFor": [
-        "moon-mare-tranquillitatis"
-      ],
-      "headline": "Young basaltic lava fields and lava tubes.",
-      "description": "The Kaʻū Desert on the flank of Kīlauea is covered in recent basaltic lava and ash, with sparse plants due to volcanic gases and rain shadow. Fresh basalt here is chemically close to lunar mare basalt, and the area is used to test regolith handling and rovers.",
-      "matches": [
-        "Fresh basalt",
-        "Lava tubes nearby",
-        "Sparse vegetation in the desert zone"
-      ],
-      "shortfalls": [
-        "Warm and humid compared with any lunar site",
-        "Vegetation close by"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": 19.42,
-          "lon": -155.29,
-          "heading": 200,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": 19.42,
-            "lon": -155.29,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": 19.432000000000002,
-            "lon": -155.29,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": 19.42,
-            "lon": -155.2772760944435,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "PISCES analog testing, Hawaiʻi",
-          "url": "https://www.pacificspaceflight.com/"
-        }
-      ],
-      "values": {
-        "elevation_m": 1100,
-        "slope_deg": 3,
-        "roughness_m": 2,
-        "rock_fraction": 0.35,
-        "temp_max_k": 302,
-        "temp_min_k": 284,
-        "temp_range_k": 10,
-        "illum_fraction": 0.48,
-        "ice_signal": 0,
-        "basalt_fraction": 1,
-        "albedo": 0.08,
-        "vegetation_ndvi": 0.15,
-        "precip_mm_yr": 900,
-        "radiation_index": 0.08,
-        "isolation_index": 0.45
-      },
-      "score": {
-        "moon-mare-tranquillitatis": 69
-      }
-    },
-    {
-      "id": "mdrs-utah",
-      "name": "Mars Desert Research Station",
-      "region": "Utah, United States",
-      "lat": 38.41,
-      "lon": -110.79,
-      "analogFor": [
-        "mars-gale",
-        "mars-jezero"
-      ],
-      "headline": "Layered red sedimentary desert used for Mars simulations.",
-      "description": "The badlands around the station expose layered sedimentary rock coloured by iron oxides, much like the layered terrain in Gale Crater. Crews live in a simulated habitat and run field missions in suits.",
-      "matches": [
-        "Layered sedimentary rock",
-        "Iron-oxide colouring",
-        "Arid with little vegetation"
-      ],
-      "shortfalls": [
-        "Liquid water and rain events",
-        "Earth gravity and air pressure"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": 38.41,
-          "lon": -110.79,
-          "heading": 45,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": 38.41,
-            "lon": -110.79,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": 38.422,
-            "lon": -110.79,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": 38.41,
-            "lon": -110.77468577184436,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "Mars Desert Research Station (Mars Society)",
-          "url": "https://mdrs.marssociety.org/"
-        }
-      ],
-      "values": {
-        "elevation_m": 1350,
-        "slope_deg": 8,
-        "roughness_m": 6,
-        "rock_fraction": 0.35,
-        "temp_max_k": 314,
-        "temp_min_k": 255,
-        "temp_range_k": 18,
-        "illum_fraction": 0.46,
-        "ice_signal": 0,
-        "basalt_fraction": 0.08,
-        "albedo": 0.28,
-        "vegetation_ndvi": 0.05,
-        "precip_mm_yr": 180,
-        "radiation_index": 0.15,
-        "isolation_index": 0.72
-      },
-      "score": {
-        "mars-gale": 78,
-        "mars-jezero": 76
-      }
-    },
-    {
-      "id": "cueva-de-los-verdes",
-      "name": "Cueva de los Verdes lava tube",
-      "region": "Lanzarote, Canary Islands, Spain",
-      "lat": 29.16,
-      "lon": -13.43,
-      "analogFor": [
-        "moon-mare-tranquillitatis"
-      ],
-      "headline": "Kilometres-long lava tube used for cave training.",
-      "description": "This lava tube runs for several kilometres beneath basaltic lava fields. Lunar and Martian lava tubes could shelter habitats from radiation and temperature swings, and astronaut cave training has used tubes on Lanzarote. Scores here describe the surface only.",
-      "matches": [
-        "Lava tube",
-        "Basaltic lava field",
-        "Dry, sparsely vegetated surface"
-      ],
-      "shortfalls": [
-        "Surface score only, the tube interior is not modelled",
-        "Mild oceanic climate"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": 29.16,
-          "lon": -13.43,
-          "heading": 0,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": 29.16,
-            "lon": -13.43,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": 29.172,
-            "lon": -13.43,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": 29.16,
-            "lon": -13.416258426737684,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "ESA PANGAEA training, Lanzarote",
-          "url": "https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/CAVES_and_Pangaea"
-        }
-      ],
-      "values": {
-        "elevation_m": 50,
-        "slope_deg": 3,
-        "roughness_m": 3,
-        "rock_fraction": 0.4,
-        "temp_max_k": 303,
-        "temp_min_k": 287,
-        "temp_range_k": 8,
-        "illum_fraction": 0.49,
-        "ice_signal": 0,
-        "basalt_fraction": 1,
-        "albedo": 0.1,
-        "vegetation_ndvi": 0.05,
-        "precip_mm_yr": 120,
-        "radiation_index": 0.09,
-        "isolation_index": 0.3
-      },
-      "score": {
-        "moon-mare-tranquillitatis": 72
-      }
-    },
-    {
-      "id": "danakil-depression",
-      "name": "Danakil Depression",
-      "region": "Afar, Ethiopia",
-      "lat": 14.24,
-      "lon": 40.3,
-      "analogFor": [
-        "mars-jezero"
-      ],
-      "headline": "Hot, salty, volcanic basin below sea level.",
-      "description": "The Danakil is one of the hottest places on Earth, with salt flats, acidic hot springs and basaltic volcanoes. Brines and evaporite minerals here help scientists understand salty deposits found in ancient Martian lake basins.",
-      "matches": [
-        "Evaporite and salt deposits",
-        "Basaltic volcanism",
-        "No vegetation"
-      ],
-      "shortfalls": [
-        "Extremely hot, unlike any Mars site",
-        "Active hydrothermal water"
-      ],
-      "tour": {
-        "spawn": {
-          "lat": 14.24,
-          "lon": 40.3,
-          "heading": 90,
-          "heightM": 1.7
-        },
-        "waypoints": [
-          {
-            "name": "Spawn point",
-            "lat": 14.24,
-            "lon": 40.3,
-            "note": "Mock narration: starting position for the tour."
-          },
-          {
-            "name": "North lookout",
-            "lat": 14.252,
-            "lon": 40.3,
-            "note": "Mock narration: replace with curated notes from the data team."
-          },
-          {
-            "name": "East ridge",
-            "lat": 14.24,
-            "lon": 40.31238040200489,
-            "note": "Mock narration: replace with curated notes from the data team."
-          }
-        ]
-      },
-      "references": [
-        {
-          "title": "Europlanet: Danakil as a Mars analogue",
-          "url": "https://www.europlanet-society.org/"
-        }
-      ],
-      "values": {
-        "elevation_m": -120,
-        "slope_deg": 2,
-        "roughness_m": 2,
-        "rock_fraction": 0.25,
-        "temp_max_k": 321,
-        "temp_min_k": 295,
-        "temp_range_k": 14,
-        "illum_fraction": 0.48,
-        "ice_signal": 0,
-        "basalt_fraction": 0.7,
-        "albedo": 0.4,
-        "vegetation_ndvi": 0,
-        "precip_mm_yr": 50,
-        "radiation_index": 0.1,
-        "isolation_index": 0.86
-      },
-      "score": {
-        "mars-jezero": 79
-      }
-    }
-  ],
-  "provenance": {
-    "mock": true,
-    "generatedAt": "2026-11-14T21:32:19.731Z",
-    "processing": "MOCK DATA generated by scripts/mockData.ts from simple heuristics. Not real analysis. Site names and coordinates are approximate seeds from the product guide; descriptions are draft text to verify before publishing.",
-    "datasets": [
-      {
-        "name": "Natural Earth 110m land (land mask only)",
-        "url": "https://www.naturalearthdata.com/",
-        "notes": "Public domain"
-      }
+    "waypoints": [
+     {
+      "name": "3 km north",
+      "lat": 32.488,
+      "lon": 81.532,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "4 km east",
+      "lat": 32.461,
+      "lon": 81.5746,
+      "note": "Landsat sees about 82 % bare ground over the block; expect sparse cover in places."
+     },
+     {
+      "name": "3 km north-east",
+      "lat": 32.488,
+      "lon": 81.5746,
+      "note": "Block median slope 8.5 deg, relief about 952 m."
+     }
     ]
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "new",
+   "status": "Confirmed",
+   "rank": 1,
+   "why": "Composite score 0.53 (lower is closer) against Slater Plain; the block stays in the top 40 in 87 % of 1,000 random re-weightings of the categories. Landsat 8/9 and Sentinel-2 find it 82 % and 83 % bare ground (vegetation 18 % and 16 %). The nearest of 166 catalogued analog sites is Hanle, Ladakh, 243 km away, so this counts as new on our list. Matches are strongest on landing-slope share, multi-scale roughness, terrain statistics.",
+   "images": {
+    "twin": "/img/twin_D1.webp",
+    "eo": "/img/eo_D1.webp",
+    "target": "/img/moon_SP.webp",
+    "earth": "/img/eo_D1.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": 277.2,
+     "target": 110.0,
+     "unit": "K",
+     "note": "Earth: MODIS annual mean. Moon: Diviner region median."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Days per year the Sun stays low and circles the horizon. Only latitudes above about 70 degrees get any on Earth. Moon value is the polar constant used in scoring."
+    },
+    {
+     "label": "Shadowed share at 1.5 deg sun",
+     "earth": 0.079,
+     "target": 0.034,
+     "unit": "",
+     "note": "Terrain shadowing from the same horizon-scan code on both bodies."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": 0.0025,
+     "target": 0.142,
+     "unit": "per km2",
+     "note": "Earth is cut by water and ice, the Moon by impacts."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by terrain statistics, so verify the location before presenting.",
+    "'New' means at least 150 km from 166 catalogued analog sites and no hits in web searches only (no Scholar, ADS or CNKI); nearest known is 243 km.",
+    "Prior art exists for ranking Earth sites against lunar terrain (e.g. arXiv 2501.08584), so this is not unprecedented; the new part is a quantified south-polar terrain match."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.533,
+    "p_top40": 0.87,
+    "nearest_known": "Hanle, Ladakh",
+    "nearest_known_km": 243,
+    "landsat_bare": 0.82,
+    "s2_bare": 0.83,
+    "landsat_veg": 0.18,
+    "s2_veg": 0.16,
+    "snow": 0.0,
+    "s2_snow": 0.01,
+    "best_moon": "Slater Plain",
+    "cat_terr": 0.33,
+    "cat_multi": 0.27,
+    "cat_crater": 0.83,
+    "cat_landing": 0.26,
+    "cat_light": 0.43,
+    "cat_ice": 0.42
+   }
+  },
+  {
+   "id": "earth-pamir-muztagh",
+   "name": "Pamir, near Muztagh Ata (approx.)",
+   "region": "Pamir",
+   "lat": 38.192,
+   "lon": 74.803,
+   "analogFor": [
+    "moon-mons-mouton-plateau",
+    "moon-nobile-rim-2"
+   ],
+   "headline": "High Pamir block that resembles the Mons Mouton Plateau region.",
+   "description": "A 20 by 20 km block in the Pamir, near Muztagh Ata, at about 4,300 m. Terrain statistics resemble the Mons Mouton Plateau, and it also scores close to Nobile Rim 2 and Haworth. About a fifth to a third of the surface is sparsely vegetated in satellite imagery, so it is not pure bare rock. Place name approximate.",
+   "matches": [
+    "Median slope 10.7 deg vs 11.0 deg at Mons Mouton Plateau",
+    "Relief 840 m vs 5122 m",
+    "Roughness 0.75 m vs 0.89 m",
+    "Landing-flat share 46 % vs 45 %",
+    "Close on: ice proxy, landing-slope share, multi-scale roughness"
+   ],
+   "shortfalls": [
+    "Mean surface temperature 273 K vs 141 K, about 132 K warmer",
+    "No circling-sun days (0 per year) vs the polar Moon's near-continuous low Sun",
+    "Crater-like pits 0.018 per km2 vs 0.178",
+    "Earth gravity, atmosphere, and no regolith",
+    "Weak on: shadow structure under a low sun, crater-like pits"
+   ],
+   "values": {
+    "slope_deg": 10.68,
+    "roughness_m": 0.75,
+    "relief_m": 840.0,
+    "flat_frac": 0.464,
+    "crater_density": 0.0175,
+    "shadow_frac": 0.159,
+    "temp_mean_k": 272.8,
+    "temp_max_k": 308.9,
+    "ice_proxy": 0.575,
+    "precip_mm_yr": 69.0,
+    "vegetation_ndvi": 0.171,
+    "snow_frac": 0.053
+   },
+   "tour": {
+    "spawn": {
+     "lat": 38.192,
+     "lon": 74.803,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "3 km north",
+      "lat": 38.219,
+      "lon": 74.803,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "4 km east",
+      "lat": 38.192,
+      "lon": 74.8488,
+      "note": "Landsat sees about 67 % bare ground over the block; expect sparse cover in places."
+     },
+     {
+      "name": "3 km north-east",
+      "lat": 38.219,
+      "lon": 74.8488,
+      "note": "Block median slope 10.7 deg, relief about 840 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "new",
+   "status": "Confirmed, 22 to 33 % sparse vegetation",
+   "rank": 2,
+   "why": "Composite score 0.53 (lower is closer) against Mons Mouton Plateau; the block stays in the top 40 in 87 % of 1,000 random re-weightings of the categories. Landsat 8/9 and Sentinel-2 find it 67 % and 78 % bare ground (vegetation 33 % and 22 %). The nearest of 166 catalogued analog sites is Leh, Ladakh (ISRO LHAM Hab-1), 514 km away, so this counts as new on our list. Matches are strongest on ice proxy, landing-slope share, multi-scale roughness.",
+   "images": {
+    "twin": "/img/twin_C1.webp",
+    "eo": "/img/eo_C1.webp",
+    "target": "/img/moon_MP.webp",
+    "earth": "/img/eo_C1.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": 272.8,
+     "target": 141.0,
+     "unit": "K",
+     "note": "Earth: MODIS annual mean. Moon: Diviner region median."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Days per year the Sun stays low and circles the horizon. Only latitudes above about 70 degrees get any on Earth. Moon value is the polar constant used in scoring."
+    },
+    {
+     "label": "Shadowed share at 1.5 deg sun",
+     "earth": 0.159,
+     "target": 0.082,
+     "unit": "",
+     "note": "Terrain shadowing from the same horizon-scan code on both bodies."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": 0.0175,
+     "target": 0.178,
+     "unit": "per km2",
+     "note": "Earth is cut by water and ice, the Moon by impacts."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by terrain statistics, so verify the location before presenting.",
+    "'New' means at least 150 km from 166 catalogued analog sites and no hits in web searches only (no Scholar, ADS or CNKI); nearest known is 514 km.",
+    "Prior art exists for ranking Earth sites against lunar terrain (e.g. arXiv 2501.08584), so this is not unprecedented; the new part is a quantified south-polar terrain match.",
+    "22 to 33 % of the block is sparse vegetation (Sentinel-2 and Landsat), which the Moon does not have."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.533,
+    "p_top40": 0.87,
+    "nearest_known": "Leh, Ladakh (ISRO LHAM Hab-1)",
+    "nearest_known_km": 514,
+    "landsat_bare": 0.67,
+    "s2_bare": 0.78,
+    "landsat_veg": 0.33,
+    "s2_veg": 0.22,
+    "snow": 0.0,
+    "s2_snow": 0.0,
+    "best_moon": "Mons Mouton Plateau",
+    "cat_terr": 0.5,
+    "cat_multi": 0.24,
+    "cat_crater": 0.7,
+    "cat_landing": 0.14,
+    "cat_light": 0.75,
+    "cat_ice": 0.0
+   }
+  },
+  {
+   "id": "earth-s-tibet-tingri",
+   "name": "Southern Tibet, Tingri and Dinggye (approx.)",
+   "region": "Southern Tibet",
+   "lat": 28.102,
+   "lon": 87.818,
+   "analogFor": [
+    "moon-malapert-massif",
+    "moon-cabeus-b"
+   ],
+   "headline": "Steep block north of the Himalaya that matches Malapert Massif's relief.",
+   "description": "A 20 by 20 km block north of the Himalaya near Tingri and Dinggye, at 5,100 m. It is the best steep match we found for Malapert Massif, but it stays in the top 40 in only 20 % of random re-weightings, so its rank depends on how the categories are weighted. Landsat shows a glacier in one corner (20 % snow), Sentinel-2 10 %. Place name approximate.",
+   "matches": [
+    "Median slope 17.2 deg vs 17.7 deg at Malapert Massif",
+    "Relief 1541 m vs 3130 m",
+    "Roughness 1.07 m vs 1.11 m",
+    "Landing-flat share 28 % vs 17 %",
+    "Close on: ice proxy, multi-scale roughness, terrain statistics, landing-slope share"
+   ],
+   "shortfalls": [
+    "Mean surface temperature 278 K vs 142 K, about 135 K warmer",
+    "No circling-sun days (0 per year) vs the polar Moon's near-continuous low Sun",
+    "Crater-like pits 0.022 per km2 vs 0.102",
+    "Earth gravity, atmosphere, and no regolith",
+    "Weak on: shadow structure under a low sun, crater-like pits"
+   ],
+   "values": {
+    "slope_deg": 17.16,
+    "roughness_m": 1.07,
+    "relief_m": 1541.0,
+    "flat_frac": 0.279,
+    "crater_density": 0.0225,
+    "shadow_frac": 0.191,
+    "temp_mean_k": 277.6,
+    "temp_max_k": 307.1,
+    "ice_proxy": 0.463,
+    "precip_mm_yr": 580.0,
+    "vegetation_ndvi": 0.15,
+    "snow_frac": 0.2
+   },
+   "tour": {
+    "spawn": {
+     "lat": 28.102,
+     "lon": 87.818,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "3 km north",
+      "lat": 28.129,
+      "lon": 87.818,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "4 km east",
+      "lat": 28.102,
+      "lon": 87.8588,
+      "note": "Landsat sees about 68 % bare ground over the block; expect sparse cover in places."
+     },
+     {
+      "name": "3 km north-east",
+      "lat": 28.129,
+      "lon": 87.8588,
+      "note": "Block median slope 17.2 deg, relief about 1541 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "new",
+   "status": "Conditional: glacier in one corner; ranking is weight-sensitive",
+   "rank": 3,
+   "why": "Composite score 0.57 (lower is closer) against Malapert Massif; the block stays in the top 40 in 20 % of 1,000 random re-weightings of the categories. Landsat 8/9 and Sentinel-2 find it 68 % and 78 % bare ground (vegetation 12 % and 11 %). The nearest of 166 catalogued analog sites is Lower Mustang, Nepal (Mars Aca, 405 km away, so this counts as new on our list. Matches are strongest on ice proxy, multi-scale roughness, terrain statistics.",
+   "images": {
+    "twin": "/img/twin_B1.webp",
+    "eo": "/img/eo_B1.webp",
+    "target": "/img/moon_MA.webp",
+    "earth": "/img/eo_B1.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": 277.6,
+     "target": 142.3,
+     "unit": "K",
+     "note": "Earth: MODIS annual mean. Moon: Diviner region median."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Days per year the Sun stays low and circles the horizon. Only latitudes above about 70 degrees get any on Earth. Moon value is the polar constant used in scoring."
+    },
+    {
+     "label": "Shadowed share at 1.5 deg sun",
+     "earth": 0.191,
+     "target": 0.007,
+     "unit": "",
+     "note": "Terrain shadowing from the same horizon-scan code on both bodies."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": 0.0225,
+     "target": 0.102,
+     "unit": "per km2",
+     "note": "Earth is cut by water and ice, the Moon by impacts."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by terrain statistics, so verify the location before presenting.",
+    "'New' means at least 150 km from 166 catalogued analog sites and no hits in web searches only (no Scholar, ADS or CNKI); nearest known is 405 km.",
+    "Prior art exists for ranking Earth sites against lunar terrain (e.g. arXiv 2501.08584), so this is not unprecedented; the new part is a quantified south-polar terrain match.",
+    "A glacier covers part of one corner: 20 % snow in Landsat, 10 % in Sentinel-2.",
+    "Ranking is sensitive to category weights: top-40 in only 20 % of 1,000 re-weightings."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.566,
+    "p_top40": 0.2,
+    "nearest_known": "Lower Mustang, Nepal (Mars Aca",
+    "nearest_known_km": 405,
+    "landsat_bare": 0.68,
+    "s2_bare": 0.78,
+    "landsat_veg": 0.12,
+    "s2_veg": 0.11,
+    "snow": 0.2,
+    "s2_snow": 0.1,
+    "best_moon": "Malapert Massif",
+    "cat_terr": 0.37,
+    "cat_multi": 0.19,
+    "cat_crater": 0.85,
+    "cat_landing": 0.44,
+    "cat_light": 0.94,
+    "cat_ice": 0.0
+   }
+  },
+  {
+   "id": "earth-altyn-tagh",
+   "name": "Altyn-Tagh margin (approx.)",
+   "region": "Altyn-Tagh, south Taklimakan margin",
+   "lat": 36.641,
+   "lon": 84.67,
+   "analogFor": [
+    "moon-mons-mouton-plateau"
+   ],
+   "headline": "Cleanest bare-rock surface of any candidate, but a weaker terrain match.",
+   "description": "A block on the Altyn-Tagh and southern Taklimakan margin with 96 % bare ground in Landsat, the cleanest of all candidates. It ranks lower on terrain match and stays in the top 40 in only 13 % of re-weightings, so it is kept in reserve.",
+   "matches": [
+    "Median slope 9.2 deg vs 11.0 deg at Mons Mouton Plateau",
+    "Relief 1585 m vs 5122 m",
+    "Roughness 0.92 m vs 0.89 m",
+    "Landing-flat share 52 % vs 45 %",
+    "Close on: ice proxy, terrain statistics, shadow structure under a low sun"
+   ],
+   "shortfalls": [
+    "Mean surface temperature 274 K vs 141 K, about 133 K warmer",
+    "No circling-sun days (0 per year) vs the polar Moon's near-continuous low Sun",
+    "Crater-like pits 0.003 per km2 vs 0.178",
+    "Earth gravity, atmosphere, and no regolith",
+    "Weak on: crater-like pits, landing-slope share"
+   ],
+   "values": {
+    "slope_deg": 9.24,
+    "roughness_m": 0.917,
+    "relief_m": 1585.0,
+    "flat_frac": 0.524,
+    "crater_density": 0.0025,
+    "shadow_frac": 0.117,
+    "temp_mean_k": 274.3,
+    "temp_max_k": 309.8,
+    "ice_proxy": 0.495,
+    "precip_mm_yr": 58.0,
+    "vegetation_ndvi": 0.059,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 36.641,
+     "lon": 84.67,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "3 km north",
+      "lat": 36.668,
+      "lon": 84.67,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "4 km east",
+      "lat": 36.641,
+      "lon": 84.7148,
+      "note": "Landsat sees about 96 % bare ground over the block; expect sparse cover in places."
+     },
+     {
+      "name": "3 km north-east",
+      "lat": 36.668,
+      "lon": 84.7148,
+      "note": "Block median slope 9.2 deg, relief about 1585 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "reserve",
+   "status": "Reserve: cleanest surface, weaker match",
+   "rank": 6,
+   "why": "Composite score 0.58 (lower is closer) against Mons Mouton Plateau; the block stays in the top 40 in 13 % of 1,000 random re-weightings of the categories. Landsat 8/9 and Sentinel-2 find it 96 % and 95 % bare ground (vegetation 0 % and 1 %). The nearest of 166 catalogued analog sites is Ruoqiang, southern Taklimakan, 405 km away, so this counts as new on our list. Matches are strongest on ice proxy, terrain statistics, shadow structure under a low sun.",
+   "images": {
+    "twin": "/img/twin_G1.webp",
+    "eo": "/img/eo_G1.webp",
+    "target": "/img/moon_MP.webp",
+    "earth": "/img/eo_G1.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": 274.3,
+     "target": 141.0,
+     "unit": "K",
+     "note": "Earth: MODIS annual mean. Moon: Diviner region median."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Days per year the Sun stays low and circles the horizon. Only latitudes above about 70 degrees get any on Earth. Moon value is the polar constant used in scoring."
+    },
+    {
+     "label": "Shadowed share at 1.5 deg sun",
+     "earth": 0.117,
+     "target": 0.082,
+     "unit": "",
+     "note": "Terrain shadowing from the same horizon-scan code on both bodies."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": 0.0025,
+     "target": 0.178,
+     "unit": "per km2",
+     "note": "Earth is cut by water and ice, the Moon by impacts."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by terrain statistics, so verify the location before presenting.",
+    "'New' means at least 150 km from 166 catalogued analog sites and no hits in web searches only (no Scholar, ADS or CNKI); nearest known is 405 km.",
+    "Prior art exists for ranking Earth sites against lunar terrain (e.g. arXiv 2501.08584), so this is not unprecedented; the new part is a quantified south-polar terrain match."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.577,
+    "p_top40": 0.13,
+    "nearest_known": "Ruoqiang, southern Taklimakan",
+    "nearest_known_km": 405,
+    "landsat_bare": 0.96,
+    "s2_bare": 0.95,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.01,
+    "snow": 0.03,
+    "s2_snow": 0.04,
+    "best_moon": "Mons Mouton Plateau",
+    "cat_terr": 0.43,
+    "cat_multi": 0.46,
+    "cat_crater": 0.95,
+    "cat_landing": 0.74,
+    "cat_light": 0.44,
+    "cat_ice": 0.0
+   }
+  },
+  {
+   "id": "earth-zanda",
+   "name": "Zanda, western Tibet (approx.)",
+   "region": "Ngari, western Tibet",
+   "lat": 31.551,
+   "lon": 80.632,
+   "analogFor": [
+    "moon-mons-mouton-plateau"
+   ],
+   "headline": "Close to the Ngari block, but sparsely vegetated.",
+   "description": "A neighbouring block near Zanda in western Tibet, with a similar terrain score to the lead Ngari candidate, but 23 to 34 % of the surface is vegetated in satellite imagery.",
+   "matches": [
+    "Median slope 10.5 deg vs 11.0 deg at Mons Mouton Plateau",
+    "Relief 1000 m vs 5122 m",
+    "Roughness 0.91 m vs 0.89 m",
+    "Landing-flat share 48 % vs 45 %",
+    "Close on: ice proxy, multi-scale roughness, landing-slope share, terrain statistics"
+   ],
+   "shortfalls": [
+    "Mean surface temperature 274 K vs 141 K, about 133 K warmer",
+    "No circling-sun days (0 per year) vs the polar Moon's near-continuous low Sun",
+    "Crater-like pits 0.007 per km2 vs 0.178",
+    "Earth gravity, atmosphere, and no regolith",
+    "Weak on: crater-like pits"
+   ],
+   "values": {
+    "slope_deg": 10.54,
+    "roughness_m": 0.911,
+    "relief_m": 1000.0,
+    "flat_frac": 0.477,
+    "crater_density": 0.0075,
+    "shadow_frac": 0.153,
+    "temp_mean_k": 273.8,
+    "temp_max_k": 308.3,
+    "ice_proxy": 0.521,
+    "precip_mm_yr": 153.0,
+    "vegetation_ndvi": 0.184,
+    "snow_frac": 0.13
+   },
+   "tour": {
+    "spawn": {
+     "lat": 31.551,
+     "lon": 80.632,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "3 km north",
+      "lat": 31.578,
+      "lon": 80.632,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "4 km east",
+      "lat": 31.551,
+      "lon": 80.6742,
+      "note": "Landsat sees about 77 % bare ground over the block; expect sparse cover in places."
+     },
+     {
+      "name": "3 km north-east",
+      "lat": 31.578,
+      "lon": 80.6742,
+      "note": "Block median slope 10.5 deg, relief about 1000 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "reserve",
+   "status": "Reserve: 23 to 34 % vegetated",
+   "rank": 7,
+   "why": "Composite score 0.54 (lower is closer) against Mons Mouton Plateau; the block stays in the top 40 in 86 % of 1,000 random re-weightings of the categories. Landsat 8/9 and Sentinel-2 find it 77 % and 65 % bare ground (vegetation 23 % and 34 %). The nearest of 166 catalogued analog sites is Hanle, Ladakh, 208 km away, so this counts as new on our list. Matches are strongest on ice proxy, multi-scale roughness, landing-slope share.",
+   "images": {
+    "twin": "/img/twin_D2.webp",
+    "eo": "/img/eo_D2.webp",
+    "target": "/img/moon_MP.webp",
+    "earth": "/img/eo_D2.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": 273.8,
+     "target": 141.0,
+     "unit": "K",
+     "note": "Earth: MODIS annual mean. Moon: Diviner region median."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Days per year the Sun stays low and circles the horizon. Only latitudes above about 70 degrees get any on Earth. Moon value is the polar constant used in scoring."
+    },
+    {
+     "label": "Shadowed share at 1.5 deg sun",
+     "earth": 0.153,
+     "target": 0.082,
+     "unit": "",
+     "note": "Terrain shadowing from the same horizon-scan code on both bodies."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": 0.0075,
+     "target": 0.178,
+     "unit": "per km2",
+     "note": "Earth is cut by water and ice, the Moon by impacts."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by terrain statistics, so verify the location before presenting.",
+    "'New' means at least 150 km from 166 catalogued analog sites and no hits in web searches only (no Scholar, ADS or CNKI); nearest known is 208 km.",
+    "Prior art exists for ranking Earth sites against lunar terrain (e.g. arXiv 2501.08584), so this is not unprecedented; the new part is a quantified south-polar terrain match.",
+    "23 to 34 % of the block is vegetated."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.537,
+    "p_top40": 0.86,
+    "nearest_known": "Hanle, Ladakh",
+    "nearest_known_km": 208,
+    "landsat_bare": 0.77,
+    "s2_bare": 0.65,
+    "landsat_veg": 0.23,
+    "s2_veg": 0.34,
+    "snow": 0.0,
+    "s2_snow": 0.0,
+    "best_moon": "Mons Mouton Plateau",
+    "cat_terr": 0.42,
+    "cat_multi": 0.24,
+    "cat_crater": 0.74,
+    "cat_landing": 0.28,
+    "cat_light": 0.61,
+    "cat_ice": 0.0
+   }
+  },
+  {
+   "id": "earth-s-tibet-2",
+   "name": "Southern Tibet, second block (approx.)",
+   "region": "Southern Tibet",
+   "lat": 28.82,
+   "lon": 86.511,
+   "analogFor": [
+    "moon-mons-mouton-plateau",
+    "moon-nobile-rim-2"
+   ],
+   "headline": "Second southern Tibet block, flatter than the lead candidate.",
+   "description": "A second block north of the Himalaya, about 150 km from the Tingri block. It resembles the Mons Mouton Plateau but is not steep, and stays in the top 40 in 31 % of re-weightings.",
+   "matches": [
+    "Median slope 11.7 deg vs 11.0 deg at Mons Mouton Plateau",
+    "Relief 1243 m vs 5122 m",
+    "Roughness 0.82 m vs 0.89 m",
+    "Landing-flat share 45 % vs 45 %",
+    "Close on: ice proxy, multi-scale roughness"
+   ],
+   "shortfalls": [
+    "Mean surface temperature 278 K vs 141 K, about 137 K warmer",
+    "No circling-sun days (0 per year) vs the polar Moon's near-continuous low Sun",
+    "Crater-like pits 0.022 per km2 vs 0.178",
+    "Earth gravity, atmosphere, and no regolith"
+   ],
+   "values": {
+    "slope_deg": 11.73,
+    "roughness_m": 0.821,
+    "relief_m": 1243.0,
+    "flat_frac": 0.452,
+    "crater_density": 0.0225,
+    "shadow_frac": 0.098,
+    "temp_mean_k": 277.6,
+    "temp_max_k": 310.5,
+    "ice_proxy": 0.478,
+    "precip_mm_yr": 354.0,
+    "vegetation_ndvi": 0.174,
+    "snow_frac": 0.056
+   },
+   "tour": {
+    "spawn": {
+     "lat": 28.82,
+     "lon": 86.511,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "3 km north",
+      "lat": 28.847,
+      "lon": 86.511,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "4 km east",
+      "lat": 28.82,
+      "lon": 86.5521,
+      "note": "Landsat sees about 78 % bare ground over the block; expect sparse cover in places."
+     },
+     {
+      "name": "3 km north-east",
+      "lat": 28.847,
+      "lon": 86.5521,
+      "note": "Block median slope 11.7 deg, relief about 1243 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "reserve",
+   "status": "Reserve: not steep",
+   "rank": 8,
+   "why": "Composite score 0.56 (lower is closer) against Mons Mouton Plateau; the block stays in the top 40 in 31 % of 1,000 random re-weightings of the categories. Landsat 8/9 and Sentinel-2 find it 78 % and 76 % bare ground (vegetation 21 % and 20 %). The nearest of 166 catalogued analog sites is Lower Mustang, Nepal (Mars Aca, 269 km away, so this counts as new on our list. Matches are strongest on ice proxy, multi-scale roughness.",
+   "images": {
+    "twin": "/img/twin_B2.webp",
+    "eo": "/img/eo_B2.webp",
+    "target": "/img/moon_MP.webp",
+    "earth": "/img/eo_B2.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": 277.6,
+     "target": 141.0,
+     "unit": "K",
+     "note": "Earth: MODIS annual mean. Moon: Diviner region median."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Days per year the Sun stays low and circles the horizon. Only latitudes above about 70 degrees get any on Earth. Moon value is the polar constant used in scoring."
+    },
+    {
+     "label": "Shadowed share at 1.5 deg sun",
+     "earth": 0.098,
+     "target": 0.082,
+     "unit": "",
+     "note": "Terrain shadowing from the same horizon-scan code on both bodies."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": 0.0225,
+     "target": 0.178,
+     "unit": "per km2",
+     "note": "Earth is cut by water and ice, the Moon by impacts."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by terrain statistics, so verify the location before presenting.",
+    "'New' means at least 150 km from 166 catalogued analog sites and no hits in web searches only (no Scholar, ADS or CNKI); nearest known is 269 km.",
+    "Prior art exists for ranking Earth sites against lunar terrain (e.g. arXiv 2501.08584), so this is not unprecedented; the new part is a quantified south-polar terrain match.",
+    "Vegetation 20 to 21 % in imagery."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.56,
+    "p_top40": 0.31,
+    "nearest_known": "Lower Mustang, Nepal (Mars Aca",
+    "nearest_known_km": 269,
+    "landsat_bare": 0.78,
+    "s2_bare": 0.76,
+    "landsat_veg": 0.21,
+    "s2_veg": 0.2,
+    "snow": 0.0,
+    "s2_snow": 0.04,
+    "best_moon": "Mons Mouton Plateau",
+    "cat_terr": 0.5,
+    "cat_multi": 0.25,
+    "cat_crater": 0.68,
+    "cat_landing": 0.52,
+    "cat_light": 0.51,
+    "cat_ice": 0.0
+   }
+  },
+  {
+   "id": "earth-mauna-kea",
+   "name": "Mauna Kea, Hawaii (PISCES analog site)",
+   "region": "Mauna Kea, Hawaii",
+   "lat": 19.82,
+   "lon": -155.47,
+   "analogFor": [
+    "moon-mons-mouton",
+    "moon-mons-mouton-plateau"
+   ],
+   "headline": "Established lunar analog: basaltic volcano whose terrain scored 98th percentile against Mons Mouton.",
+   "description": "Mauna Kea hosts the PISCES lunar analog facility. We did not search for it: it is a validation check. Run through the same 40 m terrain pipeline, its 20 km block ranks in the 98th percentile of the discovery pool for match to Mons Mouton, which shows the engine can recognise a site people already use. Landsat classes 57 % of the block as vegetated, so the surface is far from bare.",
+   "matches": [
+    "Terrain match percentile 98",
+    "Relief 1925 m vs 2158 m at Mons Mouton"
+   ],
+   "shortfalls": [
+    "Temperature, lighting and crater values were not computed for validation sites",
+    "Earth gravity, atmosphere, and no regolith"
+   ],
+   "values": {
+    "slope_deg": 12.3,
+    "roughness_m": 0.99,
+    "relief_m": 1925.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 1476.0,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "known",
+   "status": "Known analog, used as validation",
+   "rank": 4,
+   "why": "Run through the same pipeline as the new candidates: composite 0.61 (lower is closer), 98th percentile of the discovery pool for match to Mons Mouton. Block terrain: median slope 12.3 deg, roughness 0.99 m, relief 1925 m, against 11.4 deg, 0.96 m, 2158 m at Mons Mouton. This is a validation result: the engine recognises these sites, but most other known analogs rank low on terrain alone.",
+   "images": {
+    "eo": "/img/eo_mauna_kea.webp",
+    "target": "/img/moon_MM.webp",
+    "earth": "/img/eo_mauna_kea.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": null,
+     "target": 118.3,
+     "unit": "K",
+     "note": "Not computed for validation sites."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": 0,
+     "target": 365,
+     "unit": "days",
+     "note": "Mauna Kea is at 20 degrees north: no circling sun. Not computed for Wright Valley."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": null,
+     "target": 0.152,
+     "unit": "per km2",
+     "note": "Not computed for validation sites."
+    }
+   ],
+   "caveats": [
+    "Validation site shown for context, not a new find.",
+    "Percentile is a rank among the discovery pool (validation test T1), using the composite of all categories."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.61,
+    "percentile": 97.6,
+    "nearest_known": null,
+    "nearest_known_km": 0,
+    "landsat_bare": 0.43,
+    "s2_bare": 0.44,
+    "snow": 0.0,
+    "role": "validation analog",
+    "best_moon": "MM"
+   }
+  },
+  {
+   "id": "earth-wright-valley",
+   "name": "Wright Valley, McMurdo Dry Valleys, Antarctica",
+   "region": "McMurdo Dry Valleys, Antarctica",
+   "lat": -77.52,
+   "lon": 161.85,
+   "analogFor": [
+    "moon-mons-mouton",
+    "moon-nobile-rim-2"
+   ],
+   "headline": "Established Mars and ice analog: cold desert valley that scored 85th percentile for terrain.",
+   "description": "The McMurdo Dry Valleys are a long-used cold-desert analog for Mars. Run through the same pipeline as a validation check, the Wright Valley block ranks in the 85th percentile of the discovery pool for match. It could not be fully assessed on surface cover because WorldCover stops at 60 degrees south.",
+   "matches": [
+    "Terrain match percentile 85",
+    "Relief 1508 m vs 2158 m at Mons Mouton"
+   ],
+   "shortfalls": [
+    "Temperature, lighting and crater values were not computed for validation sites",
+    "Earth gravity, atmosphere, and no regolith"
+   ],
+   "values": {
+    "slope_deg": 13.4,
+    "roughness_m": 0.7,
+    "relief_m": 1508.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 87.0,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "references": [
+    {
+     "title": "LRO LOLA data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm"
+    },
+    {
+     "title": "LRO Diviner data archive (PDS Geosciences Node)",
+     "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    }
+   ],
+   "body": "moon",
+   "kind": "known",
+   "status": "Known analog, used as validation",
+   "rank": 5,
+   "why": "Run through the same pipeline as the new candidates: composite 0.73 (lower is closer), 85th percentile of the discovery pool for match to Mons Mouton. Block terrain: median slope 13.4 deg, roughness 0.70 m, relief 1508 m, against 11.4 deg, 0.96 m, 2158 m at Mons Mouton. This is a validation result: the engine recognises these sites, but most other known analogs rank low on terrain alone.",
+   "images": {
+    "eo": "/img/eo_dry_valleys.webp",
+    "target": "/img/moon_MM.webp",
+    "earth": "/img/eo_dry_valleys.webp"
+   },
+   "gaps": [
+    {
+     "label": "Mean surface temperature",
+     "earth": null,
+     "target": 118.3,
+     "unit": "K",
+     "note": "Not computed for validation sites."
+    },
+    {
+     "label": "Circling-sun days per year",
+     "earth": null,
+     "target": 365,
+     "unit": "days",
+     "note": "Mauna Kea is at 20 degrees north: no circling sun. Not computed for Wright Valley."
+    },
+    {
+     "label": "Crater-like pits",
+     "earth": null,
+     "target": 0.152,
+     "unit": "per km2",
+     "note": "Not computed for validation sites."
+    }
+   ],
+   "caveats": [
+    "Validation site shown for context, not a new find.",
+    "Percentile is a rank among the discovery pool (validation test T1), using the composite of all categories."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.73,
+    "percentile": 85.4,
+    "nearest_known": null,
+    "nearest_known_km": 0,
+    "landsat_bare": 0.53,
+    "s2_bare": 0.66,
+    "snow": 0.35,
+    "role": "validation analog",
+    "best_moon": "MM"
+   }
+  },
+  {
+   "id": "earth-atacama-yungay",
+   "name": "Atacama Desert, Yungay (Chile)",
+   "region": "Atacama Desert, Chile",
+   "lat": -24.08,
+   "lon": -69.95,
+   "analogFor": [
+    "mars-gale",
+    "mars-oxia"
+   ],
+   "headline": "Hyperarid desert whose oxidising soils are a classic analog for Mars surface chemistry.",
+   "description": "The hyperarid core of the Atacama, around Yungay, is one of the driest places on Earth. Its soils have extremely low organic content and microbial activity, and are used as an analog for Mars's oxidising, dry regolith. The match is about surface chemistry and aridity rather than terrain: Yungay is flat, so it does not match the steep ground at Gale.",
+   "matches": [
+    "Hyperarid: very little rain",
+    "Oxidising, organic-poor soils (Navarro-Gonzalez et al. 2003)"
+   ],
+   "shortfalls": [
+    "Much warmer and thicker air than Mars",
+    "Terrain is flatter than most Mars landing-site windows"
+   ],
+   "values": {
+    "slope_deg": 1.4,
+    "roughness_m": 1.24,
+    "relief_m": 322.0,
+    "flat_frac": 0.944,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 7.0,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "references": [
+    {
+     "title": "Navarro-Gonzalez et al. 2003, Mars-like soils in the Atacama Desert, Chile, and the dry limit of microbial life. Science",
+     "url": "https://doi.org/10.1126/science.1089143"
+    }
+   ],
+   "body": "mars",
+   "kind": "known",
+   "status": "Known analog, literature",
+   "rank": 1,
+   "why": "The hyperarid core of the Atacama, around Yungay, is one of the driest places on Earth. Its soils have extremely low organic content and microbial activity, and are used as an analog for Mars's oxidising, dry regolith. The match is about surface chemistry and aridity rather than terrain: Yungay is flat, so it does not match the steep ground at Gale. Terrain values are from the nearest 200 m block of the Mars pool (12 km away): median slope 1.4 deg, relief 322 m.",
+   "images": {
+    "target": "/img/mars_gale.webp"
+   },
+   "gaps": [
+    {
+     "label": "Annual precipitation",
+     "earth": 7.0,
+     "target": null,
+     "unit": "mm/yr",
+     "note": "No liquid precipitation on present-day Mars; no sourced Mars figure in the data pack."
+    },
+    {
+     "label": "Median slope",
+     "earth": 1.4,
+     "target": 10.15,
+     "unit": "deg",
+     "note": "Earth value is a 200 m-scale pool block; Mars value is a 200 m window, so indicative only."
+    }
+   ],
+   "caveats": [
+    "Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
+    "Place name approximate; coordinates are the well-known site location."
+   ],
+   "valueSource": "literature",
+   "stats": {
+    "role": "literature analog",
+    "nearest_pool_block_km": 11.7
+   }
+  },
+  {
+   "id": "earth-lake-salda",
+   "name": "Lake Salda, Turkey",
+   "region": "Lake Salda, Turkey",
+   "lat": 37.55,
+   "lon": 29.68,
+   "analogFor": [
+    "mars-jezero"
+   ],
+   "headline": "Alkaline lake with hydromagnesite shorelines, studied as an analog for Jezero's carbonates.",
+   "description": "Lake Salda in southwest Turkey is an alkaline lake with Mg-carbonate (hydromagnesite) deposits. It has been proposed as an analog for the Mg-rich carbonate seen from orbit at Jezero crater, the Perseverance landing site. The match is mineralogical and about a lake margin environment, not about terrain.",
+   "matches": [
+    "Mg-carbonate shoreline deposits",
+    "Lake margin setting like a Jezero delta lake"
+   ],
+   "shortfalls": [
+    "Wet, vegetated catchment unlike Mars",
+    "Not a terrain match"
+   ],
+   "values": {
+    "slope_deg": null,
+    "roughness_m": null,
+    "relief_m": null,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": null,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "references": [],
+   "body": "mars",
+   "kind": "known",
+   "status": "Known analog, literature",
+   "rank": 2,
+   "why": "Lake Salda in southwest Turkey is an alkaline lake with Mg-carbonate (hydromagnesite) deposits. It has been proposed as an analog for the Mg-rich carbonate seen from orbit at Jezero crater, the Perseverance landing site. The match is mineralogical and about a lake margin environment, not about terrain. No terrain values were computed for this site.",
+   "images": {
+    "target": "/img/mars_jezero.webp"
+   },
+   "gaps": [
+    {
+     "label": "Annual precipitation",
+     "earth": null,
+     "target": null,
+     "unit": "mm/yr",
+     "note": "No liquid precipitation on present-day Mars; no sourced Mars figure in the data pack."
+    },
+    {
+     "label": "Median slope",
+     "earth": null,
+     "target": 1.95,
+     "unit": "deg",
+     "note": "Earth value is a 200 m-scale pool block; Mars value is a 200 m window, so indicative only."
+    }
+   ],
+   "caveats": [
+    "Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
+    "Place name approximate; coordinates are the well-known site location.",
+    "No 200 m pool block within 50 km (nearest 693 km), so terrain values are blank.",
+    "No reference attached: verify a citation before presenting."
+   ],
+   "valueSource": "literature",
+   "stats": {
+    "role": "literature analog",
+    "nearest_pool_block_km": 692.8
+   }
+  },
+  {
+   "id": "earth-rio-tinto",
+   "name": "Rio Tinto, Spain",
+   "region": "Rio Tinto, Huelva, Spain",
+   "lat": 37.72,
+   "lon": -6.56,
+   "analogFor": [
+    "mars-meridiani"
+   ],
+   "headline": "Acidic, iron- and sulfate-rich river used as an analog for Meridiani's jarosite and hematite.",
+   "description": "The Rio Tinto in southwest Spain is an acidic, iron-rich river with sulfate minerals such as jarosite. It is used as an analog for the sulfate and hematite-bearing rocks that Opportunity found at Meridiani Planum. The match is about water chemistry and minerals, not terrain.",
+   "matches": [
+    "Acid, iron-rich waters",
+    "Iron sulfates and oxides as at Meridiani"
+   ],
+   "shortfalls": [
+    "Biologically active; Mars is not known to be",
+    "Hillier than Meridiani's very flat plain"
+   ],
+   "values": {
+    "slope_deg": null,
+    "roughness_m": null,
+    "relief_m": null,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": null,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": null,
+    "vegetation_ndvi": null,
+    "snow_frac": null
+   },
+   "references": [
+    {
+     "title": "Fernandez-Remolar et al. 2005, The Rio Tinto Basin, Spain: mineralogy, sedimentary geobiology, and implications for interpretation of outcrop on Mars. Earth and Planetary Science Letters",
+     "url": "https://doi.org/10.1016/j.epsl.2005.09.010"
+    }
+   ],
+   "body": "mars",
+   "kind": "known",
+   "status": "Known analog, literature",
+   "rank": 3,
+   "why": "The Rio Tinto in southwest Spain is an acidic, iron-rich river with sulfate minerals such as jarosite. It is used as an analog for the sulfate and hematite-bearing rocks that Opportunity found at Meridiani Planum. The match is about water chemistry and minerals, not terrain. No terrain values were computed for this site.",
+   "images": {
+    "target": "/img/mars_meridiani.webp"
+   },
+   "gaps": [
+    {
+     "label": "Annual precipitation",
+     "earth": null,
+     "target": null,
+     "unit": "mm/yr",
+     "note": "No liquid precipitation on present-day Mars; no sourced Mars figure in the data pack."
+    },
+    {
+     "label": "Median slope",
+     "earth": null,
+     "target": 1.07,
+     "unit": "deg",
+     "note": "Earth value is a 200 m-scale pool block; Mars value is a 200 m window, so indicative only."
+    }
+   ],
+   "caveats": [
+    "Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
+    "Place name approximate; coordinates are the well-known site location.",
+    "No 200 m pool block within 50 km (nearest 562 km), so terrain values are blank."
+   ],
+   "valueSource": "literature",
+   "stats": {
+    "role": "literature analog",
+    "nearest_pool_block_km": 561.9
+   }
   }
+ ],
+ "provenance": {
+  "mock": false,
+  "datasets": [
+   {
+    "name": "Copernicus GLO-30 DEM",
+    "version": "2021 release",
+    "dateRange": "2011 to 2015 acquisition",
+    "url": "https://registry.opendata.aws/copernicus-dem/",
+    "notes": "235 tiles shortlisted for cold, dry, rugged terrain; resampled to 40 m, cut into 20 by 20 km blocks."
+   },
+   {
+    "name": "LRO LOLA LDEM_80S_40M",
+    "version": "40 m south polar DEM",
+    "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm",
+    "notes": "Moon slope, roughness, relief, crater-like pits, landing share, shadow structure."
+   },
+   {
+    "name": "LRO Diviner polar resource products (PRP)",
+    "version": "south polar",
+    "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm",
+    "notes": "Annual mean and maximum temperature, ice-stability fractions per region."
+   },
+   {
+    "name": "MODIS MYD11A2 land surface temperature",
+    "version": "Collection 6.1",
+    "dateRange": "2019 to 2023",
+    "url": "https://planetarycomputer.microsoft.com/dataset/modis-11A2-061",
+    "notes": "Read anonymously via Microsoft Planetary Computer. Annual mean, daytime 95th percentile, frozen-observation share."
+   },
+   {
+    "name": "Landsat 8/9 and Sentinel-2 surface check",
+    "version": "Level-2",
+    "url": "https://planetarycomputer.microsoft.com/",
+    "notes": "Bare, vegetated, snow shares for the featured blocks (eo_verify.csv)."
+   },
+   {
+    "name": "ESA WorldCover (surface gate)",
+    "version": "v200",
+    "url": "https://esa-worldcover.org/",
+    "notes": "Used to gate out forest, farmland, water and snow-covered blocks before ranking."
+   }
+  ],
+  "processing": "Moon cards: three 'new' blocks and three reserves from results/v3_final_table.csv (composite across 10 categories, stability over 1,000 random re-weightings, distance to 166 catalogued sites, Landsat 8/9 and Sentinel-2 surface check). Values are the block's own values from earth_cells.json. 'Known' Moon cards (Mauna Kea, Wright Valley) are validation analogs. Mars cards are literature analogs unless a Mars Earth-match file was found. Place names are approximate; 'new' means at least 150 km from catalogued sites and nothing found in web searches only.",
+  "generatedAt": "2026-11-15",
+  "run": "Terralog discovery run, 2026-11-14/15"
+ }
 }

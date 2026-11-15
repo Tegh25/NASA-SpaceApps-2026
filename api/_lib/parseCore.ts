@@ -74,7 +74,7 @@ Return ONLY a JSON object, no prose, no code fences, with exactly this shape:
 
 Rules:
 - Use only keys from the registry. Never invent keys.
-- targets are normalized 0..1 positions on each feature's range above. Map qualitative words onto that range, for example "very cold" sets temp_min_k near 0.05 with weight 3; "flat" sets slope_deg near 0.1; "no vegetation" sets vegetation_ndvi 0.
+- targets are normalized 0..1 positions on each feature's range above. Map qualitative words onto that range, for example "very cold" sets temp_mean_k near 0.05 with weight 3; "flat" sets slope_deg near 0.1; "no vegetation" sets vegetation_ndvi 0.
 - Only set a target when the text implies one. Leave other features out entirely.
 - weights: 3 = central to the description, 2 = clearly stated, 1 = implied or minor. Every key in targets needs a weight.
 - required: only explicit must-haves ("must have", "needs", "no vegetation at all"). Every required key must also be in targets.
