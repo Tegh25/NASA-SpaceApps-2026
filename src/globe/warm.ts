@@ -19,7 +19,7 @@ export async function warmTour(siteId: string, spawn: { lat: number; lon: number
   if (!spawn || groundBySite.has(siteId) || !v.terrainProvider.availability) return;
   try {
     const [p] = await Cesium.sampleTerrainMostDetailed(v.terrainProvider, [Cesium.Cartographic.fromDegrees(spawn.lon, spawn.lat)]);
-    if (p && Number.isFinite(p.height)) groundBySite.set(siteId, p.height);
+    if (p && Number.isFinite(p.height) && p.height > -500) groundBySite.set(siteId, p.height);
   } catch {
     /* the tour samples again on its own */
   }

@@ -49,23 +49,23 @@ export function TourView() {
     (async () => {
       const v = await whenViewer();
       if (cancelled) return;
-      // Deep links skip the prefetch on site select; give the ground sample a short head start here.
-      if (cachedGround(siteKey) === undefined) await Promise.race([warmTour(siteKey, spawn), new Promise((r) => setTimeout(r, 1500))]);
-      if (cancelled) return;
-      tileset = await getPhotorealTileset(v);
-      if (cancelled) return;
-      if (tileset) {
-        tileset.show = true;
+      // Fly in straight away. The photoreal tiles and the ground sample load alongside the flight
+      // (both are usually warm already from the site prefetch) instead of in front of it.
+      if (cachedGround(siteKey) === undefined) void warmTour(siteKey, spawn);
+      setFidelity(HAS_ION ? 'terrain' : 'low');
+      tvRef.current = new TargetViewController(v);
+      controller = new TourController(v, { spawn, tileset: null, onPointerLock: setLocked, groundHint: cachedGround(siteKey) });
+      setCtl(controller);
+      void getPhotorealTileset(v).then((ts) => {
+        if (cancelled || !ts || !controller) return;
+        tileset = ts;
+        ts.show = true;
         // Keep terrain + satellite underneath: photoreal coverage is sparse in remote
         // places like the Tibetan plateau, and hiding the globe left black holes.
         v.scene.globe.show = true;
         setFidelity('photoreal');
-      } else {
-        setFidelity(HAS_ION ? 'terrain' : 'low');
-      }
-      tvRef.current = new TargetViewController(v);
-      controller = new TourController(v, { spawn, tileset, onPointerLock: setLocked, groundHint: cachedGround(siteKey) });
-      setCtl(controller);
+        controller.setTileset(ts);
+      });
       await controller.start();
       if (cancelled) controller.stop();
     })();

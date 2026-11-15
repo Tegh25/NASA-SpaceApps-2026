@@ -8,6 +8,17 @@ const WALK_SPEED = 5;
 const SPRINT = 3;
 const LOOK_SENS = 0.0022;
 const SAMPLE_MS = 150;
+/** Full-detail height samples force tile loads under the camera, so they run rarely; cheap samples fill in. */
+const DETAILED_SAMPLE_MS = 2000;
+/** No land surface is below about -430 m (Dead Sea); lower samples are bad reads and are ignored. */
+const MIN_GROUND_M = -500;
+const plausible = (h: number | undefined): h is number => h !== undefined && Number.isFinite(h) && h > MIN_GROUND_M;
+/** Flight end height above the pre-sampled ground: close enough that the final drop is short. */
+const ARRIVE_ABOVE_GROUND_M = 150;
+/** With no height known at all, arrive above the highest analog sites (Tibetan plateau, ~5.5 km). */
+const ARRIVE_BLIND_M = 6000;
+/** Quick globe readings further than this from the last full-detail sample are ignored. */
+const QUICK_TRUST_M = 150;
 
 export interface TourPose {
   lat: number;
@@ -22,6 +33,7 @@ export interface TourPose {
 
 export interface TourOptions {
   spawn: { lat: number; lon: number; heading: number };
+  /** Photoreal tiles. May arrive after the tour started; see setTileset. */
   tileset: Cesium.Cesium3DTileset | null;
   onPointerLock: (locked: boolean) => void;
   /** Terrain height at the spawn point, sampled ahead of time (globe/warm.ts). Lets the tour start without waiting. */
@@ -34,6 +46,13 @@ export class TourController {
   private keys = new Set<string>();
   private last = performance.now();
   private lastSample = 0;
+  private lastDetailed = 0;
+  /** Detailed height minus globe height at the last detailed sample, so cheap samples line up with it. */
+  private groundOffset = 0;
+  /** False until a trusted height exists (pre-sampled or full detail); the landing holds altitude until then. */
+  private groundKnown = false;
+  /** Height from the last full-detail sample; quick globe readings must stay near it. */
+  private lastDetailedH: number | null = null;
   private sampling = false;
   private removePreRender: (() => void) | null = null;
   private cleanup: (() => void)[] = [];
@@ -63,9 +82,17 @@ export class TourController {
     };
     if (opts.groundHint !== undefined) {
       this.pose.ground = opts.groundHint;
+      this.lastDetailedH = opts.groundHint;
+      this.groundKnown = true;
       // Arrive just above the real ground instead of at a fixed 2.5 km: a short drop, fewer tiles to load.
-      this.pose.height = opts.groundHint + 600;
+      this.pose.height = opts.groundHint + ARRIVE_ABOVE_GROUND_M;
     }
+  }
+
+  /** Attach the photoreal tileset once it has loaded; the flight does not wait for it. */
+  setTileset(ts: Cesium.Cesium3DTileset | null) {
+    this.opts.tileset = ts;
+    this.lastDetailed = 0;
   }
 
   async start() {
@@ -73,6 +100,9 @@ export class TourController {
     const ssc = v.scene.screenSpaceCameraController;
     ssc.enableInputs = false;
     const reduced = prefersReducedMotion();
+    // Cold start (deep link): no trusted height yet, so arrive above the highest sites, never into the
+    // ground. Globe tiles seen from orbit are too coarse to aim with (they read 2.5 km low in Tibet).
+    if (this.opts.groundHint === undefined) this.pose.height = ARRIVE_BLIND_M;
     await new Promise<void>((resolve) => {
       v.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(this.pose.lon, this.pose.lat, this.pose.height),
@@ -83,10 +113,10 @@ export class TourController {
       });
     });
     this.pose.pitch = Cesium.Math.toRadians(-25);
-    // With a pre-sampled height, refine in the background; otherwise wait for the first sample.
-    if (this.opts.groundHint !== undefined) void this.sampleGround(true);
-    else await this.sampleGround(true);
-    if (reduced) {
+    // Start at once and refine in the background. With no trusted height yet the camera hovers (see
+    // tick) until the first full-detail sample lands, so nothing here has to wait.
+    void this.sampleGround(true);
+    if (reduced && this.groundKnown) {
       this.pose.height = this.pose.ground + EYE_HEIGHT;
       this.dropping = false;
     }
@@ -149,27 +179,54 @@ export class TourController {
     });
   }
 
+  private setGround(h: number) {
+    this.pose.ground = h;
+    this.groundKnown = true;
+  }
+
   private async sampleGround(force = false) {
     const now = performance.now();
-    if (this.sampling || (!force && now - this.lastSample < SAMPLE_MS)) return;
-    this.sampling = true;
+    if (!force && now - this.lastSample < SAMPLE_MS) return;
     this.lastSample = now;
     const carto = Cesium.Cartographic.fromDegrees(this.pose.lon, this.pose.lat);
+    const scene = this.viewer.scene;
+    const photoreal = !!this.opts.tileset?.show;
+
+    // Cheap path every 150 ms (also while a detailed sample is pending): the globe's already-loaded
+    // terrain, shifted by the offset measured at the last detailed sample. (scene.sampleHeight is not
+    // usable here: it measures from the current view and returned -11 km at eye level.)
+    if (this.sampling || (!force && now - this.lastDetailed < DETAILED_SAMPLE_MS)) {
+      const g = scene.globe.getHeight(carto);
+      // Coarse tiles can be kilometres off: only accept readings close to the last trusted sample.
+      if (plausible(g) && this.lastDetailedH !== null && Math.abs(g + this.groundOffset - this.lastDetailedH) < QUICK_TRUST_M) {
+        this.setGround(g + this.groundOffset);
+      }
+      return;
+    }
+
+    // Full-detail path at start, after teleports and every 2 s: may wait for tiles.
+    this.sampling = true;
+    this.lastDetailed = now;
     try {
       let h: number | undefined;
-      if (this.opts.tileset?.show) {
-        const [p] = await this.viewer.scene.sampleHeightMostDetailed([carto], [], 1);
+      if (photoreal) {
+        const [p] = await scene.sampleHeightMostDetailed([carto], [], 1);
         h = p?.height;
       } else if (this.viewer.terrainProvider.availability) {
         const [p] = await Cesium.sampleTerrainMostDetailed(this.viewer.terrainProvider, [carto]);
         h = p?.height;
       } else {
-        h = this.viewer.scene.globe.getHeight(carto) ?? 0;
+        h = scene.globe.getHeight(carto) ?? 0;
       }
-      if (h !== undefined && Number.isFinite(h)) this.pose.ground = h;
+      if (plausible(h)) {
+        this.setGround(h);
+        this.lastDetailedH = h;
+        const g = scene.globe.getHeight(carto);
+        // Bound the offset: a coarse globe tile can be far off while it is still loading.
+        this.groundOffset = plausible(g) ? Cesium.Math.clamp(h - g, -50, 50) : 0;
+      }
     } catch {
-      const g = this.viewer.scene.globe.getHeight(carto);
-      if (g !== undefined) this.pose.ground = g;
+      /* keep the last trusted height; the next detailed sample retries */
     } finally {
       this.sampling = false;
     }
@@ -177,7 +234,8 @@ export class TourController {
 
   private tick() {
     const now = performance.now();
-    const dt = Math.min(0.1, (now - this.last) / 1000);
+    const realDt = Math.min(1, (now - this.last) / 1000);
+    const dt = Math.min(0.1, realDt);
     this.last = now;
     const p = this.pose;
     const k = this.keys;
@@ -199,10 +257,13 @@ export class TourController {
 
     this.sampleGround();
     const floor = p.ground + EYE_HEIGHT;
-    if (p.mode === 'walk') {
+    if (p.mode === 'walk' && !this.groundKnown) {
+      // No height yet (cold deep link, tiles still loading): hover instead of dropping toward sea level.
+    } else if (p.mode === 'walk') {
+      // Exponential approach on real time, so a slow frame rate does not stretch the landing.
       const rate = this.dropping ? 2.2 : 10;
-      p.height += (floor - p.height) * Math.min(1, dt * rate);
-      if (this.levelling) p.pitch += (Cesium.Math.toRadians(-6) - p.pitch) * Math.min(1, dt * 2.2);
+      p.height += (floor - p.height) * (1 - Math.exp(-rate * realDt));
+      if (this.levelling) p.pitch += (Cesium.Math.toRadians(-6) - p.pitch) * (1 - Math.exp(-2.2 * realDt));
       if (this.dropping && Math.abs(p.height - floor) < 0.5) {
         this.dropping = false;
         this.levelling = false;
@@ -237,6 +298,10 @@ export class TourController {
     this.pose.height = Math.max(this.pose.height, this.pose.ground + 200);
     this.dropping = true;
     this.lastSample = 0;
+    this.lastDetailed = 0;
+    // Up to 5 km away: the old reference height may not apply, so trust only the next detailed sample.
+    this.lastDetailedH = null;
+    this.groundKnown = false;
   }
 
   teleportTo(lat: number, lon: number) {
