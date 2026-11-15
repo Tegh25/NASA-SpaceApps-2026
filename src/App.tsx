@@ -24,7 +24,7 @@ function BootSkeleton() {
         <div className="skeleton h-[38px] w-full" />
         <CardSkeletons n={4} />
       </div>
-      <div className="absolute inset-0 grid place-items-center md:left-[320px] lg:right-[400px]">
+      <div className="absolute inset-0 grid place-items-center md:left-[320px] xl:right-[400px]">
         <div className="flex flex-col items-center gap-4">
           <div className="md:hidden">
             <Logo tagline={false} />

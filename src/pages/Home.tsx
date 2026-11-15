@@ -85,7 +85,7 @@ export function Home() {
       )}
 
       {/* Middle column: the globe shows through; HUD and pencil notes sit on top. */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 md:left-[344px] lg:right-[424px]">
+      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 md:left-[344px] xl:right-[424px]">
         <GlobeHud />
         <GlobeNotes selectedId={selectedId} />
         <Intro />
@@ -96,7 +96,7 @@ export function Home() {
             type="button"
             onClick={() => setFindOpen(true)}
             aria-label="Open find panel"
-            className="glass-capsule pointer-events-auto absolute right-4 top-4 flex h-9 items-center gap-2 px-4 text-[13px] text-[var(--ink)]"
+            className="glass-capsule pointer-events-auto absolute left-4 top-4 flex h-9 items-center gap-2 px-4 text-[13px] text-[var(--ink)]"
           >
             <SlidersHorizontal size={14} aria-hidden /> Find
           </button>
@@ -111,7 +111,7 @@ export function Home() {
 
       {bp === 'tablet' && (
         <div
-          className="pointer-events-auto absolute inset-y-3 right-3 w-[400px] max-w-[calc(100%-332px-24px)]"
+          className="pointer-events-auto absolute inset-y-3 right-3 z-30 w-[400px] max-w-[calc(100%-332px-24px)]"
           style={{
             transform: selectedId || findOpen ? 'none' : 'translateX(calc(100% + 24px))',
             transition: 'transform 250ms var(--ease-out-quint)',
