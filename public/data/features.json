@@ -1,282 +1,261 @@
 {
-  "version": 1,
-  "features": [
-    {
-      "key": "elevation_m",
-      "label": "Elevation",
-      "unit": "m",
-      "group": "Terrain",
-      "description": "Earth: above sea level. Moon and Mars: relative to the reference sphere or geoid.",
-      "norm": {
-        "min": -5000,
-        "max": 6000,
-        "scale": "linear"
-      },
-      "higherIs": "higher",
-      "sources": [
-        "Copernicus GLO-30",
-        "LOLA",
-        "MOLA"
-      ]
-    },
-    {
-      "key": "slope_deg",
-      "label": "Mean slope",
-      "unit": "deg",
-      "group": "Terrain",
-      "description": "Mean slope at a 20 to 100 m baseline.",
-      "norm": {
-        "min": 0,
-        "max": 30,
-        "scale": "linear"
-      },
-      "higherIs": "steeper",
-      "sources": [
-        "Copernicus GLO-30",
-        "LOLA",
-        "MOLA"
-      ]
-    },
-    {
-      "key": "roughness_m",
-      "label": "Surface roughness",
-      "unit": "m RMS",
-      "group": "Terrain",
-      "description": "Height deviation at about a 100 m baseline.",
-      "norm": {
-        "min": 0,
-        "max": 40,
-        "scale": "log"
-      },
-      "higherIs": "rougher",
-      "sources": [
-        "Copernicus GLO-30",
-        "LOLA",
-        "MOLA"
-      ]
-    },
-    {
-      "key": "rock_fraction",
-      "label": "Rock abundance",
-      "unit": "0 to 1",
-      "group": "Terrain",
-      "description": "Fraction of surface covered by rocks. Earth: proxy from roughness and land cover.",
-      "norm": {
-        "min": 0,
-        "max": 1,
-        "scale": "linear"
-      },
-      "higherIs": "rockier",
-      "sources": [
-        "Diviner rock abundance",
-        "THEMIS",
-        "ESA WorldCover"
-      ]
-    },
-    {
-      "key": "temp_max_k",
-      "label": "Max surface temp",
-      "unit": "K",
-      "group": "Thermal",
-      "description": "Annual maximum surface temperature.",
-      "norm": {
-        "min": 200,
-        "max": 400,
-        "scale": "linear"
-      },
-      "higherIs": "hotter",
-      "sources": [
-        "ERA5",
-        "Diviner",
-        "Mars Climate Database"
-      ]
-    },
-    {
-      "key": "temp_min_k",
-      "label": "Min surface temp",
-      "unit": "K",
-      "group": "Thermal",
-      "description": "Annual minimum surface temperature.",
-      "norm": {
-        "min": 40,
-        "max": 300,
-        "scale": "linear"
-      },
-      "higherIs": "warmer",
-      "sources": [
-        "ERA5",
-        "Diviner",
-        "Mars Climate Database"
-      ]
-    },
-    {
-      "key": "temp_range_k",
-      "label": "Diurnal temp range",
-      "unit": "K",
-      "group": "Thermal",
-      "description": "Mean daily maximum minus minimum.",
-      "norm": {
-        "min": 0,
-        "max": 300,
-        "scale": "log"
-      },
-      "higherIs": "wider swing",
-      "sources": [
-        "ERA5",
-        "Diviner",
-        "Mars Climate Database"
-      ]
-    },
-    {
-      "key": "illum_fraction",
-      "label": "Sunlit fraction",
-      "unit": "0 to 1",
-      "group": "Light",
-      "description": "Fraction of the year the sun is above the local horizon. Earth: geometric, ignoring atmosphere and cloud.",
-      "norm": {
-        "min": 0,
-        "max": 1,
-        "scale": "linear"
-      },
-      "higherIs": "more sunlit",
-      "sources": [
-        "LOLA illumination maps",
-        "Computed"
-      ]
-    },
-    {
-      "key": "ice_signal",
-      "label": "Volatile or ground ice",
-      "unit": "0 to 1",
-      "group": "Volatiles and Geology",
-      "description": "Composite likelihood index for ice in or on the ground.",
-      "norm": {
-        "min": 0,
-        "max": 1,
-        "scale": "linear"
-      },
-      "higherIs": "more likely ice",
-      "sources": [
-        "LEND",
-        "Mini-RF",
-        "SHARAD",
-        "ESA CCI Permafrost"
-      ]
-    },
-    {
-      "key": "basalt_fraction",
-      "label": "Basaltic composition",
-      "unit": "0 to 1",
-      "group": "Volatiles and Geology",
-      "description": "Fraction of basaltic or volcanic terrain.",
-      "norm": {
-        "min": 0,
-        "max": 1,
-        "scale": "linear"
-      },
-      "higherIs": "more basaltic",
-      "sources": [
-        "Geologic maps",
-        "CRISM",
-        "GLiM"
-      ]
-    },
-    {
-      "key": "albedo",
-      "label": "Albedo",
-      "unit": "0 to 1",
-      "group": "Surface and Climate",
-      "description": "Visible albedo.",
-      "norm": {
-        "min": 0,
-        "max": 0.9,
-        "scale": "linear"
-      },
-      "higherIs": "brighter",
-      "sources": [
-        "MODIS",
-        "LRO WAC",
-        "TES"
-      ]
-    },
-    {
-      "key": "vegetation_ndvi",
-      "label": "Vegetation",
-      "unit": "0 to 1",
-      "group": "Surface and Climate",
-      "description": "Vegetation index. Moon and Mars are 0. Lower matches better.",
-      "norm": {
-        "min": 0,
-        "max": 0.9,
-        "scale": "linear"
-      },
-      "higherIs": "greener",
-      "sources": [
-        "MODIS NDVI"
-      ]
-    },
-    {
-      "key": "precip_mm_yr",
-      "label": "Precipitation",
-      "unit": "mm/yr",
-      "group": "Surface and Climate",
-      "description": "Annual precipitation. Moon and Mars are 0.",
-      "norm": {
-        "min": 0,
-        "max": 3000,
-        "scale": "log"
-      },
-      "higherIs": "wetter",
-      "sources": [
-        "ERA5"
-      ]
-    },
-    {
-      "key": "radiation_index",
-      "label": "Radiation exposure",
-      "unit": "0 to 1",
-      "group": "Hazards and Access",
-      "description": "Relative surface radiation index. Earth values stay low because of the atmosphere and magnetosphere.",
-      "norm": {
-        "min": 0,
-        "max": 1,
-        "scale": "linear"
-      },
-      "higherIs": "more exposed",
-      "sources": [
-        "CRaTER",
-        "RAD",
-        "Model"
-      ]
-    },
-    {
-      "key": "isolation_index",
-      "label": "Isolation",
-      "unit": "0 to 1",
-      "group": "Hazards and Access",
-      "description": "Earth: from population density and road distance. Moon and Mars: defined by the data team.",
-      "norm": {
-        "min": 0,
-        "max": 1,
-        "scale": "linear"
-      },
-      "higherIs": "more isolated",
-      "sources": [
-        "GHSL",
-        "OpenStreetMap"
-      ]
-    }
-  ],
-  "provenance": {
-    "mock": true,
-    "generatedAt": "2026-11-14T21:32:18.929Z",
-    "processing": "MOCK DATA generated by scripts/mockData.ts from simple heuristics. Not real analysis.",
-    "datasets": [
-      {
-        "name": "Natural Earth 110m land (land mask only)",
-        "url": "https://www.naturalearthdata.com/",
-        "notes": "Public domain"
-      }
-    ]
+ "version": 2,
+ "features": [
+  {
+   "key": "slope_deg",
+   "label": "Median slope",
+   "unit": "deg",
+   "group": "Terrain",
+   "description": "Median slope of the 20 km block (Earth) or region (Moon) at a 40 m baseline. Same slope code on Copernicus GLO-30 and LRO LOLA.",
+   "norm": {
+    "min": 0,
+    "max": 40,
+    "scale": "linear"
+   },
+   "higherIs": "steeper",
+   "sources": [
+    "Copernicus GLO-30",
+    "LRO LOLA LDEM_80S_40M"
+   ]
+  },
+  {
+   "key": "roughness_m",
+   "label": "Roughness",
+   "unit": "m",
+   "group": "Terrain",
+   "description": "Median residual height after fitting a plane in each 3 by 3 window (about 120 m wide), same code on both bodies.",
+   "norm": {
+    "min": 0,
+    "max": 3,
+    "scale": "linear"
+   },
+   "higherIs": "rougher",
+   "sources": [
+    "Copernicus GLO-30",
+    "LRO LOLA LDEM_80S_40M"
+   ]
+  },
+  {
+   "key": "relief_m",
+   "label": "Relief",
+   "unit": "m",
+   "group": "Terrain",
+   "description": "Elevation range inside the block: 5th to 95th percentile. Moon regions range from 1.2 to 5.1 km.",
+   "norm": {
+    "min": 0,
+    "max": 5000,
+    "scale": "linear"
+   },
+   "higherIs": "more relief",
+   "sources": [
+    "Copernicus GLO-30",
+    "LRO LOLA LDEM_80S_40M"
+   ]
+  },
+  {
+   "key": "flat_frac",
+   "label": "Landing-flat share (< 10 deg)",
+   "unit": "",
+   "group": "Terrain",
+   "description": "Share of the block with slope under 10 degrees at 40 m, a rough proxy for landable ground.",
+   "norm": {
+    "min": 0,
+    "max": 1,
+    "scale": "linear"
+   },
+   "higherIs": "flatter",
+   "sources": [
+    "Copernicus GLO-30",
+    "LRO LOLA LDEM_80S_40M"
+   ]
+  },
+  {
+   "key": "crater_density",
+   "label": "Crater-like pits",
+   "unit": "per km2",
+   "group": "Terrain",
+   "description": "Closed depressions per km2 found by the same detector on both bodies. Earth blocks have few (0 to 0.03 typical), Moon regions 0.04 to 0.21.",
+   "norm": {
+    "min": 0,
+    "max": 0.25,
+    "scale": "linear"
+   },
+   "higherIs": "more pits",
+   "sources": [
+    "Copernicus GLO-30",
+    "LRO LOLA LDEM_80S_40M"
+   ]
+  },
+  {
+   "key": "shadow_frac",
+   "label": "Shadowed share, sun 1.5 deg",
+   "unit": "",
+   "group": "Lighting",
+   "description": "Share of the block that never sees a sun 1.5 degrees above the horizon in any direction, a proxy for permanent shadow under the low polar sun.",
+   "norm": {
+    "min": 0,
+    "max": 0.5,
+    "scale": "linear"
+   },
+   "higherIs": "more shadow",
+   "sources": [
+    "Copernicus GLO-30",
+    "LRO LOLA LDEM_80S_40M"
+   ]
+  },
+  {
+   "key": "temp_mean_k",
+   "label": "Mean surface temperature",
+   "unit": "K",
+   "group": "Climate",
+   "description": "Annual mean land surface temperature. Earth: MODIS MYD11A2 (2019 to 2023). Moon: Diviner annual average, median over the region. The gap is large: Moon 105 to 153 K, Earth blocks about 250 to 297 K.",
+   "norm": {
+    "min": 80,
+    "max": 320,
+    "scale": "linear"
+   },
+   "higherIs": "warmer",
+   "sources": [
+    "MODIS MYD11A2 C6.1",
+    "LRO Diviner"
+   ]
+  },
+  {
+   "key": "temp_max_k",
+   "label": "Max surface temperature",
+   "unit": "K",
+   "group": "Climate",
+   "description": "Earth: 95th percentile of MODIS daytime land surface temperature. Moon: median of the Diviner maximum over the region. Different statistics, so compare loosely.",
+   "norm": {
+    "min": 180,
+    "max": 340,
+    "scale": "linear"
+   },
+   "higherIs": "hotter",
+   "sources": [
+    "MODIS MYD11A2 C6.1",
+    "LRO Diviner"
+   ]
+  },
+  {
+   "key": "ice_proxy",
+   "label": "Ice / frozen-ground proxy",
+   "unit": "",
+   "group": "Ice and surface",
+   "description": "Not the same quantity on both bodies. Earth: share of MODIS observations that are frozen. Moon: share of the region where Diviner temperatures allow ice to be stable within the top metre or so. Read it as 'how ice-friendly', not as ice amount.",
+   "norm": {
+    "min": 0,
+    "max": 1,
+    "scale": "linear"
+   },
+   "higherIs": "more ice-friendly",
+   "sources": [
+    "MODIS MYD11A2 C6.1",
+    "LRO Diviner PRP"
+   ]
+  },
+  {
+   "key": "precip_mm_yr",
+   "label": "Precipitation",
+   "unit": "mm/yr",
+   "group": "Climate",
+   "description": "Earth: NASA POWER climatology (mm per day times 365). Moon: 0.",
+   "norm": {
+    "min": 0,
+    "max": 3000,
+    "scale": "log"
+   },
+   "higherIs": "wetter",
+   "sources": [
+    "NASA POWER"
+   ]
+  },
+  {
+   "key": "vegetation_ndvi",
+   "label": "Vegetation (NDVI max)",
+   "unit": "index",
+   "group": "Ice and surface",
+   "description": "Peak NDVI in 2019 to 2023 from MODIS MYD13Q1 on Earth; 0 on the Moon. Values above about 0.2 mean sparse to dense plant cover.",
+   "norm": {
+    "min": 0,
+    "max": 1,
+    "scale": "linear"
+   },
+   "higherIs": "greener",
+   "sources": [
+    "MODIS MYD13Q1 C6.1"
+   ]
+  },
+  {
+   "key": "snow_frac",
+   "label": "Snow cover share",
+   "unit": "",
+   "group": "Ice and surface",
+   "description": "Share of valid MODIS MYD10A2 observations with snow (Earth); 0 on the Moon.",
+   "norm": {
+    "min": 0,
+    "max": 1,
+    "scale": "linear"
+   },
+   "higherIs": "snowier",
+   "sources": [
+    "MODIS MYD10A2 C6.1"
+   ]
   }
+ ],
+ "provenance": {
+  "mock": false,
+  "datasets": [
+   {
+    "name": "Copernicus GLO-30 DEM",
+    "version": "2021 release",
+    "dateRange": "2011 to 2015 acquisition",
+    "url": "https://registry.opendata.aws/copernicus-dem/",
+    "notes": "235 tiles shortlisted for cold, dry, rugged terrain; resampled to 40 m, cut into 20 by 20 km blocks."
+   },
+   {
+    "name": "LRO LOLA LDEM_80S_40M",
+    "version": "40 m south polar DEM",
+    "url": "https://pds-geosciences.wustl.edu/missions/lro/lola.htm",
+    "notes": "Moon slope, roughness, relief, crater-like pits, landing share, shadow structure."
+   },
+   {
+    "name": "LRO Diviner polar resource products (PRP)",
+    "version": "south polar",
+    "url": "https://pds-geosciences.wustl.edu/missions/lro/diviner.htm",
+    "notes": "Annual mean and maximum temperature, ice-stability fractions per region."
+   },
+   {
+    "name": "MODIS MYD11A2 land surface temperature",
+    "version": "Collection 6.1",
+    "dateRange": "2019 to 2023",
+    "url": "https://planetarycomputer.microsoft.com/dataset/modis-11A2-061",
+    "notes": "Read anonymously via Microsoft Planetary Computer. Annual mean, daytime 95th percentile, frozen-observation share."
+   },
+   {
+    "name": "MODIS MYD13Q1 NDVI",
+    "version": "Collection 6.1",
+    "dateRange": "2019 to 2023",
+    "url": "https://planetarycomputer.microsoft.com/dataset/modis-13Q1-061",
+    "notes": "Peak NDVI per block."
+   },
+   {
+    "name": "MODIS MYD10A2 snow cover",
+    "version": "Collection 6.1",
+    "dateRange": "2019 to 2023",
+    "url": "https://planetarycomputer.microsoft.com/dataset/modis-10A2-061",
+    "notes": "Share of valid observations with snow."
+   },
+   {
+    "name": "NASA POWER climatology",
+    "version": "monthly climatology",
+    "dateRange": "long-term mean",
+    "url": "https://power.larc.nasa.gov/",
+    "notes": "Precipitation in mm per day, multiplied by 365."
+   }
+  ],
+  "processing": "Twelve features shared by Earth blocks and Moon regions. Terrain features come from the same slope, roughness and depression code run on Copernicus GLO-30 (resampled to 40 m) and on LOLA 40 m. Climate features are MODIS and NASA POWER on Earth and Diviner on the Moon. ice_proxy and temp_max_k use different statistics on each body (see descriptions). Norm ranges are fixed so that Moon and Earth values both fall on-scale.",
+  "generatedAt": "2026-11-15",
+  "run": "Terralog discovery run, 2026-11-14/15"
+ }
 }

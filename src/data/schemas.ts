@@ -56,6 +56,10 @@ export const TargetSchema = z.object({
   heightmap: z.string().optional(),
   imagery: z.string().optional(),
   sources: z.array(z.string()).default([]),
+  /** Short code from the discovery tables, e.g. "SP" for Slater Plain. */
+  code: z.string().optional(),
+  /** computed = from orbital data by our pipeline; literature = cited values. */
+  valueSource: z.enum(['computed', 'literature']).optional(),
 });
 
 export const TargetsFileSchema = z.object({
@@ -111,6 +115,47 @@ export const FeaturedSiteSchema = z.object({
     })
     .optional(),
   references: z.array(z.object({ title: z.string(), url: z.string() })).default([]),
+
+  // ---- Redesign extensions (all optional; see data/README.md) ----
+  /** Which body this card is listed under on the home page. Falls back to the body of analogFor[0]. */
+  body: BodySchema.optional(),
+  /** new = engine-found candidate, known = established analog, reserve = behind "More candidates". */
+  kind: z.enum(['new', 'known', 'reserve']).optional(),
+  /** Free-text status, e.g. "Confirmed", "Conditional: glacier in one corner". */
+  status: z.string().optional(),
+  /** Display order on the home page (lower first). */
+  rank: z.number().optional(),
+  /** Curated "why it matches" text, 3 to 4 sentences, from real numbers. */
+  why: z.string().optional(),
+  /** Hero images, paths relative to the site root (e.g. "/img/twin_D1.webp"). */
+  images: z
+    .object({
+      earth: z.string().optional(),
+      target: z.string().optional(),
+      twin: z.string().optional(),
+      eo: z.string().optional(),
+    })
+    .optional(),
+  /** Numeric gaps stated plainly, e.g. temperature and lighting. */
+  gaps: z
+    .array(
+      z.object({
+        label: z.string(),
+        earth: z.number().nullable(),
+        target: z.number().nullable(),
+        unit: z.string().default(''),
+        note: z.string().default(''),
+      }),
+    )
+    .default([]),
+  /** Honesty caveats (approximate names, vegetation share, etc.). */
+  caveats: z.array(z.string()).default([]),
+  /** Provenance of the values: computed from EO data, or literature values. */
+  valueSource: z.enum(['computed', 'literature']).optional(),
+  /** Free-form extra numbers (composite, stability, nearest known km, surface check). */
+  stats: z.record(z.string(), z.union([z.number(), z.string(), z.null()])).optional(),
+  /** Twin Terrain Lab: matching Earth block and Moon region heightmaps at the same 40 m scale (paths relative to /data/). */
+  twin: z.object({ earthHeightmap: z.string(), moonHeightmap: z.string() }).optional(),
 });
 
 export const FeaturedFileSchema = z.object({
@@ -126,6 +171,8 @@ export const HeightmapSchema = z.object({
   maxElevation: z.number(),
   encoding: z.literal('int16-base64'),
   data: z.string(),
+  /** Slope histogram and relief percentiles (see scripts/build_twin_terrain.py). */
+  stats: z.record(z.string(), z.any()).optional(),
 });
 
 export type Provenance = z.infer<typeof ProvenanceSchema>;

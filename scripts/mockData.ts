@@ -412,7 +412,7 @@ const TARGETS: Target[] = [
 ];
 
 // ---------- featured analogs ----------
-type Seed = Omit<FeaturedSite, 'score' | 'values'> & { overrides: Vals; tags?: string[] };
+type Seed = Omit<FeaturedSite, 'score' | 'values' | 'gaps' | 'caveats'> & Partial<Pick<FeaturedSite, 'gaps' | 'caveats'>> & { overrides: Vals; tags?: string[] };
 const SEEDS: Seed[] = [
   {
     id: 'devon-island-haughton',
@@ -675,7 +675,7 @@ function main() {
       const res = scoreVector(valuesGetter(norm), queryFromTarget(t, FEATURES));
       if (res) score[tid] = Math.round(res.score);
     }
-    return { ...s, values: v, score, tour: s.tour && { ...s.tour, waypoints: waypointsFor(s.lat, s.lon) } };
+    return { gaps: [], caveats: [], ...s, values: v, score, tour: s.tour && { ...s.tour, waypoints: waypointsFor(s.lat, s.lon) } };
   });
   writeFileSync(
     join(OUT, 'featured_analogs.json'),
