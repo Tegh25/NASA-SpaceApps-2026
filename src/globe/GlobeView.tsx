@@ -176,6 +176,25 @@ export function GlobeView({ hidden, interactive }: Props) {
     });
   }, [data, selectedId, ready, interactive]);
 
+  // Return to the whole-Earth view when the selection is cleared or the logo is clicked.
+  const homeNonce = useApp((s) => s.homeNonce);
+  const prevHome = useRef({ selectedId, homeNonce });
+  useEffect(() => {
+    const prev = prevHome.current;
+    prevHome.current = { selectedId, homeNonce };
+    const v = viewerRef.current;
+    if (!v || !interactive) return;
+    const cleared = prev.selectedId !== null && selectedId === null;
+    const logoClicked = prev.homeNonce !== homeNonce;
+    if (!cleared && !logoClicked) return;
+    if (selectedId !== null) return;
+    v.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(-40, 25, 2.2e7),
+      orientation: { heading: 0, pitch: Cesium.Math.toRadians(-90), roll: 0 },
+      duration: prefersReducedMotion() ? 0 : 1.5,
+    });
+  }, [selectedId, homeNonce, interactive]);
+
   const tipSite = tip && data ? getSite(data, tip.id) : null;
   const tipResult = tip ? results.find((r) => r.id === tip.id) : null;
 

@@ -5,6 +5,7 @@ import { HAS_ION } from '../globe/viewer';
 import { formatLatLon } from '../lib/geo';
 import { GLOBAL_LIMITS } from '../lib/sites';
 import { useSiteAnalysis } from '../lib/useSite';
+import { useApp } from '../state/store';
 import { FeatureTable } from './FeatureTable';
 import { RadarChart } from './RadarChart';
 import { Chip, ScoreGauge, SectionTitle, Segmented } from './common';
@@ -15,7 +16,10 @@ export function SiteDetailPanel({ id }: { id: string }) {
   const [copied, setCopied] = useState(false);
   const [view, setView] = useState<'table' | 'radar'>('table');
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const close = () => navigate(`/${window.location.search}`);
+  const close = () => {
+    useApp.getState().goHome();
+    navigate(`/${window.location.search}`);
+  };
 
   useEffect(() => {
     headingRef.current?.focus();

@@ -32,6 +32,8 @@ interface AppState {
   selectedId: string | null;
   hoveredId: string | null;
   drawerOpen: boolean;
+  /** Bumped to ask the globe to return to the whole-Earth view. */
+  homeNonce: number;
 
   targetViewProfile: TargetViewProfile;
   fidelity: Fidelity;
@@ -47,6 +49,7 @@ interface AppState {
   setQuery: (q: ParsedQuery, source: QuerySource, presetId?: string | null) => void;
   reset: () => void;
   select: (id: string | null) => void;
+  goHome: () => void;
   hover: (id: string | null) => void;
   setShowFeatured: (v: boolean) => void;
   setDrawerOpen: (v: boolean) => void;
@@ -99,6 +102,7 @@ export const useApp = create<AppState>((set, get) => {
     selectedId: null,
     hoveredId: null,
     drawerOpen: false,
+    homeNonce: 0,
     targetViewProfile: 'off',
     fidelity: 'low',
 
@@ -201,6 +205,7 @@ export const useApp = create<AppState>((set, get) => {
       });
     },
     select: (id) => set({ selectedId: id }),
+    goHome: () => set((st) => ({ homeNonce: st.homeNonce + 1 })),
     hover: (id) => set({ hoveredId: id }),
     setShowFeatured: (v) => set({ showFeatured: v }),
     setDrawerOpen: (v) => set({ drawerOpen: v }),

@@ -12,7 +12,7 @@ import { SiteDetailPanel } from '../ui/SiteDetailPanel';
 
 export function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-2.5" aria-label="Terralog home">
+    <Link to="/" onClick={() => useApp.getState().goHome()} className="flex items-center gap-2.5" aria-label="Terralog home">
       <img src="/favicon.svg" alt="" className="h-8 w-8" />
       <span>
         <span className="block text-lg font-semibold leading-none tracking-tight">Terralog</span>
