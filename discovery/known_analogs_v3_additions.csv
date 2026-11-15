@@ -1,0 +1,12 @@
+id,name,lat,lon,body,type,radius_km,confidence,source_url
+pircas_negras_pass,"Paso de Pircas Negras (Chile-Argentina border; location marker only, NOT an analog site)",-28.067,-69.300,none,terrain,10,low,https://en.wikipedia.org/wiki/Pircas_Negras_Pass
+laguna_brava_larioja,"Laguna Brava hydrothermal system, La Rioja (ExoMars project scientist visit 2010; coords approximate)",-28.30,-68.95,mars,geology,20,low,https://exploration.esa.int/web/mars/-/47994-jorge-vago-in-laguna-brava
+puna_apvc_andean_domes,"Altiplano-Puna Volcanic Complex / Andean domes (lunar silicic dome + Mars lava rheology analogs; region centre approximate)",-22.50,-67.50,both,volcanic,150,medium,https://meetingorganizer.copernicus.org/EPSC2020/EPSC2020-756.html
+mustang_nepal_marsmedics,"Lower Mustang, Nepal (Mars Academy USA Mars Medics analog mission 2019; Kagbeni area approximate)",28.80,83.75,mars,ops,30,medium,https://iafastro.directory/iac/archive/browse/IAC-19/A1/4/50533/
+pangong_tso_ladakh,"Pangong Tso, Ladakh (named in Ladakh-as-Mars-analog paper; approximate)",33.75,78.70,mars,geology,40,low,https://www.jpsonline.co.in/index.php/jop/article/download/24/20/24
+tso_kar_paleolake_radar,"Tso Kar basin paleolake / GPR permafrost-ice analog studies",33.30,78.00,mars,geology,30,medium,https://meetingorganizer.copernicus.org/EPSC2024/EPSC2024-212.html
+qaidam_basin_regional,"Qaidam Basin (Europlanet TA1 Facility 7; regional centre approximate)",37.50,93.50,mars,terrain,200,high,https://www.europlanet-society.org/?p=15968
+kumtag_wangshu_village,"Kumtag Desert 'Wangshu Village' Chang'e-3 lunar rover test ground (approximate location)",40.00,93.20,moon,ops,40,medium,https://europe.chinadaily.com.cn/china/2011-10/26/content_13982769.htm
+mongolia_northern_periglacial,"Northern Mongolia permafrost/desert boundary, Mars mid-latitude periglacial analog (JpGU 2024; location very approximate)",49.00,100.00,mars,terrain,300,low,https://confit.atlas.jp/guide/event/jpgu2024/subject/PPS06-10/date
+station_nord_greenland,"Station Nord, NE Greenland (lunar habitat test-bed siting, Arctic Today)",81.60,-16.67,moon,ops,30,low,https://www.arctictoday.com/?p=29982
+painted_hills_oregon,"Painted Hills, John Day Fossil Beds (cited as lunar-south-pole-like slope/roughness; Artemis-era HMP figure caption)",44.66,-119.64,moon,terrain,15,low,https://www.eurekalert.org/multimedia/957913
