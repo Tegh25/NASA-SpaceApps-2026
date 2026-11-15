@@ -10,8 +10,6 @@ Cursor discovers project subagents in `.cursor/agents/`, project rules in `.curs
 
 ## 2. Start from the correct branch
 
-PR #2 is `integration` -> `main`. Its head is the branch to QA, not `main`.
-
 ```bash
 git fetch origin
 git switch integration
@@ -21,10 +19,8 @@ git pull --ff-only origin integration
 For a separate, reviewable hardening branch:
 
 ```bash
-git switch -c qa/pr2-hardening
+git switch -c qa/hardening
 ```
-
-Open a PR from `qa/pr2-hardening` into `integration`. Merging that follow-up into `integration` updates the existing PR #2. Alternatively, commit directly to `integration` if that is your team's agreed workflow.
 
 ## 3. Run the existing baseline before agents investigate
 
@@ -49,7 +45,7 @@ With `BACKBOARD_API_KEY` absent, `/api/parse` and `/api/explain` should use thei
 
 Use Cursor Agent in Plan mode first. Paste this prompt:
 
-> We are QA-hardening PR #2 in this repository. Read `AGENT_HANDOFF.md`, `README.md`, `data/README.md`, `discovery/HANDOFF.md`, `discovery/mars/MARS_FINDINGS.md`, and `docs/DESIGN.md`. Do not edit files yet. Coordinate three independent read-only audits in parallel: `/frontend-runtime-auditor`, `/api-integration-auditor`, and `/data-performance-auditor`. Use `/multitask` for independent work. Ask each agent to report severity P0-P3, exact file/line or route, evidence, impact, reproducible steps, and a regression-test idea. Deduplicate overlapping findings. Separate confirmed bugs from unverified risks. Do not run `npm run mock-data`, full discovery pipelines, remote downloads, or scripts that overwrite `public/data/`. Return a prioritized QA report and a test matrix before proposing fixes.
+> We are QA-hardening of this branch in this repository. Read `AGENT_HANDOFF.md`, `README.md`, `data/README.md`, `discovery/HANDOFF.md`, `discovery/mars/MARS_FINDINGS.md`, and `docs/DESIGN.md`. Do not edit files yet. Coordinate three independent read-only audits in parallel: `/frontend-runtime-auditor`, `/api-integration-auditor`, and `/data-performance-auditor`. Use `/multitask` for independent work. Ask each agent to report severity P0-P3, exact file/line or route, evidence, impact, reproducible steps, and a regression-test idea. Deduplicate overlapping findings. Separate confirmed bugs from unverified risks. Do not run `npm run mock-data`, full discovery pipelines, remote downloads, or scripts that overwrite `public/data/`. Return a prioritized QA report and a test matrix before proposing fixes.
 
 The agents are deliberately read-only. Keep the parent/orchestrating Agent as the only source-code writer.
 
@@ -65,7 +61,7 @@ For each confirmed P0/P1 issue:
 
 Use Cursor Agents Window worktrees for genuinely independent code changes. Give each coding agent its own worktree and non-overlapping files. Do not merge several agents' edits until each diff and test result has been reviewed. For audit-only work, subagents can run in parallel without separate worktrees.
 
-## 6. Minimum QA matrix for this PR
+## 6. Minimum QA matrix for this branch
 
 ### Browser and app integration
 - Home route, Moon/Mars toggle, selecting a site, clearing selection, returning to whole-Earth view, and browser back/forward.
