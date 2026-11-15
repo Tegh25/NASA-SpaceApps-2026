@@ -96,15 +96,30 @@ export async function loadAppData(): Promise<AppData> {
   };
 }
 
-export async function loadHeightmap(path: string): Promise<{ hm: Heightmap; elev: Float32Array; isMock: boolean }> {
-  const json = (await fetchJson(path)) as { provenance?: Provenance };
-  const hm = validate(path, HeightmapSchema, json);
+/**
+ * Decodes the base64 little-endian int16 payload into metres. A payload of the wrong length would otherwise
+ * give NaN elevations (too short) or an obscure RangeError (odd length), so it is rejected with a clear message.
+ */
+export function decodeHeightmap(path: string, hm: Heightmap): Float32Array {
+  if (hm.maxElevation < hm.minElevation) {
+    throw new DataError(`${path}: maxElevation ${hm.maxElevation} is below minElevation ${hm.minElevation}.`);
+  }
   const bin = atob(hm.data);
+  const expected = hm.width * hm.height * 2;
+  if (bin.length !== expected) {
+    throw new DataError(`${path}: data is ${bin.length} bytes but ${hm.width} x ${hm.height} int16 values need ${expected}.`);
+  }
   const bytes = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   const i16 = new Int16Array(bytes.buffer);
   const elev = new Float32Array(hm.width * hm.height);
   const span = hm.maxElevation - hm.minElevation;
   for (let i = 0; i < elev.length; i++) elev[i] = hm.minElevation + ((i16[i] + 32768) / 65535) * span;
-  return { hm, elev, isMock: !!json.provenance?.mock };
+  return elev;
+}
+
+export async function loadHeightmap(path: string): Promise<{ hm: Heightmap; elev: Float32Array; isMock: boolean }> {
+  const json = (await fetchJson(path)) as { provenance?: Provenance };
+  const hm = validate(path, HeightmapSchema, json);
+  return { hm, elev: decodeHeightmap(path, hm), isMock: !!json.provenance?.mock };
 }
