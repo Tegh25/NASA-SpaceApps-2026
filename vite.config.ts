@@ -79,6 +79,9 @@ export default defineConfig(({ mode }) => {
     },
     test: {
       include: ['src/**/*.test.ts', 'api/**/*.test.ts'],
+      // vitest 5.1.0 with Node 22 on Windows: the default forks and the threads pools fail every file with
+      // "Vitest failed to find the current suite". The VM pool runs them correctly.
+      pool: 'vmThreads',
     },
   };
 });
