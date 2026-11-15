@@ -1,5 +1,6 @@
 import * as Cesium from 'cesium';
 import { create } from 'zustand';
+import { hasDrawingBuffer } from '../globe/health';
 import { getViewer, prefersReducedMotion } from '../globe/viewer';
 import { getSite } from './sites';
 import { useApp } from '../state/store';
@@ -78,7 +79,8 @@ export function trackCamera(v: Cesium.Viewer): () => void {
   const run = () => {
     timer = null;
     last = performance.now();
-    if (!v.isDestroyed()) sample(v);
+    // Skip while the context is lost: getPixelSize throws on a 0 x 0 drawing buffer.
+    if (!v.isDestroyed() && hasDrawingBuffer(v.scene)) sample(v);
   };
   const onChange = () => {
     const wait = 100 - (performance.now() - last);

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { featureFetcher, handleParse } from './_lib/parseCore.js';
+import { featureFetcher, handleParse, resolveOrigin } from './_lib/parseCore.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -8,8 +8,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const fwd = req.headers['x-forwarded-for'];
   const ip = (Array.isArray(fwd) ? fwd[0] : fwd)?.split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
-  const proto = (req.headers['x-forwarded-proto'] as string) || 'https';
-  const origin = `${proto}://${req.headers.host}`;
+  const origin = resolveOrigin(req.headers.host, req.headers['x-forwarded-proto'] as string | undefined);
+  if (!origin) return res.status(400).json({ error: 'Invalid host header.' });
   const body = typeof req.body === 'string' ? safeJson(req.body) : req.body;
 
   const result = await handleParse(body, ip, {

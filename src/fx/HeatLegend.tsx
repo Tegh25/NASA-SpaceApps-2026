@@ -13,6 +13,7 @@ export function HeatLegend({ className = '' }: { className?: string }) {
   const targetName = useHeat((s) => s.targetName);
   const setOn = useHeat((s) => s.setOn);
   const count = useApp((s) => s.data?.cells.count ?? 0);
+  const isMars = useApp((s) => s.query.body === 'mars');
 
   const subject = mode === 'search' ? 'your conditions' : targetName ?? 'the target';
 
@@ -38,6 +39,11 @@ export function HeatLegend({ className = '' }: { className?: string }) {
         <p className="mt-1 text-[11px] leading-snug text-[var(--dim)]">
           Only the <span className="num">{count.toLocaleString('en')}</span> blocks our pipeline searched glow. Dark land was not searched.
         </p>
+        {isMars && (
+          <p className="mt-1 text-[11px] leading-snug text-[var(--dim)]">
+            Indicative: Mars terrain is 200 m resolution, so this match is a rough guide.
+          </p>
+        )}
       </div>
       <button
         type="button"

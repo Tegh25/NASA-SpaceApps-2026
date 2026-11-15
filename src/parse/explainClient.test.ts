@@ -31,4 +31,17 @@ describe('explainSite', () => {
     expect(b).toEqual(a);
     expect(fetchMock).toHaveBeenCalledOnce();
   });
+
+  it('does not cache a server fallback, so a later request can get LLM text', async () => {
+    const responses = [
+      new Response(JSON.stringify({ text: 'Server curated.', mode: 'curated' }), { status: 200 }),
+      new Response(JSON.stringify({ text: 'LLM text.', mode: 'llm' }), { status: 200 }),
+    ];
+    const fetchMock = vi.fn(async () => responses.shift()!);
+    vi.stubGlobal('fetch', fetchMock);
+    const site = { ...input, siteName: 'Recovering site' };
+    expect((await explainSite(site)).mode).toBe('curated');
+    expect(await explainSite(site)).toEqual({ text: 'LLM text.', mode: 'llm' });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
 });

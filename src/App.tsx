@@ -2,11 +2,13 @@ import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { GlobeView } from './globe/GlobeView';
+import { useGlobeHealth } from './globe/health';
 import { hasWebGL2 } from './globe/viewer';
 import { Home } from './pages/Home';
 import { Method } from './pages/Method';
 import { useApp } from './state/store';
 import { TourView } from './tour/TourView';
+import { ErrorBoundary } from './ui/kit/ErrorBoundary';
 import { GlassFilters } from './ui/kit/GlassFilters';
 import { CardSkeletons } from './ui/left/CardList';
 import { Logo } from './ui/left/Logo';
@@ -42,6 +44,35 @@ function BootSkeleton() {
         <div className="skeleton mb-2 h-10 w-full" />
         <div className="skeleton mb-2 h-24 w-full" />
         <div className="skeleton h-24 w-full" />
+      </div>
+    </div>
+  );
+}
+
+/** Shown when the globe's WebGL context is lost or its render loop dies; Cesium cannot recover on its own. */
+function GlobeFailureNotice() {
+  const failure = useGlobeHealth((s) => s.failure);
+  if (!failure) return null;
+  return (
+    <div className="absolute inset-0 z-50 grid place-items-center bg-black/60 p-6">
+      <div className="console notch max-w-md p-5" role="alert">
+        <div className="mb-2 flex items-center gap-2 text-[var(--bad)]">
+          <AlertTriangle size={18} aria-hidden />
+          <h1 className="text-lg font-semibold">The globe stopped drawing</h1>
+        </div>
+        <p className="mb-4 text-sm text-[var(--muted)]">
+          {failure === 'context-lost'
+            ? 'The browser reclaimed the graphics context, which can happen when the GPU is busy or too many graphics tabs are open.'
+            : 'The 3D view hit a rendering error and stopped.'}{' '}
+          Reload the page to bring it back.
+        </p>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="flex items-center gap-2 rounded-[3px] bg-[var(--moon)] px-4 py-2 text-sm font-semibold text-[#0b1220]"
+        >
+          <RefreshCw size={15} aria-hidden /> Reload
+        </button>
       </div>
     </div>
   );
@@ -95,6 +126,7 @@ export default function App() {
         <GlobeView hidden={!isGlobeRoute} interactive={interactive} />
       </div>
       {status === 'loading' && interactive && <BootSkeleton />}
+      <GlobeFailureNotice />
 
       {status === 'error' && (
         <div className="absolute inset-0 z-50 grid place-items-center bg-black/60 p-6">
@@ -120,37 +152,39 @@ export default function App() {
         </div>
       )}
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/site/:id" element={<Home />} />
-        <Route path="/tour/:id" element={<TourView />} />
-        <Route
-          path="/target/:id"
-          element={
-            <Suspense fallback={<Loading label="Loading target viewer..." />}>
-              <TargetPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/compare/:siteId/:targetId"
-          element={
-            <Suspense fallback={<Loading label="Loading comparison..." />}>
-              <ComparePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/lab/:siteId"
-          element={
-            <Suspense fallback={<Loading label="Loading terrain lab..." />}>
-              <LabPage />
-            </Suspense>
-          }
-        />
-        <Route path="/method" element={<Method />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
+      <ErrorBoundary resetKey={pathname}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/site/:id" element={<Home />} />
+          <Route path="/tour/:id" element={<TourView />} />
+          <Route
+            path="/target/:id"
+            element={
+              <Suspense fallback={<Loading label="Loading target viewer..." />}>
+                <TargetPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/compare/:siteId/:targetId"
+            element={
+              <Suspense fallback={<Loading label="Loading comparison..." />}>
+                <ComparePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/lab/:siteId"
+            element={
+              <Suspense fallback={<Loading label="Loading terrain lab..." />}>
+                <LabPage />
+              </Suspense>
+            }
+          />
+          <Route path="/method" element={<Method />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 }
