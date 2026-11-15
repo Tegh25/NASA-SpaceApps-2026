@@ -178,18 +178,19 @@ describe('real data pack', () => {
     }
   });
 
-  it('Twin Terrain Lab: every twin path exists, Earth heightmaps are 256 x 256 at 40 m', () => {
-    const twins = featured.featured.filter((f) => f.twin);
+  it('Twin Terrain Lab (Moon): every twin path exists, Earth heightmaps are 256 x 256 at 40 m', () => {
+    const twins = featured.featured.filter((f) => f.twin && f.body === 'moon');
     expect(twins.length).toBeGreaterThanOrEqual(6);
     for (const f of twins) {
       const { earthHeightmap, moonHeightmap } = f.twin!;
+      expect(moonHeightmap, f.id).toBeTruthy();
       expect(existsSync(`public/data/${earthHeightmap}`), `${f.id} ${earthHeightmap}`).toBe(true);
       expect(existsSync(`public/data/${moonHeightmap}`), `${f.id} ${moonHeightmap}`).toBe(true);
       const e = HeightmapSchema.parse(read(earthHeightmap));
       expect(e.width).toBe(256);
       expect(e.height).toBe(256);
       expect(e.metersPerPixel).toBe(40);
-      const m = HeightmapSchema.parse(read(moonHeightmap));
+      const m = HeightmapSchema.parse(read(moonHeightmap!));
       expect(m.metersPerPixel).toBe(40);
       for (const hm of [e, m]) {
         const st = hm.stats as { slopeHist: number[]; slopeP50: number; slopeP90: number; reliefM: number };
@@ -200,5 +201,78 @@ describe('real data pack', () => {
       }
       expect(read(earthHeightmap).provenance.datasets[0].name).toMatch(/Copernicus/);
     }
+  });
+
+  describe('Mars featured cards', () => {
+    const mars = featured.featured.filter((f) => f.body === 'mars');
+    const computed = mars.filter((f) => f.valueSource === 'computed');
+    const marsTargetIds = new Set(targets.targets.filter((t) => t.body === 'mars').map((t) => t.id));
+
+    it('has >= 3 new computed cards ranked ahead of the literature analogs', () => {
+      const news = computed.filter((f) => f.kind === 'new');
+      expect(news.length).toBeGreaterThanOrEqual(3);
+      for (const f of news) {
+        expect(f.stats?.nearest_known_km as number, f.id).toBeGreaterThanOrEqual(150);
+        expect(f.why?.length, f.id).toBeGreaterThan(100);
+        expect(f.description + (f.why ?? ''), f.id).not.toMatch(/unprecedented/i);
+        expect(f.caveats.join(' '), f.id).toMatch(/provisional/);
+      }
+      const lit = mars.filter((f) => f.valueSource === 'literature');
+      expect(lit.length).toBeGreaterThanOrEqual(3);
+      for (const f of lit) expect(f.kind, f.id).toBe('known');
+      const maxNewRank = Math.max(...news.map((f) => f.rank ?? 99));
+      for (const f of lit) expect(f.rank ?? 0, f.id).toBeGreaterThan(maxNewRank);
+    });
+
+    it('every analogFor id is a Mars target, every image and twin path exists', () => {
+      for (const f of mars) {
+        for (const id of f.analogFor) expect(marsTargetIds.has(id), `${f.id} -> ${id}`).toBe(true);
+        for (const [k, p] of Object.entries(f.images ?? {})) {
+          if (p) expect(existsSync(`public${p}`), `${f.id}.images.${k} ${p}`).toBe(true);
+        }
+        if (f.twin) {
+          expect(existsSync(`public/data/${f.twin.earthHeightmap}`), `${f.id} earth twin`).toBe(true);
+          expect(f.twin.marsHeightmap, f.id).toBeTruthy();
+          expect(existsSync(`public/data/${f.twin.marsHeightmap}`), `${f.id} mars twin`).toBe(true);
+        }
+      }
+    });
+
+    it('no computed card has a null composite, and values stay honest', () => {
+      expect(computed.length).toBeGreaterThanOrEqual(3);
+      for (const f of computed) {
+        expect(typeof f.stats?.composite, `${f.id} composite`).toBe('number');
+        expect(f.stats?.composite as number, f.id).toBeGreaterThan(0);
+        expect(f.stats?.nearest_known_km, f.id).not.toBeNull();
+        expect(f.values.slope_deg, f.id).not.toBeNull();
+        expect(f.values.temp_mean_k, f.id).not.toBeNull();
+        // Mars-side temperature and diurnal swing have no sourced site value: they must stay blank
+        for (const g of f.gaps.filter((x) => /temperature/i.test(x.label))) expect(g.target, `${f.id} ${g.label}`).toBeNull();
+      }
+    });
+
+    it('Mars twins: Earth block is 150 x 150 at 200 m, the Mars window matches, stats present', () => {
+      const twins = computed.filter((f) => f.twin);
+      expect(twins.length).toBeGreaterThanOrEqual(3);
+      for (const f of twins) {
+        const e = HeightmapSchema.parse(read(f.twin!.earthHeightmap));
+        const m = HeightmapSchema.parse(read(f.twin!.marsHeightmap!));
+        for (const hm of [e, m]) {
+          expect(hm.width, f.id).toBe(150);
+          expect(hm.height, f.id).toBe(150);
+          expect(hm.metersPerPixel, f.id).toBe(200);
+          expect(Buffer.from(hm.data, 'base64').length).toBe(150 * 150 * 2);
+          const st = hm.stats as { slopeHist: number[]; slopeP50: number; slopeP90: number; reliefM: number };
+          expect(st.slopeHist.length, f.id).toBe(45);
+          expect(st.slopeHist.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 2);
+          expect(st.reliefM).toBeGreaterThan(0);
+        }
+        const prov = read(f.twin!.earthHeightmap).provenance;
+        expect(prov.mock).toBe(false);
+        expect(prov.datasets[0].name).toMatch(/Copernicus/);
+        // Earth slope from the twin grid agrees with the run's value for the block (same 200 m scale)
+        expect(Math.abs((e.stats as { slopeP50: number }).slopeP50 - (f.values.slope_deg as number)), f.id).toBeLessThan(0.15);
+      }
+    });
   });
 });

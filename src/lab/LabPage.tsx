@@ -6,7 +6,7 @@ import { useApp } from '../state/store';
 import { BIN_DEG, fingerprint, histogramOverlap, type Fingerprint } from './fingerprint';
 import { LabScene, prepareHeights, type Layout } from './labScene';
 
-type Loaded = { elev: Float32Array; w: number; h: number; mpp: number; isMock: boolean };
+type Loaded = { elev: Float32Array; w: number; h: number; mpp: number; widthKm: number; isMock: boolean };
 type LoadState =
   | { status: 'loading' }
   | { status: 'done'; earth: Loaded | null; moon: Loaded | null; earthErr?: string; moonErr?: string };
@@ -15,10 +15,20 @@ const SAND = '#D9B882';
 
 function load(path: string | undefined): Promise<Loaded> {
   if (!path) return Promise.reject(new Error('No heightmap path'));
-  return loadHeightmap(path).then(({ hm, elev, isMock }) => ({ elev, w: hm.width, h: hm.height, mpp: hm.metersPerPixel, isMock }));
+  return loadHeightmap(path).then(({ hm, elev, isMock }) => ({
+    elev,
+    w: hm.width,
+    h: hm.height,
+    mpp: hm.metersPerPixel,
+    // real width of the block: 10.24 km for 256 x 40 m (Moon twins), 30 km for 150 x 200 m (Mars twins)
+    widthKm: (hm.width * hm.metersPerPixel) / 1000,
+    isMock,
+  }));
 }
 
 const fmt = (v: number, d = 1) => (Number.isFinite(v) ? v.toFixed(d) : 'n/a');
+const fmtKm = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(2));
+const fmtM = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
 
 export default function LabPage() {
   const { siteId } = useParams();
@@ -26,11 +36,12 @@ export default function LabPage() {
   const data = useApp((s) => s.data);
   const featured = data?.featured.find((f) => f.id === siteId);
   const target = data?.targets.find((t) => t.id === featured?.analogFor[0]);
-  const twin = (featured as unknown as { twin?: { earthHeightmap?: string; moonHeightmap?: string } } | undefined)?.twin;
+  const twin = featured?.twin;
   const earthPath = featured ? (twin?.earthHeightmap ?? `heightmaps/earth/${featured.id}.json`) : undefined;
-  const otherPath = featured ? (twin?.moonHeightmap ?? target?.heightmap) : undefined;
+  const otherPath = featured ? (twin?.moonHeightmap ?? twin?.marsHeightmap ?? target?.heightmap) : undefined;
   const body = target?.body ?? 'moon';
   const bodyName = body === 'mars' ? 'Mars' : 'Moon';
+  const isMars = body === 'mars';
 
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   useEffect(() => {
@@ -68,8 +79,12 @@ export default function LabPage() {
   const reduced = useMemo(() => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches, []);
   const [layout, setLayout] = useState<Layout>('side');
   const [t, setT] = useState(0);
-  const [exag, setExag] = useState(1.5);
+  const [exag, setExag] = useState(isMars ? 3 : 1.5);
   const [sunEl, setSunEl] = useState(28);
+  // Mars blocks are 30 km wide with little relief: start with more vertical exaggeration (the slider says so)
+  useEffect(() => {
+    setExag(isMars ? 3 : 1.5);
+  }, [isMars]);
   const [sunAz, setSunAz] = useState(135);
   const [contours, setContours] = useState(false);
   const [autoOrbit, setAutoOrbit] = useState(!reduced);
@@ -89,8 +104,8 @@ export default function LabPage() {
     if (state.status !== 'done' || (!earth && !moon) || !hostRef.current) return;
     let scene: LabScene;
     try {
-      const pe = earth ? prepareHeights(earth.elev, earth.w, earth.h) : null;
-      const pm = moon ? prepareHeights(moon.elev, moon.w, moon.h) : null;
+      const pe = earth ? prepareHeights(earth.elev, earth.w, earth.h, earth.widthKm) : null;
+      const pm = moon ? prepareHeights(moon.elev, moon.w, moon.h, moon.widthKm) : null;
       scene = new LabScene({
         host: hostRef.current,
         earth: pe,
@@ -184,6 +199,12 @@ export default function LabPage() {
       : featured.shortfalls
   ).slice(0, 4);
   const nameOther = target?.name ?? `${bodyName} region`;
+  const ref = earth ?? moon;
+  const blockKm = ref?.widthKm ?? 10.24;
+  const blockMpp = ref?.mpp ?? 40;
+  const sourceNote = `${earth ? 'Copernicus GLO-30' : ''}${earth && moon ? ' / ' : ''}${moon ? (isMars ? 'HRSC+MOLA blend' : 'LRO LOLA') : ''}`;
+  const sunNoonEl = Math.min(75, Math.round(90 - Math.abs(target?.lat ?? 0)));
+  const shortName = nameOther.split(' ')[0];
   const mock = !!(earth?.isMock || moon?.isMock);
 
   return (
@@ -248,18 +269,24 @@ export default function LabPage() {
         )}
       </header>
 
-      {/* HUD, bottom left */}
+      {/* HUD, bottom left: scale and sources come from the loaded grids, not constants */}
       <div className="pointer-events-none absolute bottom-[158px] left-3 z-10 hidden max-w-[300px] md:bottom-4 md:left-4 md:block">
         <div className="mb-1.5 flex items-center gap-2" aria-hidden>
           <div className="h-[7px] w-24 border-x border-b border-[var(--ink)]/70" />
-          <span className="num text-[13px]">10.24 km</span>
+          <span className="num text-[13px]">{fmtKm(blockKm)} km</span>
         </div>
         <p className="num text-[10.5px] leading-snug text-[var(--dim)]">
-          40 m per pixel, real elevation
+          {fmtM(blockMpp)} m per pixel, real elevation
           <br />
-          Copernicus GLO-30 / {body === 'mars' ? 'MOLA' : 'LRO LOLA'}
+          {sourceNote}
         </p>
-        {body !== 'mars' && <p className="mt-1 text-[11px] leading-snug text-[var(--faint)]">Moon grid is polar stereographic, not north-up.</p>}
+        {isMars ? (
+          <p className="mt-1 text-[11px] leading-snug text-[var(--faint)]">
+            Mars terrain is 200 m resolution, so slope and the overlap are indicative. The Earth block is averaged to 200 m to match.
+          </p>
+        ) : (
+          <p className="mt-1 text-[11px] leading-snug text-[var(--faint)]">Moon grid is polar stereographic, not north-up.</p>
+        )}
       </div>
 
       {/* Fingerprint panel */}
@@ -281,7 +308,7 @@ export default function LabPage() {
           {drawer ? <ChevronDown size={16} aria-hidden /> : <ChevronUp size={16} aria-hidden />}
         </button>
         <div className="space-y-3.5 px-3.5 pb-4 md:pt-4">
-          <FingerprintBody fp={fp} bodyName={bodyName} otherName={nameOther} hasEarth={!!earth} hasOther={!!moon} gaps={gaps} />
+          <FingerprintBody fp={fp} bodyName={bodyName} otherName={nameOther} hasEarth={!!earth} hasOther={!!moon} gaps={gaps} mpp={blockMpp} isMars={isMars} />
         </div>
       </aside>
 
@@ -313,6 +340,9 @@ export default function LabPage() {
         replay={() => sceneRef.current?.replayScan()}
         bodyName={bodyName}
         reduced={reduced}
+        isMars={isMars}
+        noonEl={sunNoonEl}
+        siteShort={shortName}
       />
     </div>
   );
@@ -335,6 +365,8 @@ function FingerprintBody({
   hasEarth,
   hasOther,
   gaps,
+  mpp,
+  isMars,
 }: {
   fp: { earth: Fingerprint | null; moon: Fingerprint | null; overlap: number | null } | null;
   bodyName: string;
@@ -342,6 +374,8 @@ function FingerprintBody({
   hasEarth: boolean;
   hasOther: boolean;
   gaps: string[];
+  mpp: number;
+  isMars: boolean;
 }) {
   const overlap = fp?.overlap;
   const note =
@@ -350,9 +384,9 @@ function FingerprintBody({
     <>
       <div>
         <h2 className="font-display text-[15px] leading-tight">Slope fingerprint</h2>
-        <p className="mt-0.5 text-[11.5px] leading-snug text-[var(--dim)]">How much of each block sits at each slope, from the same 40 m elevation grid.</p>
+        <p className="mt-0.5 text-[11.5px] leading-snug text-[var(--dim)]">How much of each block sits at each slope, from the same {fmtM(mpp)} m elevation grid.{isMars ? ' Indicative: Mars is only known at 200 m.' : ''}</p>
       </div>
-      {fp && <SlopeChart earth={fp.earth} other={fp.moon} bodyName={bodyName} />}
+      {fp && <SlopeChart earth={fp.earth} other={fp.moon} bodyName={bodyName} otherColor={isMars ? 'var(--mars)' : 'var(--moon)'} />}
       <div className="flex items-baseline justify-between gap-3 border-y border-[var(--rule)] py-2">
         <span className="text-[13px]">Fingerprint overlap</span>
         <span className="num text-[24px] leading-none text-[var(--accent)]" aria-live="polite">
@@ -367,7 +401,9 @@ function FingerprintBody({
               <th className="pb-1 text-right font-normal" style={{ color: SAND }}>
                 Earth
               </th>
-              <th className="pb-1 text-right font-normal text-[var(--moon)]">{bodyName}</th>
+              <th className="pb-1 text-right font-normal" style={{ color: isMars ? 'var(--mars)' : 'var(--moon)' }}>
+                {bodyName}
+              </th>
             </tr>
           </thead>
           <tbody className="num">
@@ -407,7 +443,7 @@ function Row({ label, a, b }: { label: string; a: string | null | undefined; b: 
   );
 }
 
-function SlopeChart({ earth, other, bodyName }: { earth: Fingerprint | null; other: Fingerprint | null; bodyName: string }) {
+function SlopeChart({ earth, other, bodyName, otherColor }: { earth: Fingerprint | null; other: Fingerprint | null; bodyName: string; otherColor: string }) {
   const W = 288;
   const H = 96;
   const pad = { l: 4, r: 4, t: 6, b: 16 };
@@ -441,17 +477,17 @@ function SlopeChart({ earth, other, bodyName }: { earth: Fingerprint | null; oth
         })}
         <line x1={pad.l} x2={W - pad.r} y1={base} y2={base} stroke="var(--rule-hi)" />
         {e && <path d={area(e)} fill={SAND} fillOpacity={0.28} />}
-        {m && <path d={area(m)} fill="var(--moon)" fillOpacity={0.24} />}
+        {m && <path d={area(m)} fill={otherColor} fillOpacity={0.24} />}
         {inter && <path d={area(inter)} fill="#fff" fillOpacity={0.16} />}
         {e && <path d={line(e)} fill="none" stroke={SAND} strokeWidth={1.5} strokeLinejoin="round" />}
-        {m && <path d={line(m)} fill="none" stroke="var(--moon)" strokeWidth={1.5} strokeLinejoin="round" />}
+        {m && <path d={line(m)} fill="none" stroke={otherColor} strokeWidth={1.5} strokeLinejoin="round" />}
       </svg>
       <figcaption className="mt-1 flex items-center gap-3 text-[11px] text-[var(--dim)]">
         <span className="inline-flex items-center gap-1">
           <i className="inline-block h-2 w-2 rounded-sm" style={{ background: SAND }} /> Earth
         </span>
         <span className="inline-flex items-center gap-1">
-          <i className="inline-block h-2 w-2 rounded-sm bg-[var(--moon)]" /> {bodyName}
+          <i className="inline-block h-2 w-2 rounded-sm" style={{ background: otherColor }} /> {bodyName}
         </span>
         {inter && (
           <span className="inline-flex items-center gap-1">
@@ -486,6 +522,10 @@ interface DockProps {
   replay: () => void;
   bodyName: string;
   reduced: boolean;
+  isMars: boolean;
+  /** Equinox noon sun elevation at the target latitude, capped at the slider maximum. */
+  noonEl: number;
+  siteShort: string;
 }
 
 const chip =
@@ -497,6 +537,8 @@ function Dock(p: DockProps) {
   const fill = (v: number, lo: number, hi: number) => ({ ['--fill' as string]: `${((v - lo) / (hi - lo)) * 100}%` }) as React.CSSProperties;
   const lunar = p.sunEl <= 2;
   const noon = Math.abs(p.sunEl - 70) < 0.6;
+  const marsNoon = Math.abs(p.sunEl - p.noonEl) < 0.6;
+  const marsLow = Math.abs(p.sunEl - 10) < 0.6;
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-[58px] z-20 flex justify-center px-2 md:bottom-4 md:pl-[336px] md:pr-[348px]">
       <div
@@ -551,7 +593,7 @@ function Dock(p: DockProps) {
         )}
 
         <Labeled label="Vertical" value={`${p.exag.toFixed(1)}x`}>
-          <input type="range" className="metric w-[110px]" min={1} max={3} step={0.1} value={p.exag} aria-label="Vertical exaggeration" style={fill(p.exag, 1, 3)} onChange={(e) => p.setExag(Number(e.target.value))} />
+          <input type="range" className="metric w-[110px]" min={1} max={p.isMars ? 8 : 3} step={0.1} value={p.exag} aria-label="Vertical exaggeration" style={fill(p.exag, 1, p.isMars ? 8 : 3)} onChange={(e) => p.setExag(Number(e.target.value))} />
         </Labeled>
 
         <Labeled label="Sun elevation" value={`${p.sunEl.toFixed(1)}°`}>
@@ -561,12 +603,31 @@ function Dock(p: DockProps) {
         <AzDial az={p.sunAz} setAz={p.setSunAz} />
 
         <div role="group" aria-label="Sun presets" className="flex shrink-0 gap-1">
-          <button type="button" aria-pressed={lunar} onClick={() => p.setSunEl(1.5)} className={`${chip} ${lunar ? chipOn : chipOff}`}>
-            Lunar south pole sun <span className="num text-[11.5px]">1.5°</span>
-          </button>
-          <button type="button" aria-pressed={noon} onClick={() => p.setSunEl(70)} className={`${chip} ${noon ? chipOn : chipOff}`}>
-            Midday here <span className="num text-[11.5px]">70°</span>
-          </button>
+          {p.isMars ? (
+            <>
+              <button
+                type="button"
+                aria-pressed={marsNoon}
+                onClick={() => p.setSunEl(p.noonEl)}
+                title="Sun at local noon on an equinox: 90 degrees minus the site latitude, capped at the slider maximum of 75"
+                className={`${chip} ${marsNoon ? chipOn : chipOff}`}
+              >
+                Mars noon at {p.siteShort} <span className="num text-[11.5px]">{p.noonEl}°</span>
+              </button>
+              <button type="button" aria-pressed={marsLow} onClick={() => p.setSunEl(10)} className={`${chip} ${marsLow ? chipOn : chipOff}`}>
+                Low morning sun <span className="num text-[11.5px]">10°</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="button" aria-pressed={lunar} onClick={() => p.setSunEl(1.5)} className={`${chip} ${lunar ? chipOn : chipOff}`}>
+                Lunar south pole sun <span className="num text-[11.5px]">1.5°</span>
+              </button>
+              <button type="button" aria-pressed={noon} onClick={() => p.setSunEl(70)} className={`${chip} ${noon ? chipOn : chipOff}`}>
+                Midday here <span className="num text-[11.5px]">70°</span>
+              </button>
+            </>
+          )}
         </div>
 
         <div role="group" aria-label="View options" className="flex shrink-0 gap-1">

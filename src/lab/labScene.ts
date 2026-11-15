@@ -39,10 +39,17 @@ export interface Prepared {
   snowLine: number;
   min: number;
   max: number;
+  /** Heights are scaled by vScale so the block keeps true proportions when its real width differs from SIZE km. */
+  vScale: number;
 }
 
-/** Resample to GRID x GRID (bilinear) if needed, centre on the median, convert metres to km. */
-export function prepareHeights(elev: Float32Array, w: number, h: number): Prepared {
+/**
+ * Resample to GRID x GRID (bilinear) if needed, centre on the median, convert metres to world units.
+ * The scene draws every block SIZE (10.24) units wide. A block that is really widthKm wide (10.24 for the 256 x 40 m Moon and Earth
+ * grids, 30 for the 150 x 200 m Mars grids) gets its heights scaled by SIZE / widthKm, so slopes keep their true angle.
+ */
+export function prepareHeights(elev: Float32Array, w: number, h: number, widthKm: number = SIZE): Prepared {
+  const vScale = SIZE / Math.max(0.1, widthKm);
   let src = elev;
   if (w !== GRID || h !== GRID) {
     src = new Float32Array(GRID * GRID);
@@ -67,12 +74,12 @@ export function prepareHeights(elev: Float32Array, w: number, h: number): Prepar
   let min = Infinity;
   let max = -Infinity;
   for (let i = 0; i < out.length; i++) {
-    const v = (src[i] - median) / 1000;
+    const v = ((src[i] - median) / 1000) * vScale;
     out[i] = v;
     if (v < min) min = v;
     if (v > max) max = v;
   }
-  return { h: out, lo: percentile(out, 3), hi: percentile(out, 97), snowLine: 0, min, max };
+  return { h: out, lo: percentile(out, 3), hi: percentile(out, 97), snowLine: 0, min, max, vScale };
 }
 
 interface BodyLook {
@@ -320,13 +327,13 @@ export class LabScene {
     const otherHi = o.other?.hi ?? 1;
 
     if (earthTex && o.earth) {
-      this.earthBlock = this.makeBlock(this.sceneA, earthTex, earthTex, 0, 0, earthLo, earthHi, snowLine);
+      this.earthBlock = this.makeBlock(this.sceneA, earthTex, earthTex, 0, 0, earthLo, earthHi, snowLine, o.earth.vScale);
     }
     if (otherTex && o.other) {
-      this.otherBlock = this.makeBlock(o.earth ? this.sceneB : this.sceneA, otherTex, otherTex, 0, 1, otherLo, otherHi, 9);
+      this.otherBlock = this.makeBlock(o.earth ? this.sceneB : this.sceneA, otherTex, otherTex, 0, 1, otherLo, otherHi, 9, o.other.vScale);
     }
     if (earthTex && otherTex) {
-      this.morphBlock = this.makeBlock(this.sceneA, earthTex, otherTex, 0, 0, earthLo, earthHi, snowLine);
+      this.morphBlock = this.makeBlock(this.sceneA, earthTex, otherTex, 0, 0, earthLo, earthHi, snowLine, o.earth?.vScale ?? 1);
     }
     this.lightA = this.makeLight(this.sceneA);
     this.lightB = o.earth && o.other ? this.makeLight(this.sceneB) : null;
@@ -365,7 +372,7 @@ export class LabScene {
     return (q - e.lo) / Math.max(1e-4, e.hi - e.lo);
   }
 
-  private makeBlock(scene: THREE.Scene, a: THREE.DataTexture, b: THREE.DataTexture, t: number, pal: number, lo: number, hi: number, snow: number): Block {
+  private makeBlock(scene: THREE.Scene, a: THREE.DataTexture, b: THREE.DataTexture, t: number, pal: number, lo: number, hi: number, snow: number, vScale = 1): Block {
     const s = this.shared;
     const look = this.look;
     const u: Record<string, { value: unknown }> = {
@@ -378,6 +385,7 @@ export class LabScene {
       uBottom: s.uBottom,
       uShim: s.uShim,
       uContour: s.uContour,
+      uInvV: { value: 1 / vScale },
       uHazeK: s.uHazeK,
       uPal: { value: pal },
       uLo: { value: lo },

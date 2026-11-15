@@ -28,6 +28,10 @@ DISC = os.environ.get("TERRALOG_DISC") or (
 )
 RES = os.path.join(DISC, "results")
 MARS = os.path.join(DISC, "mars")
+# Large raw inputs (Moon crops, Mars DEM windows, pool_blocks.csv) are not in git: use <DISC>/data and <DISC>/mars/data if present,
+# else a sibling ../discovery checkout (or TERRALOG_RAW).
+_RAW_CAND = [os.environ.get("TERRALOG_RAW"), DISC, os.path.abspath(os.path.join(APP, "..", "discovery"))]
+RAW = next((r for r in _RAW_CAND if r and os.path.isdir(os.path.join(r, "mars", "data"))), DISC)
 OUT = os.path.join(APP, "public", "data")
 IMG = os.path.join(APP, "public", "img")
 CWEBP = "/opt/homebrew/bin/cwebp"
@@ -354,7 +358,21 @@ MARS_SITES = {
 }
 MARS_NOTE = ("Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly "
              "comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: "
-             "no sourced values in the data pack.")
+             "no sourced site values in the data pack.")
+
+
+def mars_context(sites, key):
+    """Sourced (class A) context values from mars_sites.json: TES albedo and TES night-side thermal inertia (Putzig and Mellon 2007)."""
+    c = (sites.get(key) or {}).get("context") or {}
+    alb = (c.get("albedo") or {})
+    ti = (c.get("thermal_inertia") or {})
+    out = {}
+    if alb.get("class") == "A" and isinstance(alb.get("value"), dict):
+        out["albedo"] = rnd(alb["value"].get("mean"), 3)
+    if ti.get("class") == "A" and isinstance(ti.get("value"), dict):
+        out["ti_night"] = rnd(ti["value"].get("nightside_median_tiu"), 0)
+        out["ti_day"] = rnd(ti["value"].get("dayside_median_tiu"), 0)
+    return out
 
 
 def build_mars_targets():
@@ -370,13 +388,20 @@ def build_mars_targets():
         values = {k: None for k in FEATURE_KEYS}
         values.update(slope_deg=rnd(t["slope_p50"], 2), roughness_m=sig(t["rough_p50"], 3), relief_m=rnd(t["relief_m"], 0),
                       flat_frac=rnd(flat, 3))
+        ctx = mars_context(sites, key)
+        ctx_txt = ""
+        if "albedo" in ctx:
+            ctx_txt = f" MGS TES albedo {ctx['albedo']:.3f}"
+            if ctx.get("ti_night") is not None:
+                ctx_txt += f", night-side thermal inertia {ctx['ti_night']:.0f} tiu (median, Putzig and Mellon 2007)"
+            ctx_txt += "; these are context, not scored."
         targets.append(dict(
             id=tid, body="mars", name=name, code=code, lat=lat, lon=lon,
             summary=summ + " Terrain at 200 m scale.",
-            whyItMatters=why + " " + MARS_NOTE,
+            whyItMatters=why + ctx_txt + " " + MARS_NOTE,
             values=values,
             imagery=f"/img/mars_{key}.webp",
-            sources=["USGS HRSC+MOLA blended DEM 200 m (v2)", "MGS TES thermal inertia and albedo (context, not scored)"],
+            sources=["USGS HRSC+MOLA blended DEM 200 m (v2)", "MGS TES albedo (USGS mosaic) and Putzig and Mellon 2007 thermal inertia (PDS), context only"],
             valueSource="computed",
         ))
     return targets, sites
@@ -391,8 +416,9 @@ def targets_file(moon, mars):
             datasets=[d["lola"], d["diviner"], d["mola"]],
             processing=("Moon: nine Artemis III south-polar candidate regions; terrain from LOLA 40 m with the same code as the Earth blocks, "
                         "temperature and ice from Diviner region medians, precipitation, NDVI and snow set to 0 by definition. "
-                        "Mars: four rover landing sites, terrain only, at 200 m (slope, roughness, relief, share under 10 degrees); "
-                        "everything else is null. Coordinates are the well-known landing locations."),
+                        "Mars: four rover landing sites, terrain at 200 m (slope, roughness, relief, share under 10 degrees); TES albedo and thermal inertia "
+                        "are quoted in the text as context; temperature, precipitation, vegetation and snow are null (no sourced site values). "
+                        "Coordinates are the well-known landing locations."),
             generatedAt=TODAY,
             run=RUN_LABEL,
         ),
@@ -563,7 +589,10 @@ def build_featured_moon(earth, moon_targets, cells):
 def build_featured_known(moon_targets):
     """Mauna Kea and Wright Valley: validation analogs (percentile from v3_test_T1_sites)."""
     t1 = pd.read_csv(os.path.join(RES, "v3_test_T1_sites.csv")).set_index("id")
-    val = pd.read_csv(os.path.join(RES, "validation.csv")).set_index("id")
+    _vp = os.path.join(RES, "validation.csv")
+    if not os.path.exists(_vp):  # not copied into the in-repo discovery/results: fall back to the sibling checkout
+        _vp = os.path.join(RAW, "results", "validation.csv")
+    val = pd.read_csv(_vp).set_index("id")
     eo = pd.read_csv(os.path.join(RES, "eo_verify.csv")).set_index("id")
     tmap = {t["code"]: t for t in moon_targets}
     mm = tmap["MM"]
@@ -619,7 +648,7 @@ def build_featured_known(moon_targets):
 # --------------------------------------------------------------------------- Mars featured
 MARS_LIT = [
     dict(id="earth-atacama-yungay", name="Atacama Desert, Yungay (Chile)", region="Atacama Desert, Chile", lat=-24.08, lon=-69.95,
-         rank=1, analogFor=["mars-gale", "mars-oxia"], status="Known analog, literature",
+         rank=4, analogFor=["mars-gale", "mars-oxia"], status="Known analog, literature",
          headline="Hyperarid desert whose oxidising soils are a classic analog for Mars surface chemistry.",
          desc=("The hyperarid core of the Atacama, around Yungay, is one of the driest places on Earth. Its soils have extremely low organic content and "
                "microbial activity, and are used as an analog for Mars's oxidising, dry regolith. The match is about surface chemistry and aridity rather "
@@ -629,7 +658,7 @@ MARS_LIT = [
          refs=[dict(title="Navarro-Gonzalez et al. 2003, Mars-like soils in the Atacama Desert, Chile, and the dry limit of microbial life. Science",
                     url="https://doi.org/10.1126/science.1089143")]),
     dict(id="earth-lake-salda", name="Lake Salda, Turkey", region="Lake Salda, Turkey", lat=37.55, lon=29.68,
-         rank=2, analogFor=["mars-jezero"], status="Known analog, literature",
+         rank=5, analogFor=["mars-jezero"], status="Known analog, literature",
          headline="Alkaline lake with hydromagnesite shorelines, studied as an analog for Jezero's carbonates.",
          desc=("Lake Salda in southwest Turkey is an alkaline lake with Mg-carbonate (hydromagnesite) deposits. It has been proposed as an analog for the "
                "Mg-rich carbonate seen from orbit at Jezero crater, the Perseverance landing site. The match is mineralogical and about a lake margin "
@@ -638,7 +667,7 @@ MARS_LIT = [
          shortfalls=["Wet, vegetated catchment unlike Mars", "Not a terrain match"],
          refs=[]),
     dict(id="earth-rio-tinto", name="Rio Tinto, Spain", region="Rio Tinto, Huelva, Spain", lat=37.72, lon=-6.56,
-         rank=3, analogFor=["mars-meridiani"], status="Known analog, literature",
+         rank=6, analogFor=["mars-meridiani"], status="Known analog, literature",
          headline="Acidic, iron- and sulfate-rich river used as an analog for Meridiani's jarosite and hematite.",
          desc=("The Rio Tinto in southwest Spain is an acidic, iron-rich river with sulfate minerals such as jarosite. It is used as an analog for the "
                "sulfate and hematite-bearing rocks that Opportunity found at Meridiani Planum. The match is about water chemistry and minerals, not terrain."),
@@ -649,32 +678,223 @@ MARS_LIT = [
 ]
 
 
-def find_mars_match_file():
-    pats = ["*final*", "*featured*", "*rank*", "*match*"]
-    skip = {"pool_blocks.csv", "test_blocks.csv", "test_geo.csv", "mars_sites.json"}
-    for p in pats:
-        for fpath in sorted(glob.glob(os.path.join(MARS, "results", p + ".csv"))):
-            if os.path.basename(fpath) not in skip and "pool" not in os.path.basename(fpath):
-                return fpath
-    return None
+# Mars finalists from discovery/mars/results/mars_final_table.csv (see MARS_FINDINGS.md section 2).
+# 'new' = the picks named in MARS_FINDINGS.md section 2 (the two best new analogs plus the wildcard); each also has
+# nearest_known_km >= 150 and no block-level Mars-analog use found. Every other finalist is a reserve (adjacent use, weaker
+# surface check, or not picked), ranked by composite.
+MARS_NEW_IDS = ["B28302", "B7719", "B19394"]
+MARS_SPEC = {
+    "B28302": dict(id="earth-chagai-taftan", name="Chagai and Taftan, Pakistan-Iran border (approx.)", region="Chagai, Balochistan, Pakistan",
+                   status="Confirmed bare desert; nothing found in web searches",
+                   headline="Flat alluvial desert whose slope, relief and albedo match Oxia Planum almost exactly.",
+                   desc=("A 30 by 30 km block of alluvial fans and a bright dry-lake playa on the Pakistan-Iran border, in the Chagai and Taftan area, "
+                         "at about 630 m elevation. At 200 m its slope and relief are the closest of any gated block to Oxia Planum, the ExoMars landing "
+                         "site, and its albedo matches Oxia's. Landsat 8/9 and Sentinel-2 both read it as bare ground. The place name is approximate: "
+                         "the block was found by statistics, so check it on a map before quoting it."),
+                   extra_caveats=["Remote border region (Pakistan-Iran); access, permits and security were not assessed."]),
+    "B7719": dict(id="earth-mazongshan-beishan", name="Beishan Gobi near Mazongshan, Gansu-Mongolia border (approx.)", region="Beishan Gobi, Gansu and Inner Mongolia",
+                  status="Confirmed bare desert; weak adjacent Gobi-wide analog use",
+                  headline="Gobi alluvial fans converging on a playa, a close terrain and albedo match for Oxia Planum.",
+                  desc=("A 30 by 30 km block of alluvial fans converging on a bright playa in the Beishan Gobi, near the Gansu, Inner Mongolia and "
+                        "Mongolia borders, at about 1,080 m. Its slope, relief and albedo track Oxia Planum closely, and both satellites read it as "
+                        "bare ground. The place name is approximate: reverse geocoding puts the block centre in Ejina Banner, about 100 km from Mazong Shan."),
+                  extra_caveats=["Weak adjacent prior use: the Gobi as a whole is used for Mars-analog tourism and training, and Hami and Dunhuang lie 330 to 410 km away. "
+                                 "No study of this block was found.",
+                                 "Remote border region (Gansu, Inner Mongolia, Mongolia); access, permits and security were not assessed."]),
+    "B19394": dict(id="earth-gerze-ngari", name="Gerze, Ngari, northern Tibet (approx.)", region="Ngari, northern Tibet",
+                   status="Wildcard: 15 % vegetated, ranking is weight-sensitive",
+                   headline="High Tibetan volcanic terrain with Jezero-like slopes, but a weaker, less stable match.",
+                   desc=("A 30 by 30 km block at 4,700 m on the northern Tibetan plateau near Gerze, with a red volcanic cone and dark lava in the imagery. "
+                         "Its terrain is steeper than the two lead picks and is the closest we found to Jezero's. It is a wildcard: the match depends on "
+                         "how the categories are weighted, about 15 % of the surface is vegetated, and the air is thin by Earth standards (57 kPa). "
+                         "The place name and the volcanic-field label are approximate."),
+                   extra_caveats=["15 % of the block is vegetated in Landsat (10 % in Sentinel-2), which Mars is not.",
+                                  "Remote high plateau; access and permits were not assessed."]),
+    "B20913": dict(id="earth-bafq-yazd", name="Bafq and Yazd, central Iran (approx.)", region="Central Iran, Kavir and Lut margin",
+                   status="Reserve: adjacent to the Lut and Kavir analog system",
+                   headline="Central Iran block with a Jezero-like terrain match, next to an established analog desert.",
+                   desc=("A 30 by 30 km block near Bafq and Yazd on the Kavir and Lut margin. Its terrain is a moderate match for Jezero, but the Lut desert "
+                         "is already an established Mars analog (mega-ripples, kaluts), the nearest catalogued site is 249 km away, and adjacent use was found "
+                         "in the literature check, so it is held in reserve rather than claimed as new.")),
+    "B17168": dict(id="earth-kavir-margin", name="Central Iran, Kavir margin (approx.)", region="Central Iran, Dasht-e Kavir margin",
+                   status="Reserve: adjacent to the Lut and Kavir analog system",
+                   headline="Kavir-margin block with a Jezero-like terrain match, inside a studied desert system.",
+                   desc=("A 30 by 30 km block on the margin of the Dasht-e Kavir, central Iran. Terrain is a moderate match for Jezero, but the block is "
+                         "200 km from a catalogued Kavir analog and the Kavir salt-sheet system has been compared with Mars in the literature, so it is held in reserve.")),
+    "B42587": dict(id="earth-tibesti", name="Tibesti, Chad-Libya (approx.)", region="Tibesti massif, Chad and Libya",
+                   status="Reserve: inside a massif already in the catalogue",
+                   headline="Volcanic massif block that scores close to Jezero's terrain, but Tibesti is already catalogued.",
+                   desc=("A 30 by 30 km block inside the Tibesti massif. Terrain is a moderate match for Jezero, but Tibesti is already on our list of "
+                         "analog sites (159 km away) and Emi Koussi has long been compared with Martian volcanoes, so it should count as a known region, not a new one.")),
+    "B37030": dict(id="earth-hejaz-harrat", name="Hejaz plateau, Saudi Arabia (approx.)", region="Najd, Medina Province, Saudi Arabia",
+                   status="Reserve: adjacent to Saudi lava-field analog use",
+                   headline="Flat Saudi block with an Oxia-like terrain match but a poor albedo match.",
+                   desc=("A 30 by 30 km block east of the Harrat Rahat area in Saudi Arabia. Slope and relief match Oxia Planum closely, but its albedo is "
+                         "brighter than Oxia's, Harrat Khaybar (252 km) is already described as Mars-like, and we could not tell which lava field, if any, lies under the block.")),
+    "B58488": dict(id="earth-ica-nazca", name="Ica and Nazca, Peru (approx.)", region="Coastal desert, Ica, Peru",
+                   status="Reserve: 11 % vegetated, next to the Atacama analog system",
+                   headline="Peruvian coastal desert block with a moderate Jezero match and some vegetation.",
+                   desc=("A 30 by 30 km block of the Peruvian coastal desert near Ica and Nazca. Terrain is a moderate match for Jezero, but about 8 to 11 % of "
+                         "the surface is vegetated and the block belongs to the Peru-Atacama desert system, with Pampas de La Joya, a known Mars analog, 475 km away.")),
+    "B8964": dict(id="earth-ejin-heihe", name="Ejin and Heihe Gobi, Inner Mongolia (approx.)", region="Ejin, Alxa League, Inner Mongolia",
+                  status="Reserve: albedo mismatch, ranking is weight-sensitive",
+                  headline="Flat Gobi block, but brighter than Meridiani and its ranking is unstable.",
+                  desc=("A 30 by 30 km block in the Ejin and Heihe Gobi. It is flat like Meridiani Planum, but its albedo (0.23) is far brighter than Meridiani's "
+                        "(0.13), it stays in the top 30 in only 36 % of random re-weightings, and the nearest catalogued site, Badain Jaran megadunes, is 178 km away.")),
+}
+# mars_final_table.csv truncates a few long names at 40 characters; full names from novelty_mars.md and the known-analog catalogues.
+MARS_NK_FIX = {
+    "Valley of the Gobi Lakes (Boon Tsagaan /": "Valley of the Gobi Lakes, Mongolia",
+    "Shahdad kaluts / western Lut, Iran (Lut": "Shahdad kaluts, western Lut, Iran",
+    "Badain Jaran Desert megadunes, Inner Mon": "Badain Jaran Desert megadunes, Inner Mongolia",
+    "Pampas de La Joya, Arequipa, Peru (hyper": "Pampas de La Joya, Arequipa, Peru",
+}
+
+
+def build_featured_mars_computed(mars_targets):
+    ft = pd.read_csv(os.path.join(MARS, "results", "mars_final_table.csv"))
+    blocks = pd.read_csv(os.path.join(MARS, "results", "mars_final_blocks.csv")).set_index("id")
+    cand = pd.read_csv(os.path.join(MARS, "results", "mars_candidates.csv")).set_index("id")
+    eo = pd.read_csv(os.path.join(MARS, "results", "eo_verify.csv")).set_index("id")
+    tmap = {t["id"]: t for t in mars_targets}
+    sites = json.load(open(os.path.join(MARS, "results", "mars_sites.json")))
+    out = []
+    # composite order (lower = closer); new picks first, then reserves
+    order = list(ft.sort_values(["composite", "id"]).id)
+    news = [i for i in order if i in MARS_NEW_IDS]
+    reserves = [i for i in order if i not in MARS_NEW_IDS]
+    rank_of = {i: n for n, i in enumerate(news, 1)}
+    rank_of.update({i: 7 + n for n, i in enumerate(reserves)})  # 4 to 6 are the literature analogs
+    for r in ft.itertuples(index=False):
+        bid = r.id
+        s = MARS_SPEC.get(bid)
+        if s is None:
+            print(f"  ! no Mars card spec for {bid}, skipped")
+            continue
+        tid = f"mars-{str(r.best_mars_site).strip().lower()}"
+        if tid not in tmap:
+            print(f"  ! {bid}: unknown Mars target {tid}, skipped")
+            continue
+        tgt, tv = tmap[tid], tmap[tid]["values"]
+        c, e, b = cand.loc[bid], eo.loc[bid], blocks.loc[bid]
+        key = tid.replace("mars-", "")
+        ctx = mars_context(sites, key)
+        kind = "new" if bid in MARS_NEW_IDS else "reserve"
+        if kind == "new":
+            assert float(r.nearest_known_km) >= 150, f"{bid} cannot be new: nearest known {r.nearest_known_km} km"
+        vals = {k: None for k in FEATURE_KEYS}
+        vals.update(slope_deg=rnd(r.slope_p50, 2), roughness_m=sig(c.rough_p50, 3), relief_m=rnd(r.relief_m, 0),
+                    temp_mean_k=rnd(c.lst_mean_K, 1), precip_mm_yr=rnd(float(c.precip_mm_day) * 365.0, 0),
+                    vegetation_ndvi=rnd(c.ndvi_max, 3), snow_frac=rnd(c.snow_frac, 3))
+        lbare, sbare = pct(e.bare_frac), pct(e.s2_bare_frac)
+        lveg, sveg = pct(e.veg_frac), pct(e.s2_veg_frac)
+        nk = MARS_NK_FIX.get(str(r.nearest_known).strip(), str(r.nearest_known).strip())
+        lit = str(r.literature).strip()
+        lit_txt = "web searches found nothing for this block" if lit.lower().startswith("nothing found") else f"web searches found: {lit}"
+        eal = rnd(c.albedo_mean, 3)
+        mal = ctx.get("albedo")
+        stab = rnd(r.stability_p_top30, 2)
+        mat = [f"Median slope {vals['slope_deg']:.2f} deg vs {tv['slope_deg']:.2f} deg at {tgt['name']} (200 m scale)",
+               f"Relief {vals['relief_m']:.0f} m vs {tv['relief_m']:.0f} m",
+               f"Roughness {vals['roughness_m']:.2f} m vs {tv['roughness_m']:.2f} m (partly DEM noise on Mars)"]
+        if mal is not None:
+            mat.append(f"Albedo {eal:.2f} (MODIS) vs {mal:.3f} (MGS TES)")
+        mat.append(f"Terrain distance {float(r.d_terrain):.2f} (0 = identical), albedo distance {float(r.d_albedo):.2f}")
+        mat.append(f"Bare ground {lbare} % (Landsat) and {sbare} % (Sentinel-2)")
+        short = [f"Air pressure {float(r.pressure_kPa):.0f} kPa vs about 0.6 kPa on Mars",
+                 f"Mean surface temperature {float(c.lst_mean_K):.0f} K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+                 "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about "
+                 f"{float(b_clay(e)):.2f}",
+                 "No impact-crater population, Earth gravity and weathering"]
+        if lveg and lveg >= 5:
+            short.insert(0, f"{lveg} % vegetated in Landsat ({sveg} % in Sentinel-2)")
+        why = (f"Composite score {float(r.composite):.2f} (lower is closer) against {tgt['name']}; terrain distance {float(r.d_terrain):.2f} and albedo distance "
+               f"{float(r.d_albedo):.2f}. At 200 m the block has median slope {vals['slope_deg']:.2f} deg and {vals['relief_m']:.0f} m relief, against "
+               f"{tv['slope_deg']:.2f} deg and {tv['relief_m']:.0f} m at {tgt['name']}; Landsat 8/9 and Sentinel-2 find it {lbare} % and {sbare} % bare ground. "
+               f"It stays in the top 30 in {pct(r.stability_p_top30)} % of 1,000 random re-weightings of the categories. "
+               f"The nearest of 251 catalogued analog sites is {nk}, {int(r.nearest_known_km)} km away; {lit_txt}.")
+        caveats = [
+            "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+            "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+            ("'New' is provisional: at least 150 km from 251 catalogued sites and nothing found at block level, but only in web searches by helper agents "
+             f"(no Scholar, ADS, CNKI or Persian databases); nearest known is {int(r.nearest_known_km)} km." if kind == "new" else
+             f"Not claimed as new: nearest catalogued site {nk}, {int(r.nearest_known_km)} km; literature check: {lit}."),
+            "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+            "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented.",
+        ] + s.get("extra_caveats", [])
+        stats = dict(composite=rnd(r.composite, 3), stability=stab, nearest_known=nk, nearest_known_km=int(r.nearest_known_km),
+                     landsat_bare=rnd(e.bare_frac, 2), s2_bare=rnd(e.s2_bare_frac, 2), landsat_veg=rnd(e.veg_frac, 2), s2_veg=rnd(e.s2_veg_frac, 2),
+                     d_terrain=rnd(r.d_terrain, 2), d_geology=rnd(r.d_geology, 2), d_albedo=rnd(r.d_albedo, 2), d_swing=rnd(r.d_swing, 2),
+                     earth_albedo=eal, mars_albedo=mal, diurnal_k=rnd(r.diurnal_K, 1), pressure_kpa=rnd(r.pressure_kPa, 0), elev_m=rnd(r.elev_m, 0),
+                     lithology=str(c.lith_main), literature=lit, best_mars=key, block_id=bid, role="computed Mars match")
+        gaps = [
+            dict(label="Surface pressure", earth=rnd(r.pressure_kPa, 0), target=0.6, unit="kPa",
+                 note="Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."),
+            dict(label="Mean surface temperature", earth=rnd(c.lst_mean_K, 0), target=None, unit="K",
+                 note="Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."),
+            dict(label="Day-night temperature swing", earth=rnd(r.diurnal_K, 0), target=None, unit="K",
+                 note="Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."),
+            dict(label="Median slope", earth=vals["slope_deg"], target=tv["slope_deg"], unit="deg",
+                 note="Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."),
+        ]
+        lat0, lon0 = float(blocks.loc[bid].lat), float(blocks.loc[bid].lon)
+        w1, w2, w3 = offset(lat0, lon0, 6, 0), offset(lat0, lon0, 0, 8), offset(lat0, lon0, 6, 8)
+        tour = dict(
+            spawn=dict(lat=rnd(lat0, 4), lon=rnd(lon0, 4), heading=90, heightM=1.7),
+            waypoints=[
+                dict(name="6 km north", lat=w1[0], lon=w1[1], note="Waypoints are offsets of a few km from the block centre, not surveyed landmarks."),
+                dict(name="8 km east", lat=w2[0], lon=w2[1], note=f"Landsat sees about {lbare} % bare ground over the block."),
+                dict(name="6 km north-east", lat=w3[0], lon=w3[1], note=f"Block median slope {vals['slope_deg']:.1f} deg at 200 m, relief about {vals['relief_m']:.0f} m."),
+            ],
+        )
+        code = bid
+        images = dict(eo=f"/img/mars/eo_{code}.webp", earth=f"/img/mars/eo_{code}.webp", target=tgt["imagery"])
+        if os.path.exists(os.path.join(MARS, "previews", f"mars_twin_{bid}.png")):
+            images["twin"] = f"/img/mars/twin_{code}.webp"
+        out.append(dict(
+            id=s["id"], name=s["name"], region=s["region"], lat=rnd(lat0, 3), lon=rnd(lon0, 3), analogFor=[tid],
+            headline=s["headline"], description=s["desc"], matches=mat, shortfalls=short, values=vals, tour=tour,
+            references=REFS_MARS, body="mars", kind=kind, status=s["status"], rank=rank_of[bid], why=why,
+            images=images, gaps=gaps, caveats=caveats, valueSource="computed", stats=stats,
+        ))
+        out[-1]["_blockid"] = bid
+    return out
+
+
+def b_clay(e):
+    v = e.s2_clay_idx if pd.notna(e.s2_clay_idx) else e.clay_idx
+    return v
+
+
+REFS_MARS = [
+    dict(title="USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m", url="https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"),
+    dict(title="Copernicus GLO-30 DEM (AWS Open Data)", url="https://registry.opendata.aws/copernicus-dem/"),
+    dict(title="Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus", url="https://doi.org/10.1016/j.icarus.2007.05.004"),
+]
 
 
 def build_featured_mars(mars_targets):
-    pool = pd.read_csv(os.path.join(MARS, "results", "pool_blocks.csv"), usecols=["lat", "lon", "slope_p50", "rough_p50", "relief_m",
-                                                                                  "precip_mm", "frac_lt10", "tile"])
+    out = build_featured_mars_computed(mars_targets)
+    out.extend(build_featured_mars_literature(mars_targets))
+    return out
+
+
+def build_featured_mars_literature(mars_targets):
+    """The three literature analogs (Atacama, Lake Salda, Rio Tinto): kept as kind=known, valueSource=literature."""
+    pool_path = next((p for p in (os.path.join(MARS, "results", "pool_blocks.csv"), os.path.join(RAW, "mars", "results", "pool_blocks.csv")) if os.path.exists(p)), None)
+    pool = pd.read_csv(pool_path, usecols=["lat", "lon", "slope_p50", "rough_p50", "relief_m", "precip_mm", "frac_lt10", "tile"]) if pool_path else None
+    if pool is None:
+        print("  note: mars pool_blocks.csv not found; literature Mars cards get no terrain values")
     out = []
     tmap = {t["id"]: t for t in mars_targets}
-    mf = find_mars_match_file()
-    if mf:
-        print(f"  note: found Mars match file {os.path.relpath(mf, DISC)}; see data/README.md for the columns it needs")
-        out.extend(cards_from_mars_csv(mf, pool, mars_targets))
-    if out:
-        return out
     for s in MARS_LIT:
-        d = haversine_km(s["lat"], s["lon"], pool.lat.values, pool.lon.values)
-        i = int(np.argmin(d))
-        near = pool.iloc[i]
-        within = float(d[i]) <= 50
+        if pool is not None:
+            d = haversine_km(s["lat"], s["lon"], pool.lat.values, pool.lon.values)
+            i = int(np.argmin(d))
+            near = pool.iloc[i]
+            within = float(d[i]) <= 50
+        else:
+            d, i, near, within = [float("nan")], 0, None, False
         vals = {k: None for k in FEATURE_KEYS}
         if within:
             vals.update(slope_deg=rnd(near.slope_p50, 2), roughness_m=sig(near.rough_p50, 3), relief_m=rnd(near.relief_m, 0),
@@ -685,10 +905,10 @@ def build_featured_mars(mars_targets):
                      note="No liquid precipitation on present-day Mars; no sourced Mars figure in the data pack."),
                 dict(label="Median slope", earth=vals["slope_deg"], target=tv.get("slope_deg"), unit="deg",
                      note="Earth value is a 200 m-scale pool block; Mars value is a 200 m window, so indicative only.")]
-        caveats = ["Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
-                   "Place name approximate; coordinates are the well-known site location." ]
+        caveats = ["Literature analog: the match is about chemistry or minerals, not a computed terrain match.",
+                   "Place name approximate; coordinates are the well-known site location."]
         if not within:
-            caveats.append(f"No 200 m pool block within 50 km (nearest {float(d[i]):.0f} km), so terrain values are blank.")
+            caveats.append("No 200 m pool block within 50 km, so terrain values are blank." if pool is not None else "Terrain values not computed in this build.")
         if not s["refs"]:
             caveats.append("No reference attached: verify a citation before presenting.")
         out.append(dict(
@@ -699,45 +919,7 @@ def build_featured_mars(mars_targets):
                               if within else " No terrain values were computed for this site.")),
             images=dict(target=tgt["imagery"]) if tgt else None,
             gaps=gaps, caveats=caveats, valueSource="literature",
-            stats=dict(role="literature analog", nearest_pool_block_km=rnd(float(d[i]), 1)),
-        ))
-    return out
-
-
-def cards_from_mars_csv(path, pool, mars_targets):
-    """Expected columns: id,name,lat,lon,best_mars (jezero|gale|meridiani|oxia),kind (new|known),composite[,region,status,nearest_known,nearest_known_km]."""
-    df = pd.read_csv(path)
-    need = {"id", "name", "lat", "lon", "best_mars"}
-    if not need <= set(df.columns):
-        print(f"  ! {os.path.basename(path)} lacks columns {sorted(need - set(df.columns))}; ignoring, using literature cards")
-        return []
-    tmap = {t["id"]: t for t in mars_targets}
-    out = []
-    for n, r in enumerate(df.itertuples(index=False), 1):
-        r = r._asdict()
-        tid = f"mars-{str(r['best_mars']).strip().lower()}"
-        if tid not in tmap:
-            continue
-        d = haversine_km(float(r["lat"]), float(r["lon"]), pool.lat.values, pool.lon.values)
-        i = int(np.argmin(d))
-        near = pool.iloc[i]
-        ok = float(d[i]) <= 50
-        vals = {k: None for k in FEATURE_KEYS}
-        if ok:
-            vals.update(slope_deg=rnd(near.slope_p50, 2), roughness_m=sig(near.rough_p50, 3), relief_m=rnd(near.relief_m, 0),
-                        precip_mm_yr=rnd(near.precip_mm, 0), flat_frac=rnd(near.frac_lt10, 3))
-        comp = rnd(r.get("composite"), 3) if r.get("composite") is not None else None
-        out.append(dict(
-            id=f"earth-{r['id']}", name=str(r["name"]), region=str(r.get("region") or ""), lat=rnd(r["lat"], 3), lon=rnd(r["lon"], 3),
-            analogFor=[tid], headline=f"Earth block matched to {tmap[tid]['name']} by the Mars run.",
-            description="Candidate from the Mars Earth-match run. Terrain is at 200 m scale.", values=vals, references=[], body="mars",
-            kind=str(r.get("kind") or "new") if str(r.get("kind")) in ("new", "known", "reserve") else "new",
-            status=str(r.get("status") or "Mars run candidate"), rank=n,
-            why=f"Composite {comp} against {tmap[tid]['name']} (lower is closer)." if comp is not None else "",
-            images=dict(target=tmap[tid]["imagery"]), gaps=[],
-            caveats=["Mars terrain is at 200 m scale; comparison with 40 m Earth blocks is indicative."],
-            valueSource="computed", stats=dict(composite=comp, nearest_known=str(r.get("nearest_known") or ""),
-                                                 nearest_known_km=rnd(r.get("nearest_known_km"), 0)),
+            stats=dict(role="literature analog", nearest_pool_block_km=rnd(float(d[i]), 1) if within or pool is not None else None),
         ))
     return out
 
@@ -745,7 +927,7 @@ def cards_from_mars_csv(path, pool, mars_targets):
 def featured_file(cards):
     d = PROV_DATASETS
     for c in cards:
-        for k in ("_code", "_ft"):
+        for k in ("_code", "_ft", "_blockid"):
             c.pop(k, None)
         if c.get("images") is None:
             c.pop("images", None)
@@ -753,11 +935,13 @@ def featured_file(cards):
         featured=cards,
         provenance=dict(
             mock=False,
-            datasets=[d["cop"], d["lola"], d["diviner"], d["modis_lst"], d["landsat"], d["worldcover"]],
+            datasets=[d["cop"], d["lola"], d["diviner"], d["modis_lst"], d["landsat"], d["worldcover"], d["mola"]],
             processing=("Moon cards: three 'new' blocks and three reserves from results/v3_final_table.csv (composite across 10 categories, stability "
                         "over 1,000 random re-weightings, distance to 166 catalogued sites, Landsat 8/9 and Sentinel-2 surface check). Values are the "
                         "block's own values from earth_cells.json. 'Known' Moon cards (Mauna Kea, Wright Valley) are validation analogs. "
-                        "Mars cards are literature analogs unless a Mars Earth-match file was found. Place names are approximate; 'new' means at least 150 km from "
+                        "Mars cards: nine computed finalists from results/mars_final_table.csv (composite over 8 categories against four Mars sites, stability over "
+                        "1,000 random re-weightings, distance to 251 catalogued sites, Landsat 8/9 and Sentinel-2 surface check; Mars terrain is the 200 m "
+                        "HRSC+MOLA blend) plus three literature analogs (Atacama, Lake Salda, Rio Tinto). Place names are approximate; 'new' means at least 150 km from "
                         "catalogued sites and nothing found in web searches only."),
             generatedAt=TODAY,
             run=RUN_LABEL,
@@ -768,6 +952,9 @@ def featured_file(cards):
 # --------------------------------------------------------------------------- images
 def cwebp(src, dst, maxw=1200, q=78):
     from PIL import Image
+    if not os.path.exists(src):  # not in the in-repo discovery/previews: try the sibling checkout
+        alt = src.replace(DISC, RAW, 1) if src.startswith(DISC) else src
+        src = alt if os.path.exists(alt) else src
     if not os.path.exists(src):
         print(f"  ! missing image {src}")
         return False
@@ -794,6 +981,12 @@ def build_images():
     jobs.append((f"{P}/eo_CTRL_known_dry_valleys.png", "eo_dry_valleys.webp"))
     for key in MARS_SITES:
         jobs.append((f"{MARS}/previews/mars_{key}.png", f"mars_{key}.webp"))
+    # Mars finalists: Landsat/Sentinel-2 surface check (30 km) and the Mars | Earth twin view
+    os.makedirs(os.path.join(IMG, "mars"), exist_ok=True)
+    for bid in pd.read_csv(os.path.join(MARS, "results", "mars_final_table.csv")).id:
+        jobs.append((f"{MARS}/previews/eo_{bid}.png", f"mars/eo_{bid}.webp"))
+        if os.path.exists(f"{MARS}/previews/mars_twin_{bid}.png"):
+            jobs.append((f"{MARS}/previews/mars_twin_{bid}.png", f"mars/twin_{bid}.webp"))
     total = 0
     for src, name in jobs:
         dst = os.path.join(IMG, name)
@@ -803,6 +996,9 @@ def build_images():
     for f in os.listdir(IMG):
         if f.endswith(".webp") and f not in keep:
             os.remove(os.path.join(IMG, f))
+    for f in os.listdir(os.path.join(IMG, "mars")):
+        if f.endswith(".webp") and f"mars/{f}" not in keep:
+            os.remove(os.path.join(IMG, "mars", f))
     print(f"  wrote {len(jobs)} images, {total / 1024:.0f} KB total")
 
 
@@ -836,10 +1032,11 @@ def build_heightmaps(moon, mars):
     hd = os.path.join(OUT, "heightmaps")
     os.makedirs(hd, exist_ok=True)
     for f in os.listdir(hd):
-        os.remove(os.path.join(hd, f))
+        if os.path.isfile(os.path.join(hd, f)):  # keep earth/ (rewritten by build_twin_terrain.py)
+            os.remove(os.path.join(hd, f))
     done = set()
     for t in moon:
-        p = os.path.join(DISC, "data", "moon", "crops", f"{t['code']}.npy")
+        p = os.path.join(RAW, "data", "moon", "crops", f"{t['code']}.npy")
         if not os.path.exists(p):
             continue
         a = center_crop(np.load(p), 256)
@@ -850,7 +1047,7 @@ def build_heightmaps(moon, mars):
             done.add(t["id"])
     for t in mars:
         key = t["id"].replace("mars-", "")
-        p = os.path.join(MARS, "data", f"{key}_dem200.npy")
+        p = os.path.join(RAW, "mars", "data", f"{key}_dem200.npy")
         if not os.path.exists(p):
             continue
         a = np.load(p)
@@ -867,7 +1064,7 @@ def build_heightmaps(moon, mars):
 
 # --------------------------------------------------------------------------- main
 def main():
-    print(f"APP  = {APP}\nDISC = {DISC}")
+    print(f"APP  = {APP}\nDISC = {DISC}\nRAW  = {RAW}")
     os.makedirs(OUT, exist_ok=True)
     print("features.json")
     write_json("features.json", features_file(), indent=1)

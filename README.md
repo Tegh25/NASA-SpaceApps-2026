@@ -49,13 +49,17 @@ NASA GIBS needs no key. It is the fallback imagery when there is no Cesium token
 The site data in `public/data/` is generated from the discovery outputs by a Python script. From the app folder, with the discovery virtual environment set up:
 
 ```bash
-../discovery/.venv/bin/python scripts/build_real_data.py
+../discovery/.venv/bin/python scripts/build_real_data.py     # first: cards, targets, images, heightmaps (wipes heightmaps/*.json)
+../discovery/.venv/bin/python scripts/build_twin_terrain.py  # second: Earth twins for the Twin Terrain Lab, adds `twin` to the cards
 ```
+
+The research outputs are committed under `discovery/` (override with `TERRALOG_DISC`). Raw DEM tiles and Moon crops are not in git (`TERRALOG_TILES`, `TERRALOG_RAW`); the Mars twins read Copernicus tiles remotely from the open AWS bucket when no local tile exists. See `data/README.md`.
 
 ### Demo click path (60 to 90 seconds)
 
 1. **Land.** The globe shows three Moon cards in the left rail. Say: "Terralog finds Earth places that look like Moon and Mars sites."
-2. **Switch body.** Toggle to Mars, then back to Moon.
+2. **Switch body.** Toggle to Mars: the computed candidates come first (Chagai and Taftan, Beishan Gobi, Gerze), then the known analogs.
+   **Mars twin lab moment.** Open Chagai and Taftan, press Twin terrain lab. The Earth block sits beside Oxia Planum at the same 200 m scale (30 km wide), with the slope fingerprint overlap. Say: "same slopes, different sky", then point at the gaps panel (93 kPa air against about 0.6 kPa on Mars) and the note that Mars terrain is only 200 m resolution. Back out, then toggle back to Moon.
 3. **Open a site.** Click Ngari. Read why it matches and the gaps in the explanation and the feature table, especially temperature and lighting.
 4. **Re-rank.** Open Find and drag the temperature slider. Watch the cards re-rank.
 5. **Enter the site.** Press Enter site, then switch to Target View to see the Moon grade.

@@ -81,6 +81,7 @@ uniform float uLo;
 uniform float uHi;
 uniform float uSnow;     // normalised height where snow starts (>= 5 means none)
 uniform float uContour;
+uniform float uInvV;     // real metres per world metre of height: 1 at 10.24 km blocks, larger when a bigger block is squeezed into the same world size
 uniform float uShim;
 uniform float uScan;
 uniform float uHazeK;    // global haze scale
@@ -163,11 +164,11 @@ export const FRAG_OUT = /* glsl */ `
   float em = 0.0;
   float reveal = 1.0 - smoothstep(uScan - 0.12, uScan, vS);
   if (vEdge < 0.5) {
-    float c = vH * 20.0; // iso-line every 50 m of real elevation
+    float c = vH * uInvV * 20.0; // iso-line every 50 m of real elevation (uInvV undoes the block-size scaling)
     float fw = max(fwidth(c), 1e-5);
     float fade = 1.0 - smoothstep(0.25, 0.6, fw);
     float l1 = 1.0 - clamp(abs(fract(c - 0.5) - 0.5) / fw, 0.0, 1.0);
-    float c5 = vH * 4.0;
+    float c5 = vH * uInvV * 4.0;
     float fw5 = max(fwidth(c5), 1e-5);
     float l5 = 1.0 - clamp(abs(fract(c5 - 0.5) - 0.5) / fw5, 0.0, 1.0);
     em += uContour * (0.30 * l1 + 0.45 * l5) * fade;

@@ -1125,6 +1125,1443 @@
    }
   },
   {
+   "id": "earth-chagai-taftan",
+   "name": "Chagai and Taftan, Pakistan-Iran border (approx.)",
+   "region": "Chagai, Balochistan, Pakistan",
+   "lat": 28.462,
+   "lon": 62.307,
+   "analogFor": [
+    "mars-oxia"
+   ],
+   "headline": "Flat alluvial desert whose slope, relief and albedo match Oxia Planum almost exactly.",
+   "description": "A 30 by 30 km block of alluvial fans and a bright dry-lake playa on the Pakistan-Iran border, in the Chagai and Taftan area, at about 630 m elevation. At 200 m its slope and relief are the closest of any gated block to Oxia Planum, the ExoMars landing site, and its albedo matches Oxia's. Landsat 8/9 and Sentinel-2 both read it as bare ground. The place name is approximate: the block was found by statistics, so check it on a map before quoting it.",
+   "matches": [
+    "Median slope 0.42 deg vs 0.49 deg at Oxia Planum (200 m scale)",
+    "Relief 117 m vs 117 m",
+    "Roughness 0.32 m vs 0.29 m (partly DEM noise on Mars)",
+    "Albedo 0.20 (MODIS) vs 0.195 (MGS TES)",
+    "Terrain distance 0.05 (0 = identical), albedo distance 0.02",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 93 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 305 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.03",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 0.42,
+    "roughness_m": 0.317,
+    "relief_m": 117.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 304.6,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 80.0,
+    "vegetation_ndvi": 0.061,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 28.4615,
+     "lon": 62.3066,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 28.5155,
+      "lon": 62.3066,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 28.4615,
+      "lon": 62.3884,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 28.5155,
+      "lon": 62.3884,
+      "note": "Block median slope 0.4 deg at 200 m, relief about 117 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "new",
+   "status": "Confirmed bare desert; nothing found in web searches",
+   "rank": 1,
+   "why": "Composite score 0.50 (lower is closer) against Oxia Planum; terrain distance 0.05 and albedo distance 0.02. At 200 m the block has median slope 0.42 deg and 117 m relief, against 0.49 deg and 117 m at Oxia Planum; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 99 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Dasht-e Lut kaluts, Iran, 392 km away; web searches found nothing for this block.",
+   "images": {
+    "eo": "/img/mars/eo_B28302.webp",
+    "earth": "/img/mars/eo_B28302.webp",
+    "target": "/img/mars_oxia.webp",
+    "twin": "/img/mars/twin_B28302.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 93.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 305.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 32.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 0.42,
+     "target": 0.49,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "'New' is provisional: at least 150 km from 251 catalogued sites and nothing found at block level, but only in web searches by helper agents (no Scholar, ADS, CNKI or Persian databases); nearest known is 392 km.",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented.",
+    "Remote border region (Pakistan-Iran); access, permits and security were not assessed."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.5,
+    "stability": 0.99,
+    "nearest_known": "Dasht-e Lut kaluts, Iran",
+    "nearest_known_km": 392,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.05,
+    "d_geology": 1.0,
+    "d_albedo": 0.02,
+    "d_swing": 0.0,
+    "earth_albedo": 0.196,
+    "mars_albedo": 0.195,
+    "diurnal_k": 31.9,
+    "pressure_kpa": 93.0,
+    "elev_m": 631.0,
+    "lithology": "siliciclastic_other",
+    "literature": "nothing found",
+    "best_mars": "oxia",
+    "block_id": "B28302",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-chagai-taftan.json",
+    "marsHeightmap": "heightmaps/mars-oxia.json"
+   }
+  },
+  {
+   "id": "earth-mazongshan-beishan",
+   "name": "Beishan Gobi near Mazongshan, Gansu-Mongolia border (approx.)",
+   "region": "Beishan Gobi, Gansu and Inner Mongolia",
+   "lat": 42.462,
+   "lon": 98.549,
+   "analogFor": [
+    "mars-oxia"
+   ],
+   "headline": "Gobi alluvial fans converging on a playa, a close terrain and albedo match for Oxia Planum.",
+   "description": "A 30 by 30 km block of alluvial fans converging on a bright playa in the Beishan Gobi, near the Gansu, Inner Mongolia and Mongolia borders, at about 1,080 m. Its slope, relief and albedo track Oxia Planum closely, and both satellites read it as bare ground. The place name is approximate: reverse geocoding puts the block centre in Ejina Banner, about 100 km from Mazong Shan.",
+   "matches": [
+    "Median slope 0.52 deg vs 0.49 deg at Oxia Planum (200 m scale)",
+    "Relief 142 m vs 117 m",
+    "Roughness 0.33 m vs 0.29 m (partly DEM noise on Mars)",
+    "Albedo 0.20 (MODIS) vs 0.195 (MGS TES)",
+    "Terrain distance 0.06 (0 = identical), albedo distance 0.06",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 88 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 287 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.03",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 0.52,
+    "roughness_m": 0.333,
+    "relief_m": 142.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 287.2,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 66.0,
+    "vegetation_ndvi": 0.071,
+    "snow_frac": 0.017
+   },
+   "tour": {
+    "spawn": {
+     "lat": 42.4615,
+     "lon": 98.5486,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 42.5155,
+      "lon": 98.5486,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 42.4615,
+      "lon": 98.6462,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 42.5155,
+      "lon": 98.6462,
+      "note": "Block median slope 0.5 deg at 200 m, relief about 142 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "new",
+   "status": "Confirmed bare desert; weak adjacent Gobi-wide analog use",
+   "rank": 2,
+   "why": "Composite score 0.52 (lower is closer) against Oxia Planum; terrain distance 0.06 and albedo distance 0.06. At 200 m the block has median slope 0.52 deg and 142 m relief, against 0.49 deg and 117 m at Oxia Planum; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 99 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Valley of the Gobi Lakes, Mongolia, 339 km away; web searches found: weak adjacent (Gobi-wide use, Hami/Dunhuang 330-410 km).",
+   "images": {
+    "eo": "/img/mars/eo_B7719.webp",
+    "earth": "/img/mars/eo_B7719.webp",
+    "target": "/img/mars_oxia.webp",
+    "twin": "/img/mars/twin_B7719.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 88.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 287.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 29.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 0.52,
+     "target": 0.49,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "'New' is provisional: at least 150 km from 251 catalogued sites and nothing found at block level, but only in web searches by helper agents (no Scholar, ADS, CNKI or Persian databases); nearest known is 339 km.",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented.",
+    "Weak adjacent prior use: the Gobi as a whole is used for Mars-analog tourism and training, and Hami and Dunhuang lie 330 to 410 km away. No study of this block was found.",
+    "Remote border region (Gansu, Inner Mongolia, Mongolia); access, permits and security were not assessed."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.52,
+    "stability": 0.99,
+    "nearest_known": "Valley of the Gobi Lakes, Mongolia",
+    "nearest_known_km": 339,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.06,
+    "d_geology": 1.0,
+    "d_albedo": 0.06,
+    "d_swing": 0.46,
+    "earth_albedo": 0.199,
+    "mars_albedo": 0.195,
+    "diurnal_k": 29.2,
+    "pressure_kpa": 88.0,
+    "elev_m": 1083.0,
+    "lithology": "siliciclastic_other",
+    "literature": "weak adjacent (Gobi-wide use, Hami/Dunhuang 330-410 km)",
+    "best_mars": "oxia",
+    "block_id": "B7719",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-mazongshan-beishan.json",
+    "marsHeightmap": "heightmaps/mars-oxia.json"
+   }
+  },
+  {
+   "id": "earth-gerze-ngari",
+   "name": "Gerze, Ngari, northern Tibet (approx.)",
+   "region": "Ngari, northern Tibet",
+   "lat": 32.865,
+   "lon": 83.32,
+   "analogFor": [
+    "mars-jezero"
+   ],
+   "headline": "High Tibetan volcanic terrain with Jezero-like slopes, but a weaker, less stable match.",
+   "description": "A 30 by 30 km block at 4,700 m on the northern Tibetan plateau near Gerze, with a red volcanic cone and dark lava in the imagery. Its terrain is steeper than the two lead picks and is the closest we found to Jezero's. It is a wildcard: the match depends on how the categories are weighted, about 15 % of the surface is vegetated, and the air is thin by Earth standards (57 kPa). The place name and the volcanic-field label are approximate.",
+   "matches": [
+    "Median slope 2.33 deg vs 1.95 deg at Jezero crater (200 m scale)",
+    "Relief 611 m vs 832 m",
+    "Roughness 1.73 m vs 1.75 m (partly DEM noise on Mars)",
+    "Albedo 0.20 (MODIS) vs 0.178 (MGS TES)",
+    "Terrain distance 0.14 (0 = identical), albedo distance 0.33",
+    "Bare ground 84 % (Landsat) and 90 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "15 % vegetated in Landsat (8 % in Sentinel-2)",
+    "Air pressure 57 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 279 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.10",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 2.33,
+    "roughness_m": 1.73,
+    "relief_m": 611.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 279.0,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 106.0,
+    "vegetation_ndvi": 0.138,
+    "snow_frac": 0.092
+   },
+   "tour": {
+    "spawn": {
+     "lat": 32.8655,
+     "lon": 83.3197,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 32.9194,
+      "lon": 83.3197,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 32.8655,
+      "lon": 83.4053,
+      "note": "Landsat sees about 84 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 32.9194,
+      "lon": 83.4053,
+      "note": "Block median slope 2.3 deg at 200 m, relief about 611 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "new",
+   "status": "Wildcard: 15 % vegetated, ranking is weight-sensitive",
+   "rank": 3,
+   "why": "Composite score 0.61 (lower is closer) against Jezero crater; terrain distance 0.14 and albedo distance 0.33. At 200 m the block has median slope 2.33 deg and 611 m relief, against 1.95 deg and 832 m at Jezero crater; Landsat 8/9 and Sentinel-2 find it 84 % and 90 % bare ground. It stays in the top 30 in 29 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Hanle, Ladakh, 407 km away; web searches found nothing for this block.",
+   "images": {
+    "eo": "/img/mars/eo_B19394.webp",
+    "earth": "/img/mars/eo_B19394.webp",
+    "target": "/img/mars_jezero.webp",
+    "twin": "/img/mars/twin_B19394.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 57.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 279.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 32.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 2.33,
+     "target": 1.95,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "'New' is provisional: at least 150 km from 251 catalogued sites and nothing found at block level, but only in web searches by helper agents (no Scholar, ADS, CNKI or Persian databases); nearest known is 407 km.",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented.",
+    "15 % of the block is vegetated in Landsat (10 % in Sentinel-2), which Mars is not.",
+    "Remote high plateau; access and permits were not assessed."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.61,
+    "stability": 0.29,
+    "nearest_known": "Hanle, Ladakh",
+    "nearest_known_km": 407,
+    "landsat_bare": 0.84,
+    "s2_bare": 0.9,
+    "landsat_veg": 0.15,
+    "s2_veg": 0.08,
+    "d_terrain": 0.14,
+    "d_geology": 1.0,
+    "d_albedo": 0.33,
+    "d_swing": 0.0,
+    "earth_albedo": 0.204,
+    "mars_albedo": 0.178,
+    "diurnal_k": 32.3,
+    "pressure_kpa": 57.0,
+    "elev_m": 4700.0,
+    "lithology": "siliciclastic_other",
+    "literature": "nothing found",
+    "best_mars": "jezero",
+    "block_id": "B19394",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-gerze-ngari.json",
+    "marsHeightmap": "heightmaps/mars-jezero.json"
+   }
+  },
+  {
+   "id": "earth-ejin-heihe",
+   "name": "Ejin and Heihe Gobi, Inner Mongolia (approx.)",
+   "region": "Ejin, Alxa League, Inner Mongolia",
+   "lat": 41.462,
+   "lon": 101.719,
+   "analogFor": [
+    "mars-meridiani"
+   ],
+   "headline": "Flat Gobi block, but brighter than Meridiani and its ranking is unstable.",
+   "description": "A 30 by 30 km block in the Ejin and Heihe Gobi. It is flat like Meridiani Planum, but its albedo (0.23) is far brighter than Meridiani's (0.13), it stays in the top 30 in only 36 % of random re-weightings, and the nearest catalogued site, Badain Jaran megadunes, is 178 km away.",
+   "matches": [
+    "Median slope 0.42 deg vs 1.07 deg at Meridiani Planum (200 m scale)",
+    "Relief 92 m vs 91 m",
+    "Roughness 0.92 m vs 1.01 m (partly DEM noise on Mars)",
+    "Albedo 0.23 (MODIS) vs 0.132 (MGS TES)",
+    "Terrain distance 0.16 (0 = identical), albedo distance 0.80",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 90 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 290 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 0.97",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 0.42,
+    "roughness_m": 0.918,
+    "relief_m": 92.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 289.8,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 51.0,
+    "vegetation_ndvi": 0.084,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 41.4615,
+     "lon": 101.7193,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 41.5155,
+      "lon": 101.7193,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 41.4615,
+      "lon": 101.8153,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 41.5155,
+      "lon": 101.8153,
+      "note": "Block median slope 0.4 deg at 200 m, relief about 92 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "reserve",
+   "status": "Reserve: albedo mismatch, ranking is weight-sensitive",
+   "rank": 12,
+   "why": "Composite score 0.60 (lower is closer) against Meridiani Planum; terrain distance 0.16 and albedo distance 0.80. At 200 m the block has median slope 0.42 deg and 92 m relief, against 1.07 deg and 91 m at Meridiani Planum; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 36 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Badain Jaran Desert megadunes, Inner Mongolia, 178 km away; web searches found nothing for this block.",
+   "images": {
+    "eo": "/img/mars/eo_B8964.webp",
+    "earth": "/img/mars/eo_B8964.webp",
+    "target": "/img/mars_meridiani.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 90.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 290.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 32.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 0.42,
+     "target": 1.07,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "Not claimed as new: nearest catalogued site Badain Jaran Desert megadunes, Inner Mongolia, 178 km; literature check: nothing found.",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.6,
+    "stability": 0.36,
+    "nearest_known": "Badain Jaran Desert megadunes, Inner Mongolia",
+    "nearest_known_km": 178,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.16,
+    "d_geology": 1.0,
+    "d_albedo": 0.8,
+    "d_swing": 0.01,
+    "earth_albedo": 0.232,
+    "mars_albedo": 0.132,
+    "diurnal_k": 31.8,
+    "pressure_kpa": 90.0,
+    "elev_m": 959.0,
+    "lithology": "siliciclastic_other",
+    "literature": "nothing found",
+    "best_mars": "meridiani",
+    "block_id": "B8964",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-ejin-heihe.json",
+    "marsHeightmap": "heightmaps/mars-meridiani.json"
+   }
+  },
+  {
+   "id": "earth-bafq-yazd",
+   "name": "Bafq and Yazd, central Iran (approx.)",
+   "region": "Central Iran, Kavir and Lut margin",
+   "lat": 31.327,
+   "lon": 55.316,
+   "analogFor": [
+    "mars-jezero"
+   ],
+   "headline": "Central Iran block with a Jezero-like terrain match, next to an established analog desert.",
+   "description": "A 30 by 30 km block near Bafq and Yazd on the Kavir and Lut margin. Its terrain is a moderate match for Jezero, but the Lut desert is already an established Mars analog (mega-ripples, kaluts), the nearest catalogued site is 249 km away, and adjacent use was found in the literature check, so it is held in reserve rather than claimed as new.",
+   "matches": [
+    "Median slope 2.46 deg vs 1.95 deg at Jezero crater (200 m scale)",
+    "Relief 975 m vs 832 m",
+    "Roughness 1.63 m vs 1.75 m (partly DEM noise on Mars)",
+    "Albedo 0.22 (MODIS) vs 0.178 (MGS TES)",
+    "Terrain distance 0.20 (0 = identical), albedo distance 0.49",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 86 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 300 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.06",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 2.46,
+    "roughness_m": 1.63,
+    "relief_m": 975.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 300.1,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 80.0,
+    "vegetation_ndvi": 0.08,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 31.3269,
+     "lon": 55.3157,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 31.3808,
+      "lon": 55.3157,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 31.3269,
+      "lon": 55.3999,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 31.3808,
+      "lon": 55.3999,
+      "note": "Block median slope 2.5 deg at 200 m, relief about 975 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "reserve",
+   "status": "Reserve: adjacent to the Lut and Kavir analog system",
+   "rank": 7,
+   "why": "Composite score 0.51 (lower is closer) against Jezero crater; terrain distance 0.20 and albedo distance 0.49. At 200 m the block has median slope 2.46 deg and 975 m relief, against 1.95 deg and 832 m at Jezero crater; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 99 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Shahdad kaluts, western Lut, Iran, 249 km away; web searches found: adjacent (Lut/Kavir margin).",
+   "images": {
+    "eo": "/img/mars/eo_B20913.webp",
+    "earth": "/img/mars/eo_B20913.webp",
+    "target": "/img/mars_jezero.webp",
+    "twin": "/img/mars/twin_B20913.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 86.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 300.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 31.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 2.46,
+     "target": 1.95,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "Not claimed as new: nearest catalogued site Shahdad kaluts, western Lut, Iran, 249 km; literature check: adjacent (Lut/Kavir margin).",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.51,
+    "stability": 0.99,
+    "nearest_known": "Shahdad kaluts, western Lut, Iran",
+    "nearest_known_km": 249,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.2,
+    "d_geology": 0.58,
+    "d_albedo": 0.49,
+    "d_swing": 0.2,
+    "earth_albedo": 0.217,
+    "mars_albedo": 0.178,
+    "diurnal_k": 30.7,
+    "pressure_kpa": 86.0,
+    "elev_m": 1482.0,
+    "lithology": "siliciclastic_other",
+    "literature": "adjacent (Lut/Kavir margin)",
+    "best_mars": "jezero",
+    "block_id": "B20913",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-bafq-yazd.json",
+    "marsHeightmap": "heightmaps/mars-jezero.json"
+   }
+  },
+  {
+   "id": "earth-kavir-margin",
+   "name": "Central Iran, Kavir margin (approx.)",
+   "region": "Central Iran, Dasht-e Kavir margin",
+   "lat": 33.327,
+   "lon": 53.485,
+   "analogFor": [
+    "mars-jezero"
+   ],
+   "headline": "Kavir-margin block with a Jezero-like terrain match, inside a studied desert system.",
+   "description": "A 30 by 30 km block on the margin of the Dasht-e Kavir, central Iran. Terrain is a moderate match for Jezero, but the block is 200 km from a catalogued Kavir analog and the Kavir salt-sheet system has been compared with Mars in the literature, so it is held in reserve.",
+   "matches": [
+    "Median slope 2.07 deg vs 1.95 deg at Jezero crater (200 m scale)",
+    "Relief 783 m vs 832 m",
+    "Roughness 1.49 m vs 1.75 m (partly DEM noise on Mars)",
+    "Albedo 0.19 (MODIS) vs 0.178 (MGS TES)",
+    "Terrain distance 0.20 (0 = identical), albedo distance 0.17",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 89 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 299 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.06",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 2.07,
+    "roughness_m": 1.49,
+    "relief_m": 783.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 298.9,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 69.0,
+    "vegetation_ndvi": 0.071,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 33.3269,
+     "lon": 53.4848,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 33.3808,
+      "lon": 53.4848,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 33.3269,
+      "lon": 53.5709,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 33.3808,
+      "lon": 53.5709,
+      "note": "Block median slope 2.1 deg at 200 m, relief about 783 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "reserve",
+   "status": "Reserve: adjacent to the Lut and Kavir analog system",
+   "rank": 8,
+   "why": "Composite score 0.52 (lower is closer) against Jezero crater; terrain distance 0.20 and albedo distance 0.17. At 200 m the block has median slope 2.07 deg and 783 m relief, against 1.95 deg and 832 m at Jezero crater; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 99 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Dasht-e Kavir (Great Salt Desert), Iran, 200 km away; web searches found: adjacent (Lut/Kavir margin).",
+   "images": {
+    "eo": "/img/mars/eo_B17168.webp",
+    "earth": "/img/mars/eo_B17168.webp",
+    "target": "/img/mars_jezero.webp",
+    "twin": "/img/mars/twin_B17168.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 89.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 299.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 30.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 2.07,
+     "target": 1.95,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "Not claimed as new: nearest catalogued site Dasht-e Kavir (Great Salt Desert), Iran, 200 km; literature check: adjacent (Lut/Kavir margin).",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.52,
+    "stability": 0.99,
+    "nearest_known": "Dasht-e Kavir (Great Salt Desert), Iran",
+    "nearest_known_km": 200,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.2,
+    "d_geology": 0.8,
+    "d_albedo": 0.17,
+    "d_swing": 0.33,
+    "earth_albedo": 0.191,
+    "mars_albedo": 0.178,
+    "diurnal_k": 30.0,
+    "pressure_kpa": 89.0,
+    "elev_m": 1363.0,
+    "lithology": "metamorphic",
+    "literature": "adjacent (Lut/Kavir margin)",
+    "best_mars": "jezero",
+    "block_id": "B17168",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-kavir-margin.json",
+    "marsHeightmap": "heightmaps/mars-jezero.json"
+   }
+  },
+  {
+   "id": "earth-tibesti",
+   "name": "Tibesti, Chad-Libya (approx.)",
+   "region": "Tibesti massif, Chad and Libya",
+   "lat": 21.192,
+   "lon": 16.579,
+   "analogFor": [
+    "mars-jezero"
+   ],
+   "headline": "Volcanic massif block that scores close to Jezero's terrain, but Tibesti is already catalogued.",
+   "description": "A 30 by 30 km block inside the Tibesti massif. Terrain is a moderate match for Jezero, but Tibesti is already on our list of analog sites (159 km away) and Emi Koussi has long been compared with Martian volcanoes, so it should count as a known region, not a new one.",
+   "matches": [
+    "Median slope 2.38 deg vs 1.95 deg at Jezero crater (200 m scale)",
+    "Relief 986 m vs 832 m",
+    "Roughness 1.89 m vs 1.75 m (partly DEM noise on Mars)",
+    "Albedo 0.22 (MODIS) vs 0.178 (MGS TES)",
+    "Terrain distance 0.19 (0 = identical), albedo distance 0.54",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 85 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 300 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.11",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 2.38,
+    "roughness_m": 1.89,
+    "relief_m": 986.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 299.8,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 36.0,
+    "vegetation_ndvi": 0.1,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 21.1922,
+     "lon": 16.579,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 21.2462,
+      "lon": 16.579,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 21.1922,
+      "lon": 16.6562,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 21.2462,
+      "lon": 16.6562,
+      "note": "Block median slope 2.4 deg at 200 m, relief about 986 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "reserve",
+   "status": "Reserve: inside a massif already in the catalogue",
+   "rank": 9,
+   "why": "Composite score 0.58 (lower is closer) against Jezero crater; terrain distance 0.19 and albedo distance 0.54. At 200 m the block has median slope 2.38 deg and 986 m relief, against 1.95 deg and 832 m at Jezero crater; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 66 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Tibesti Mountains, Chad-Libya, 159 km away; web searches found: adjacent (massif already catalogued).",
+   "images": {
+    "eo": "/img/mars/eo_B42587.webp",
+    "earth": "/img/mars/eo_B42587.webp",
+    "target": "/img/mars_jezero.webp",
+    "twin": "/img/mars/twin_B42587.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 85.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 300.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 33.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 2.38,
+     "target": 1.95,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "Not claimed as new: nearest catalogued site Tibesti Mountains, Chad-Libya, 159 km; literature check: adjacent (massif already catalogued).",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.58,
+    "stability": 0.66,
+    "nearest_known": "Tibesti Mountains, Chad-Libya",
+    "nearest_known_km": 159,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.19,
+    "d_geology": 1.0,
+    "d_albedo": 0.54,
+    "d_swing": 0.0,
+    "earth_albedo": 0.221,
+    "mars_albedo": 0.178,
+    "diurnal_k": 33.0,
+    "pressure_kpa": 85.0,
+    "elev_m": 1892.0,
+    "lithology": "felsic_volcanic_plutonic",
+    "literature": "adjacent (massif already catalogued)",
+    "best_mars": "jezero",
+    "block_id": "B42587",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-tibesti.json",
+    "marsHeightmap": "heightmaps/mars-jezero.json"
+   }
+  },
+  {
+   "id": "earth-hejaz-harrat",
+   "name": "Hejaz plateau, Saudi Arabia (approx.)",
+   "region": "Najd, Medina Province, Saudi Arabia",
+   "lat": 24.327,
+   "lon": 41.593,
+   "analogFor": [
+    "mars-oxia"
+   ],
+   "headline": "Flat Saudi block with an Oxia-like terrain match but a poor albedo match.",
+   "description": "A 30 by 30 km block east of the Harrat Rahat area in Saudi Arabia. Slope and relief match Oxia Planum closely, but its albedo is brighter than Oxia's, Harrat Khaybar (252 km) is already described as Mars-like, and we could not tell which lava field, if any, lies under the block.",
+   "matches": [
+    "Median slope 0.41 deg vs 0.49 deg at Oxia Planum (200 m scale)",
+    "Relief 116 m vs 117 m",
+    "Roughness 0.39 m vs 0.29 m (partly DEM noise on Mars)",
+    "Albedo 0.24 (MODIS) vs 0.195 (MGS TES)",
+    "Terrain distance 0.06 (0 = identical), albedo distance 0.76",
+    "Bare ground 100 % (Landsat) and 100 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "Air pressure 91 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 305 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 1.03",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 0.41,
+    "roughness_m": 0.39,
+    "relief_m": 116.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 305.3,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 18.0,
+    "vegetation_ndvi": 0.098,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": 24.3269,
+     "lon": 41.5927,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": 24.3808,
+      "lon": 41.5927,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": 24.3269,
+      "lon": 41.6717,
+      "note": "Landsat sees about 100 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": 24.3808,
+      "lon": 41.6717,
+      "note": "Block median slope 0.4 deg at 200 m, relief about 116 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "reserve",
+   "status": "Reserve: adjacent to Saudi lava-field analog use",
+   "rank": 10,
+   "why": "Composite score 0.59 (lower is closer) against Oxia Planum; terrain distance 0.06 and albedo distance 0.76. At 200 m the block has median slope 0.41 deg and 116 m relief, against 0.49 deg and 117 m at Oxia Planum; Landsat 8/9 and Sentinel-2 find it 100 % and 100 % bare ground. It stays in the top 30 in 48 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Harrat Khaybar lava field, Saudi Arabia, 252 km away; web searches found: adjacent (Khaybar/Saudi lava).",
+   "images": {
+    "eo": "/img/mars/eo_B37030.webp",
+    "earth": "/img/mars/eo_B37030.webp",
+    "target": "/img/mars_oxia.webp",
+    "twin": "/img/mars/twin_B37030.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 91.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 305.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 29.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 0.41,
+     "target": 0.49,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "Not claimed as new: nearest catalogued site Harrat Khaybar lava field, Saudi Arabia, 252 km; literature check: adjacent (Khaybar/Saudi lava).",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.59,
+    "stability": 0.48,
+    "nearest_known": "Harrat Khaybar lava field, Saudi Arabia",
+    "nearest_known_km": 252,
+    "landsat_bare": 1.0,
+    "s2_bare": 1.0,
+    "landsat_veg": 0.0,
+    "s2_veg": 0.0,
+    "d_terrain": 0.06,
+    "d_geology": 1.0,
+    "d_albedo": 0.76,
+    "d_swing": 0.43,
+    "earth_albedo": 0.244,
+    "mars_albedo": 0.195,
+    "diurnal_k": 29.4,
+    "pressure_kpa": 91.0,
+    "elev_m": 989.0,
+    "lithology": "felsic_volcanic_plutonic",
+    "literature": "adjacent (Khaybar/Saudi lava)",
+    "best_mars": "oxia",
+    "block_id": "B37030",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-hejaz-harrat.json",
+    "marsHeightmap": "heightmaps/mars-oxia.json"
+   }
+  },
+  {
+   "id": "earth-ica-nazca",
+   "name": "Ica and Nazca, Peru (approx.)",
+   "region": "Coastal desert, Ica, Peru",
+   "lat": -14.404,
+   "lon": -75.583,
+   "analogFor": [
+    "mars-jezero"
+   ],
+   "headline": "Peruvian coastal desert block with a moderate Jezero match and some vegetation.",
+   "description": "A 30 by 30 km block of the Peruvian coastal desert near Ica and Nazca. Terrain is a moderate match for Jezero, but about 8 to 11 % of the surface is vegetated and the block belongs to the Peru-Atacama desert system, with Pampas de La Joya, a known Mars analog, 475 km away.",
+   "matches": [
+    "Median slope 1.51 deg vs 1.95 deg at Jezero crater (200 m scale)",
+    "Relief 525 m vs 832 m",
+    "Roughness 1.78 m vs 1.75 m (partly DEM noise on Mars)",
+    "Albedo 0.21 (MODIS) vs 0.178 (MGS TES)",
+    "Terrain distance 0.16 (0 = identical), albedo distance 0.46",
+    "Bare ground 89 % (Landsat) and 92 % (Sentinel-2)"
+   ],
+   "shortfalls": [
+    "11 % vegetated in Landsat (8 % in Sentinel-2)",
+    "Air pressure 95 kPa vs about 0.6 kPa on Mars",
+    "Mean surface temperature 302 K vs about 210 to 220 K on Mars (run notes, no sourced site value)",
+    "Clay mineralogy not confirmed: Macrostrat resolves only 'siliciclastic' here and the Sentinel-2 clay index is about 0.99",
+    "No impact-crater population, Earth gravity and weathering"
+   ],
+   "values": {
+    "slope_deg": 1.51,
+    "roughness_m": 1.78,
+    "relief_m": 525.0,
+    "flat_frac": null,
+    "crater_density": null,
+    "shadow_frac": null,
+    "temp_mean_k": 302.3,
+    "temp_max_k": null,
+    "ice_proxy": null,
+    "precip_mm_yr": 58.0,
+    "vegetation_ndvi": 0.102,
+    "snow_frac": 0.0
+   },
+   "tour": {
+    "spawn": {
+     "lat": -14.4038,
+     "lon": -75.5827,
+     "heading": 90,
+     "heightM": 1.7
+    },
+    "waypoints": [
+     {
+      "name": "6 km north",
+      "lat": -14.3499,
+      "lon": -75.5827,
+      "note": "Waypoints are offsets of a few km from the block centre, not surveyed landmarks."
+     },
+     {
+      "name": "8 km east",
+      "lat": -14.4038,
+      "lon": -75.5084,
+      "note": "Landsat sees about 89 % bare ground over the block."
+     },
+     {
+      "name": "6 km north-east",
+      "lat": -14.3499,
+      "lon": -75.5084,
+      "note": "Block median slope 1.5 deg at 200 m, relief about 525 m."
+     }
+    ]
+   },
+   "references": [
+    {
+     "title": "USGS Astrogeology: HRSC+MOLA blended DEM, Mars global 200 m",
+     "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m"
+    },
+    {
+     "title": "Copernicus GLO-30 DEM (AWS Open Data)",
+     "url": "https://registry.opendata.aws/copernicus-dem/"
+    },
+    {
+     "title": "Putzig and Mellon 2007, Apparent thermal inertia and the surface heterogeneity of Mars. Icarus",
+     "url": "https://doi.org/10.1016/j.icarus.2007.05.004"
+    }
+   ],
+   "body": "mars",
+   "kind": "reserve",
+   "status": "Reserve: 11 % vegetated, next to the Atacama analog system",
+   "rank": 11,
+   "why": "Composite score 0.59 (lower is closer) against Jezero crater; terrain distance 0.16 and albedo distance 0.46. At 200 m the block has median slope 1.51 deg and 525 m relief, against 1.95 deg and 832 m at Jezero crater; Landsat 8/9 and Sentinel-2 find it 89 % and 92 % bare ground. It stays in the top 30 in 37 % of 1,000 random re-weightings of the categories. The nearest of 251 catalogued analog sites is Pampas de La Joya, Arequipa, Peru, 475 km away; web searches found: weak adjacent (Pampas de La Joya 475 km).",
+   "images": {
+    "eo": "/img/mars/eo_B58488.webp",
+    "earth": "/img/mars/eo_B58488.webp",
+    "target": "/img/mars_jezero.webp",
+    "twin": "/img/mars/twin_B58488.webp"
+   },
+   "gaps": [
+    {
+     "label": "Surface pressure",
+     "earth": 95.0,
+     "target": 0.6,
+     "unit": "kPa",
+     "note": "Earth: NASA POWER surface pressure at the block. Mars: about 0.6 kPa, a general figure (the run notes give about 0.6 to 0.9 kPa); no site-specific sourced value in the data pack."
+    },
+    {
+     "label": "Mean surface temperature",
+     "earth": 302.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day and night mean. Mars annual mean is about 210 to 220 K in the run notes, but no site value was sourced, so it is left blank."
+    },
+    {
+     "label": "Day-night temperature swing",
+     "earth": 33.0,
+     "target": null,
+     "unit": "K",
+     "note": "Earth: MODIS day minus night. The Mars swing is much larger but no sourced site value was found."
+    },
+    {
+     "label": "Median slope",
+     "earth": 1.51,
+     "target": 1.95,
+     "unit": "deg",
+     "note": "Both measured at 200 m: Earth Copernicus GLO-30 averaged to 200 m, Mars HRSC+MOLA at 200 m."
+    }
+   ],
+   "caveats": [
+    "Place name is approximate: the block was found by statistics, so verify the location on a map before presenting.",
+    "Mars terrain is the 200 m HRSC+MOLA blend, partly interpolated from 463 m MOLA, so roughness is partly DEM noise; the comparison is indicative.",
+    "Not claimed as new: nearest catalogued site Pampas de La Joya, Arequipa, Peru, 475 km; literature check: weak adjacent (Pampas de La Joya 475 km).",
+    "The engine's check on 54 known Mars analogs is weak for terrain (AUC 0.33) and geology (0.34); the composite (AUC 0.85) works mostly because it recognises arid land.",
+    "Prior art exists for ranking Earth sites against Mars (Flahaut et al. 2017 on Chilean salars, arXiv 2501.08584, an NHSJS 2026 student paper), so this is not unprecedented."
+   ],
+   "valueSource": "computed",
+   "stats": {
+    "composite": 0.59,
+    "stability": 0.37,
+    "nearest_known": "Pampas de La Joya, Arequipa, Peru",
+    "nearest_known_km": 475,
+    "landsat_bare": 0.89,
+    "s2_bare": 0.92,
+    "landsat_veg": 0.11,
+    "s2_veg": 0.08,
+    "d_terrain": 0.16,
+    "d_geology": 1.0,
+    "d_albedo": 0.46,
+    "d_swing": 0.0,
+    "earth_albedo": 0.215,
+    "mars_albedo": 0.178,
+    "diurnal_k": 32.8,
+    "pressure_kpa": 95.0,
+    "elev_m": 449.0,
+    "lithology": "siliciclastic_other",
+    "literature": "weak adjacent (Pampas de La Joya 475 km)",
+    "best_mars": "jezero",
+    "block_id": "B58488",
+    "role": "computed Mars match"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-ica-nazca.json",
+    "marsHeightmap": "heightmaps/mars-jezero.json"
+   }
+  },
+  {
    "id": "earth-atacama-yungay",
    "name": "Atacama Desert, Yungay (Chile)",
    "region": "Atacama Desert, Chile",
@@ -1167,7 +2604,7 @@
    "body": "mars",
    "kind": "known",
    "status": "Known analog, literature",
-   "rank": 1,
+   "rank": 4,
    "why": "The hyperarid core of the Atacama, around Yungay, is one of the driest places on Earth. Its soils have extremely low organic content and microbial activity, and are used as an analog for Mars's oxidising, dry regolith. The match is about surface chemistry and aridity rather than terrain: Yungay is flat, so it does not match the steep ground at Gale. Terrain values are from the nearest 200 m block of the Mars pool (12 km away): median slope 1.4 deg, relief 322 m.",
    "images": {
     "target": "/img/mars_gale.webp"
@@ -1189,7 +2626,7 @@
     }
    ],
    "caveats": [
-    "Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
+    "Literature analog: the match is about chemistry or minerals, not a computed terrain match.",
     "Place name approximate; coordinates are the well-known site location."
    ],
    "valueSource": "literature",
@@ -1235,7 +2672,7 @@
    "body": "mars",
    "kind": "known",
    "status": "Known analog, literature",
-   "rank": 2,
+   "rank": 5,
    "why": "Lake Salda in southwest Turkey is an alkaline lake with Mg-carbonate (hydromagnesite) deposits. It has been proposed as an analog for the Mg-rich carbonate seen from orbit at Jezero crater, the Perseverance landing site. The match is mineralogical and about a lake margin environment, not about terrain. No terrain values were computed for this site.",
    "images": {
     "target": "/img/mars_jezero.webp"
@@ -1257,9 +2694,9 @@
     }
    ],
    "caveats": [
-    "Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
+    "Literature analog: the match is about chemistry or minerals, not a computed terrain match.",
     "Place name approximate; coordinates are the well-known site location.",
-    "No 200 m pool block within 50 km (nearest 693 km), so terrain values are blank.",
+    "No 200 m pool block within 50 km, so terrain values are blank.",
     "No reference attached: verify a citation before presenting."
    ],
    "valueSource": "literature",
@@ -1310,7 +2747,7 @@
    "body": "mars",
    "kind": "known",
    "status": "Known analog, literature",
-   "rank": 3,
+   "rank": 6,
    "why": "The Rio Tinto in southwest Spain is an acidic, iron-rich river with sulfate minerals such as jarosite. It is used as an analog for the sulfate and hematite-bearing rocks that Opportunity found at Meridiani Planum. The match is about water chemistry and minerals, not terrain. No terrain values were computed for this site.",
    "images": {
     "target": "/img/mars_meridiani.webp"
@@ -1332,9 +2769,9 @@
     }
    ],
    "caveats": [
-    "Mars targets use literature values / indicative 200 m terrain, not a full computed match.",
+    "Literature analog: the match is about chemistry or minerals, not a computed terrain match.",
     "Place name approximate; coordinates are the well-known site location.",
-    "No 200 m pool block within 50 km (nearest 562 km), so terrain values are blank."
+    "No 200 m pool block within 50 km, so terrain values are blank."
    ],
    "valueSource": "literature",
    "stats": {
@@ -1383,9 +2820,15 @@
     "version": "v200",
     "url": "https://esa-worldcover.org/",
     "notes": "Used to gate out forest, farmland, water and snow-covered blocks before ranking."
+   },
+   {
+    "name": "HRSC+MOLA blended DEM, 200 m",
+    "version": "v2",
+    "url": "https://astrogeology.usgs.gov/search/map/mars_mgs_mola_mex_hrsc_blended_dem_global_200m",
+    "notes": "Mars terrain fingerprints at 200 m, so comparisons to 40 m Earth blocks are indicative only."
    }
   ],
-  "processing": "Moon cards: three 'new' blocks and three reserves from results/v3_final_table.csv (composite across 10 categories, stability over 1,000 random re-weightings, distance to 166 catalogued sites, Landsat 8/9 and Sentinel-2 surface check). Values are the block's own values from earth_cells.json. 'Known' Moon cards (Mauna Kea, Wright Valley) are validation analogs. Mars cards are literature analogs unless a Mars Earth-match file was found. Place names are approximate; 'new' means at least 150 km from catalogued sites and nothing found in web searches only.",
+  "processing": "Moon cards: three 'new' blocks and three reserves from results/v3_final_table.csv (composite across 10 categories, stability over 1,000 random re-weightings, distance to 166 catalogued sites, Landsat 8/9 and Sentinel-2 surface check). Values are the block's own values from earth_cells.json. 'Known' Moon cards (Mauna Kea, Wright Valley) are validation analogs. Mars cards: nine computed finalists from results/mars_final_table.csv (composite over 8 categories against four Mars sites, stability over 1,000 random re-weightings, distance to 251 catalogued sites, Landsat 8/9 and Sentinel-2 surface check; Mars terrain is the 200 m HRSC+MOLA blend) plus three literature analogs (Atacama, Lake Salda, Rio Tinto). Place names are approximate; 'new' means at least 150 km from catalogued sites and nothing found in web searches only.",
   "generatedAt": "2026-11-15",
   "run": "Terralog discovery run, 2026-11-14/15"
  }

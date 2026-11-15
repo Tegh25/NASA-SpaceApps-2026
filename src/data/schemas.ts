@@ -154,8 +154,13 @@ export const FeaturedSiteSchema = z.object({
   valueSource: z.enum(['computed', 'literature']).optional(),
   /** Free-form extra numbers (composite, stability, nearest known km, surface check). */
   stats: z.record(z.string(), z.union([z.number(), z.string(), z.null()])).optional(),
-  /** Twin Terrain Lab: matching Earth block and Moon region heightmaps at the same 40 m scale (paths relative to /data/). */
-  twin: z.object({ earthHeightmap: z.string(), moonHeightmap: z.string() }).optional(),
+  /**
+   * Twin Terrain Lab (paths relative to /data/): the matching Earth block plus the Moon region (moonHeightmap, both at 40 m)
+   * or the Mars site (marsHeightmap, both at 200 m, 150 x 150 = 30 km).
+   */
+  twin: z
+    .object({ earthHeightmap: z.string(), moonHeightmap: z.string().optional(), marsHeightmap: z.string().optional() })
+    .optional(),
 });
 
 export const FeaturedFileSchema = z.object({

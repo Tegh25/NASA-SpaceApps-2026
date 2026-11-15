@@ -8,19 +8,25 @@ The files in the repo are now **real**: they are built from the discovery run (C
 
 ```
 cd NASA-SpaceApps-2026
-../discovery/.venv/bin/python scripts/build_real_data.py
+../discovery/.venv/bin/python scripts/build_real_data.py     # 1st: cards, targets, images, heightmaps
+../discovery/.venv/bin/python scripts/build_twin_terrain.py  # 2nd, always after the first: Earth twins + `twin` fields
 npx vitest run src/data      # validates every file against the zod schemas and physical ranges
 ```
 
-The script only reads `../discovery` (override with `TERRALOG_DISC=/path`), and writes `public/data/*.json`, `public/data/heightmaps/*.json` and `public/img/*.webp` (needs `/opt/homebrew/bin/cwebp`). It is deterministic. Moon and Earth values are raw, rounded to about 3 significant digits; missing values are `null`.
+Order matters: `build_real_data.py` wipes `public/data/heightmaps/*.json` and rewrites `featured_analogs.json` (without `twin`); `build_twin_terrain.py` then writes `heightmaps/earth/*.json`, adds `stats` to the Moon and Mars heightmaps and puts `twin` back on every card that has one. Both are deterministic given the same inputs.
+
+Inputs. The research run is committed in-repo under `discovery/` (results, previews, notes); the scripts prefer it. Override with `TERRALOG_DISC=/path/to/discovery`. Some large raw inputs are not in git and are looked up in this order:
+- `TERRALOG_TILES`, else `<DISC>/data/earth`, else `../discovery/data/earth`: Copernicus GLO-30 tiles for the Moon-body Earth twins (40 m). The Mars-scale twins use a local tile if present, otherwise read the same tile remotely from the open AWS bucket (`copernicus-dem-30m.s3.amazonaws.com`) with rasterio; the machine needs network for that.
+- `TERRALOG_RAW`, else `<DISC>`, else `../discovery`: the folder that holds `data/moon/crops/*.npy`, `mars/data/*_dem200.npy` (Mars DEM windows), `mars/results/pool_blocks.csv`, and the previews and `results/validation.csv` not copied into the in-repo folder.
+Writes `public/data/*.json`, `public/data/heightmaps/*.json` and `public/img/*.webp` (needs `/opt/homebrew/bin/cwebp`). Moon and Earth values are raw, rounded to about 3 significant digits; missing values are `null`.
 
 ### What is in the pack
 
 - `features.json`: the 12 shared feature keys (see `docs/DESIGN.md`) with fixed norms that cover both Earth and Moon, e.g. `temp_mean_k` 80 to 320 K linear, `precip_mm_yr` 0 to 3000 log. `ice_proxy` and `temp_max_k` use different statistics on each body; the descriptions say so.
 - `earth_cells.json`: 12,362 blocks of 20 by 20 km (`cellSizeDeg` 0.18) from 235 shortlisted Copernicus tiles (cold, dry, rugged areas only, not the whole Earth). `region` is a coarse hand-written bounding-box label.
-- `targets.json`: 9 Artemis III Moon regions (computed from LOLA and Diviner) and 4 Mars landing sites (terrain only, at 200 m scale, so comparisons to 40 m Earth blocks are indicative; everything else is null).
-- `featured_analogs.json`: Moon cards (3 `new`, 2 `known` validation analogs, 3 `reserve`) and Mars cards.
-- `heightmaps/<target-id>.json`: real 256 by 256 LOLA crops (40 m) for the Moon and 150 by 150 HRSC+MOLA windows (200 m) for Mars. Moon crops are on the polar stereographic grid, not north-up.
+- `targets.json`: 9 Artemis III Moon regions (computed from LOLA and Diviner) and 4 Mars landing sites (terrain at 200 m scale, so comparisons to 40 m Earth blocks are indicative; TES albedo and thermal inertia are quoted in the text as context; temperature, precipitation, vegetation and snow are null because no site value was sourced).
+- `featured_analogs.json`: Moon cards (3 `new`, 2 `known` validation analogs, 3 `reserve`) and Mars cards (3 computed `new`, 6 computed `reserve`, 3 literature `known`).
+- `heightmaps/<target-id>.json`: real 256 by 256 LOLA crops (40 m) for the Moon and 150 by 150 HRSC+MOLA windows (200 m, 30 km) for Mars. Moon crops are on the polar stereographic grid, not north-up. `heightmaps/earth/<site-id>.json`: the Earth twin of a card: 256 by 256 at 40 m (10.24 km) for Moon cards, 150 by 150 at 200 m (30 km, GLO-30 averaged to 200 m, north-up) for Mars cards. Both carry `stats` (45-bin slope histogram, p50, p90, relief).
 
 ### Optional fields added to `FeaturedSite` and `Target`
 
@@ -32,11 +38,10 @@ The script only reads `../discovery` (override with `TERRALOG_DISC=/path`), and 
 
 - "New" means at least 150 km from 166 catalogued analog sites and nothing found in web searches only. Place names are approximate, and prior art exists for ranking Earth sites against lunar terrain, so cards never say "unprecedented".
 - No Earth block closes the temperature gap (about 250 to 297 K against 105 to 153 K) or the lighting gap (0 circling-sun days). Every card has `gaps` stating this with numbers.
-- Mars cards are literature analogs (`valueSource: "literature"`) unless a Mars Earth-match file is found (below). Terrain numbers on them come from the nearest 200 m block of the Mars pool when one lies within 50 km, otherwise they are `null`.
-
-### Adding a Mars Earth-match result
-
-If `../discovery/mars/results/` contains a CSV whose name matches `*final*`, `*featured*`, `*rank*` or `*match*` (not `pool_blocks`, `test_*`), the script uses it instead of the literature cards. Required columns: `id,name,lat,lon,best_mars` (`jezero`, `gale`, `meridiani` or `oxia`). Optional: `kind` (`new`/`known`/`reserve`), `composite`, `region`, `status`, `nearest_known`, `nearest_known_km`. Terrain values are taken from the nearest `pool_blocks.csv` row within 50 km. Rerun the script and `npx vitest run src/data`. If your file has a different shape, edit `cards_from_mars_csv` in the script.
+- Mars computed cards (`valueSource: "computed"`) come from `discovery/mars/results/mars_final_table.csv` (9 finalists; composite over 8 categories against Jezero, Gale, Meridiani and Oxia; lower is closer). `kind: "new"` is the 3 picks named in `discovery/mars/MARS_FINDINGS.md` section 2 (each at least 150 km from 251 catalogued sites, no block-level Mars-analog use found; the Beishan Gobi pick has weak adjacent Gobi-wide use, stated on the card); the other 6 are `reserve`. The 3 literature cards (Atacama, Lake Salda, Rio Tinto) stay `kind: "known"`, `valueSource: "literature"`.
+- Mars values are only real numbers: slope, roughness, relief, MODIS temperature and NDVI and snow, NASA POWER precipitation. Mars-side temperature and day-night swing have no sourced site value, so those `gaps` have `target: null` and say so. The Mars surface pressure (0.6 kPa) is a general figure, labelled as such. Mars terrain is the 200 m HRSC+MOLA blend (partly interpolated from 463 m MOLA).
+- Mars `stats` keys: `composite`, `stability` (share of 1,000 re-weightings that keep the block in the top 30), `nearest_known`, `nearest_known_km`, `landsat_bare`, `s2_bare`, `landsat_veg`, `s2_veg`, `d_terrain`, `d_geology`, `d_albedo`, `d_swing`, `earth_albedo`, `mars_albedo`, `diurnal_k`, `pressure_kpa`, `elev_m`, `lithology`, `literature`, `best_mars`, `block_id`.
+- `twin` on a card: `{ earthHeightmap, moonHeightmap }` (Moon, both 40 m) or `{ earthHeightmap, marsHeightmap }` (Mars, both 200 m). The Twin Terrain Lab takes block size and source labels from each heightmap's `width * metersPerPixel`.
 
 | File | Required | Purpose |
 |---|---|---|

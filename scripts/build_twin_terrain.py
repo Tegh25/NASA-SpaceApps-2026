@@ -4,13 +4,19 @@
 Run from the app root:
     DISC/.venv/bin/python scripts/build_twin_terrain.py
 
-For every featured Moon-body site whose Copernicus GLO-30 tile exists in ../discovery/data/earth:
+Moon sites (body "moon"), for every featured site whose Copernicus GLO-30 tile exists in ../discovery/data/earth:
   * crops a 256 x 256 grid at exactly 40 m per pixel (10.24 km square), north-up, centred on the site
     (local equirectangular projection, bilinear resampling of the 30 m geographic grid),
   * writes public/data/heightmaps/earth/<site-id>.json (same format as the Moon heightmaps + provenance + stats),
   * crops the central 10.24 km of public/img/eo_<code>.webp to public/img/twin/<site-id>_earth.webp (512 px),
   * adds `stats` to every public/data/heightmaps/moon-*.json (in place),
   * adds `twin` to featured_analogs.json for each processed site.
+
+Mars sites (body "mars", computed cards with stats.block_id): a 150 x 150 grid at exactly 200 m per pixel (30 km square), north-up,
+centred on the Mars-run block centre (discovery/mars/results/mars_final_blocks.csv), from Copernicus GLO-30 averaged to 200 m
+(the same Resampling.average method the Mars scan used). Tiles are read from TILES when present, otherwise remotely from the open
+AWS bucket (rasterio + HTTP range reads, no login). The matching Mars heightmap is public/data/heightmaps/mars-<site>.json (HRSC+MOLA 200 m,
+written by build_real_data.py). `twin` = {earthHeightmap, marsHeightmap}; stats are added to the Mars heightmaps too.
 
 IMPORTANT: scripts/build_real_data.py wipes public/data/heightmaps and rewrites featured_analogs.json.
 Run this script AFTER it, every time.
@@ -110,10 +116,10 @@ def sample(lat, lon):
     return out
 
 
-def stats_for(a):
-    """Same simple finite-difference slope for Earth and Moon: central differences at 40 m, degrees."""
+def stats_for(a, mpp=MPP):
+    """Same simple finite-difference slope for every grid: central differences at the grid's own spacing (40 m Moon/Earth, 200 m Mars), degrees."""
     a = np.asarray(a, dtype="float64")
-    gy, gx = np.gradient(a, MPP)
+    gy, gx = np.gradient(a, mpp)
     slope = np.degrees(np.arctan(np.hypot(gx, gy)))
     hist, _ = np.histogram(np.clip(slope, 0, 44.9999), bins=45, range=(0, 45))
     p5, p95 = np.percentile(a, [5, 95])
@@ -123,9 +129,9 @@ def stats_for(a):
         slopeP50=round(float(np.percentile(slope, 50)), 2),
         slopeP90=round(float(np.percentile(slope, 90)), 2),
         reliefP5=round(float(p5), 1), reliefP95=round(float(p95), 1), reliefM=round(float(p95 - p5), 1),
-        method="Central finite differences (numpy.gradient) at 40 m spacing, slope = atan(|grad|) in degrees; "
+        method=f"Central finite differences (numpy.gradient) at {mpp:g} m spacing, slope = atan(|grad|) in degrees; "
                "histogram has 45 bins of 1 deg from 0 to 45 (steeper pixels counted in the last bin), values are fractions summing to 1. "
-               "Relief = 95th minus 5th percentile of elevation. Same code for Earth and Moon.",
+               "Relief = 95th minus 5th percentile of elevation. Same code for Earth, Moon and Mars.",
     )
 
 
@@ -172,6 +178,116 @@ def texture(site, lat, lon):
     return os.path.relpath(dst, APP), os.path.getsize(dst)
 
 
+# ----------------------------------------------------------------------------- Mars-scale (200 m) twins
+MN, MMPP = 150, 200.0
+MARS_RES = os.path.join(DISC, "mars", "results")
+GLO_URL = "https://copernicus-dem-30m.s3.amazonaws.com/{n}/{n}.tif"  # same bucket as discovery/common.py tile_url
+
+
+def glo_name(la, lo):
+    return f"Copernicus_DSM_COG_10_{'N' if la >= 0 else 'S'}{abs(la):02d}_00_{'E' if lo >= 0 else 'W'}{abs(lo):03d}_00_DEM"
+
+
+def open_glo(la, lo):
+    """Local tile if present, else the open AWS bucket over HTTP range reads."""
+    n = glo_name(la, lo)
+    local = tile_path(la, lo)
+    if os.path.exists(local):
+        return rasterio.open(local), "local tile"
+    return rasterio.open(GLO_URL.format(n=n)), "AWS open bucket"
+
+
+def sample_mars_scale(lat, lon):
+    """150 x 150 float array at 200 m, row 0 = north, from GLO-30 averaged to ~200 m then bilinear-sampled on the local equirectangular grid."""
+    from rasterio.enums import Resampling
+    from rasterio.windows import from_bounds
+    i = np.arange(MN) - (MN - 1) / 2
+    lats = lat - i * MMPP / M_LAT
+    lons = lon + i * MMPP / (M_LON * math.cos(math.radians(lat)))
+    LAT, LON = np.meshgrid(lats, lons, indexing="ij")
+    out = np.full((MN, MN), np.nan)
+    pad_lat, pad_lon = 2 * MMPP / M_LAT, 2 * MMPP / (M_LON * math.cos(math.radians(lat)))
+    s, n, w, e = lats.min() - pad_lat, lats.max() + pad_lat, lons.min() - pad_lon, lons.max() + pad_lon
+    srcs = set()
+    for la in range(math.floor(s), math.floor(n) + 1):
+        for lo in range(math.floor(w), math.floor(e) + 1):
+            S, N_, W, E = max(s, la), min(n, la + 1), max(w, lo), min(e, lo + 1)
+            if N_ <= S or E <= W:
+                continue
+            ds, where = open_glo(la, lo)
+            srcs.add(where)
+            with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif", GDAL_HTTP_MAX_RETRY="3"), ds:
+                win = from_bounds(W, S, E, N_, ds.transform)
+                h_m, w_m = (N_ - S) * M_LAT, (E - W) * M_LON * math.cos(math.radians(lat))
+                oh, ow = max(2, int(round(h_m / MMPP))), max(2, int(round(w_m / MMPP)))
+                a = ds.read(1, window=win, out_shape=(oh, ow), resampling=Resampling.average, boundless=False).astype("float64")
+                if ds.nodata is not None:
+                    a[a == ds.nodata] = np.nan
+            # pixel centres of this sub-window
+            m = (LAT >= S) & (LAT <= N_) & (LON >= W) & (LON <= E)
+            if not m.any():
+                continue
+            row = (N_ - LAT[m]) / (N_ - S) * oh - 0.5
+            col = (LON[m] - W) / (E - W) * ow - 0.5
+            out[m] = ndi.map_coordinates(a, [row, col], order=1, mode="nearest")
+    return out, "/".join(sorted(srcs))
+
+
+def mars_blocks():
+    import csv
+    with open(os.path.join(MARS_RES, "mars_final_blocks.csv")) as f:
+        return {r["id"]: (float(r["lat"]), float(r["lon"])) for r in csv.DictReader(f)}
+
+
+def run_mars(feat):
+    blocks = mars_blocks()
+    final = {}
+    with open(os.path.join(MARS_RES, "mars_final_table.csv")) as f:
+        import csv
+        final = {r["id"]: r for r in csv.DictReader(f)}
+    done = set()
+    for s in feat["featured"]:
+        st = s.get("stats") or {}
+        if s.get("body") != "mars" or s.get("valueSource") != "computed" or st.get("block_id") not in blocks:
+            continue
+        target = s["analogFor"][0]
+        marspath = os.path.join(DATA, "heightmaps", f"{target}.json")
+        if not os.path.exists(marspath):
+            print(f"skip {s['id']}: no Mars heightmap {target}")
+            s.pop("twin", None)
+            continue
+        bid = st["block_id"]
+        lat, lon = blocks[bid]
+        a, where = sample_mars_scale(lat, lon)
+        assert np.isfinite(a).all(), f"{bid}: non-finite elevation"
+        lo_e, hi_e, data = encode(a)
+        sx = stats_for(a, MMPP)
+        run_slope, run_relief = float(final[bid]["slope_p50"]), float(final[bid]["relief_m"])
+        hm = dict(
+            width=MN, height=MN, metersPerPixel=int(MMPP), minElevation=lo_e, maxElevation=hi_e, encoding="int16-base64", data=data,
+            provenance=dict(
+                mock=False, generatedAt=TODAY,
+                datasets=[dict(name="Copernicus DEM GLO-30", version="2021 release", url="https://registry.opendata.aws/copernicus-dem/",
+                               notes="Copernicus DEM GLO-30, produced by ESA/Airbus from TanDEM-X; free and open licence (COPERNICUS DEM, (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the EU and ESA).")],
+                processing="Copernicus DEM GLO-30 (30 m geographic grid) block-averaged to about 200 m (rasterio Resampling.average, the same method as the Mars scan) "
+                           "and bilinearly sampled on a local equirectangular grid (dx = 200 m / (111320 cos lat), dy = 200 m / 110540), 150 by 150 pixels = 30 km square, "
+                           "north-up, elevation in metres above EGM2008. Built to sit beside the Mars HRSC+MOLA 200 m window (" + target + ") at the same scale. Source: " + where + ".",
+                centre=dict(lat=round(lat, 5), lon=round(lon, 5)), requestedCentre=dict(lat=lat, lon=lon), blockId=bid, siteId=s["id"],
+                checkAgainstRun=dict(slopeP50Run=run_slope, slopeP50Here=sx["slopeP50"], reliefRun=run_relief, reliefHere=sx["reliefM"],
+                                     note="The run used common.slope_degrees and a 30 km block grid; slope here is numpy central differences on this exact grid, so small differences are expected."),
+            ),
+            stats=sx)
+        size = dump(os.path.join(DATA, "heightmaps", "earth", f"{s['id']}.json"), hm)
+        s["twin"] = dict(earthHeightmap=f"heightmaps/earth/{s['id']}.json", marsHeightmap=f"heightmaps/{target}.json")
+        done.add(target)
+        print(f"{s['id']:26s} {size/1024:.0f} KB ({where}) p50={sx['slopeP50']} (run {run_slope}) relief={sx['reliefM']} (run {run_relief})")
+    for p in sorted(glob.glob(os.path.join(DATA, "heightmaps", "mars-*.json"))):
+        hm = json.load(open(p))
+        hm["stats"] = stats_for(decode(hm), MMPP)
+        dump(p, hm)
+        print(f"{os.path.basename(p):36s} p50={hm['stats']['slopeP50']} p90={hm['stats']['slopeP90']} relief={hm['stats']['reliefM']}")
+
+
 def main():
     fpath = os.path.join(DATA, "featured_analogs.json")
     feat = json.load(open(fpath))
@@ -207,6 +323,7 @@ def main():
         tex = texture(s, la, lo)
         s["twin"] = dict(earthHeightmap=f"heightmaps/earth/{s['id']}.json", moonHeightmap=f"heightmaps/{target}.json")
         print(f"{s['id']:22s} {size/1024:.0f} KB shift={shift[0]:.0f}N/{shift[1]:.0f}E m p50={st['slopeP50']} p90={st['slopeP90']} relief={st['reliefM']} tex={tex}")
+    run_mars(feat)
     with open(fpath, "w") as f:
         json.dump(feat, f, indent=1, allow_nan=False)
 

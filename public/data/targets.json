@@ -296,7 +296,7 @@
    "lat": 18.44,
    "lon": 77.45,
    "summary": "Ancient river-delta lake basin, landing site of Perseverance. Terrain at 200 m scale.",
-   "whyItMatters": "Jezero held a lake with a delta around 3.5 billion years ago. Orbital spectra show Mg-rich carbonate, olivine and clays. Perseverance landed here in 2021. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "whyItMatters": "Jezero held a lake with a delta around 3.5 billion years ago. Orbital spectra show Mg-rich carbonate, olivine and clays. Perseverance landed here in 2021. MGS TES albedo 0.178, night-side thermal inertia 300 tiu (median, Putzig and Mellon 2007); these are context, not scored. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced site values in the data pack.",
    "values": {
     "slope_deg": 1.95,
     "roughness_m": 1.75,
@@ -314,7 +314,7 @@
    "imagery": "/img/mars_jezero.webp",
    "sources": [
     "USGS HRSC+MOLA blended DEM 200 m (v2)",
-    "MGS TES thermal inertia and albedo (context, not scored)"
+    "MGS TES albedo (USGS mosaic) and Putzig and Mellon 2007 thermal inertia (PDS), context only"
    ],
    "valueSource": "computed",
    "heightmap": "heightmaps/mars-jezero.json"
@@ -327,7 +327,7 @@
    "lat": -5.4,
    "lon": 137.8,
    "summary": "Crater with a 5 km layered mound, landing site of Curiosity. Terrain at 200 m scale.",
-   "whyItMatters": "Gale contains Mount Sharp, with clay and sulfate layers recording a wetter-to-drier transition. Curiosity landed here in 2012. The 30 km window includes the steep mound, so slope and relief are high. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "whyItMatters": "Gale contains Mount Sharp, with clay and sulfate layers recording a wetter-to-drier transition. Curiosity landed here in 2012. The 30 km window includes the steep mound, so slope and relief are high. MGS TES albedo 0.228, night-side thermal inertia 230 tiu (median, Putzig and Mellon 2007); these are context, not scored. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced site values in the data pack.",
    "values": {
     "slope_deg": 10.15,
     "roughness_m": 2.56,
@@ -345,7 +345,7 @@
    "imagery": "/img/mars_gale.webp",
    "sources": [
     "USGS HRSC+MOLA blended DEM 200 m (v2)",
-    "MGS TES thermal inertia and albedo (context, not scored)"
+    "MGS TES albedo (USGS mosaic) and Putzig and Mellon 2007 thermal inertia (PDS), context only"
    ],
    "valueSource": "computed",
    "heightmap": "heightmaps/mars-gale.json"
@@ -358,7 +358,7 @@
    "lat": -1.95,
    "lon": -5.53,
    "summary": "Very flat plain with hematite and sulfate-rich rock, landing site of Opportunity. Terrain at 200 m scale.",
-   "whyItMatters": "Meridiani is a very flat plain (median slope about 1 degree). Opportunity found sulfate-rich sedimentary rock and hematite spherules here in 2004. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "whyItMatters": "Meridiani is a very flat plain (median slope about 1 degree). Opportunity found sulfate-rich sedimentary rock and hematite spherules here in 2004. MGS TES albedo 0.132, night-side thermal inertia 190 tiu (median, Putzig and Mellon 2007); these are context, not scored. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced site values in the data pack.",
    "values": {
     "slope_deg": 1.07,
     "roughness_m": 1.01,
@@ -376,7 +376,7 @@
    "imagery": "/img/mars_meridiani.webp",
    "sources": [
     "USGS HRSC+MOLA blended DEM 200 m (v2)",
-    "MGS TES thermal inertia and albedo (context, not scored)"
+    "MGS TES albedo (USGS mosaic) and Putzig and Mellon 2007 thermal inertia (PDS), context only"
    ],
    "valueSource": "computed",
    "heightmap": "heightmaps/mars-meridiani.json"
@@ -389,7 +389,7 @@
    "lat": 18.28,
    "lon": -24.63,
    "summary": "Flat clay-bearing plain, chosen landing site for the Rosalind Franklin rover. Terrain at 200 m scale.",
-   "whyItMatters": "Oxia Planum has Fe/Mg-rich clays over a very flat plain (median slope under 1 degree), which is why it was chosen for ESA's ExoMars rover. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced values in the data pack.",
+   "whyItMatters": "Oxia Planum has Fe/Mg-rich clays over a very flat plain (median slope under 1 degree), which is why it was chosen for ESA's ExoMars rover. MGS TES albedo 0.195, night-side thermal inertia 422 tiu (median, Putzig and Mellon 2007); these are context, not scored. Mars terrain is measured on a 200 m grid from the HRSC+MOLA blend (a 30 by 30 km window), so slope and roughness are not directly comparable with the 40 m Earth blocks. Treat comparisons as indicative. Temperature, precipitation, vegetation and snow are left blank: no sourced site values in the data pack.",
    "values": {
     "slope_deg": 0.49,
     "roughness_m": 0.293,
@@ -407,7 +407,7 @@
    "imagery": "/img/mars_oxia.webp",
    "sources": [
     "USGS HRSC+MOLA blended DEM 200 m (v2)",
-    "MGS TES thermal inertia and albedo (context, not scored)"
+    "MGS TES albedo (USGS mosaic) and Putzig and Mellon 2007 thermal inertia (PDS), context only"
    ],
    "valueSource": "computed",
    "heightmap": "heightmaps/mars-oxia.json"
@@ -435,7 +435,7 @@
     "notes": "Mars terrain fingerprints at 200 m, so comparisons to 40 m Earth blocks are indicative only."
    }
   ],
-  "processing": "Moon: nine Artemis III south-polar candidate regions; terrain from LOLA 40 m with the same code as the Earth blocks, temperature and ice from Diviner region medians, precipitation, NDVI and snow set to 0 by definition. Mars: four rover landing sites, terrain only, at 200 m (slope, roughness, relief, share under 10 degrees); everything else is null. Coordinates are the well-known landing locations.",
+  "processing": "Moon: nine Artemis III south-polar candidate regions; terrain from LOLA 40 m with the same code as the Earth blocks, temperature and ice from Diviner region medians, precipitation, NDVI and snow set to 0 by definition. Mars: four rover landing sites, terrain at 200 m (slope, roughness, relief, share under 10 degrees); TES albedo and thermal inertia are quoted in the text as context; temperature, precipitation, vegetation and snow are null (no sourced site values). Coordinates are the well-known landing locations.",
   "generatedAt": "2026-11-15",
   "run": "Terralog discovery run, 2026-11-14/15"
  }

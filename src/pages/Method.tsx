@@ -26,6 +26,25 @@ const PIPELINE = [
   },
 ];
 
+const MARS_PIPELINE = [
+  {
+    title: 'Mars side',
+    body: 'Four Mars sites (Jezero, Oxia Planum, Gale, Meridiani) are fingerprinted from the USGS HRSC and MOLA blended DEM at 200 m, in a 30 × 30 km window each, with the same slope and roughness code as Earth.',
+  },
+  {
+    title: 'Earth pool',
+    body: '68,496 arid blocks of 30 km worldwide (WorldClim screen, Copernicus GLO-30 averaged to 200 m), so both sides are compared at the same scale. Blocks within 100 km of a known analog are dropped first.',
+  },
+  {
+    title: 'Composite and gate',
+    body: 'Eight categories: terrain, geology (Macrostrat), albedo, day-night swing, dryness, vegetation, pressure and cold. Terrain counts 2, geology 2, albedo 1, dryness 1, vegetation 1, the rest 0.5. Blocks with NDVI above 0.20 or snow above 10 % are gated out. Stability is the share of 1,000 random re-weightings that keep a block in the top 30.',
+  },
+  {
+    title: 'Checks',
+    body: 'Landsat 8/9 and Sentinel-2 composites check the surface, 251 catalogued analog sites set the 150 km novelty rule, and web searches by two helper agents looked for prior Mars-analog use of each block.',
+  },
+];
+
 const DATASETS: { name: string; use: string; side: 'Moon' | 'Earth' | 'Mars' }[] = [
   { name: 'LRO LOLA, LDEM_80S_40M (NASA PDS)', use: 'Slope, roughness, relief, crater-like pits, landing fractions and shadow for the Moon regions', side: 'Moon' },
   { name: 'LRO Diviner Polar Resource Product', use: 'Moon temperature and water-ice stable depth targets', side: 'Moon' },
@@ -37,14 +56,15 @@ const DATASETS: { name: string; use: string; side: 'Moon' | 'Earth' | 'Mars' }[]
   { name: 'ESA WorldCover', use: 'Bare-rock surface gate', side: 'Earth' },
   { name: 'JAXA ALOS PALSAR-2 (via Planetary Computer)', use: 'Radar characterisation only. Not scored', side: 'Earth' },
   { name: 'Landsat 8/9 and Sentinel-2', use: 'Surface verification of finalists', side: 'Earth' },
-  { name: 'USGS HRSC and MOLA blended DEM, 200 m', use: 'Mars terrain', side: 'Mars' },
-  { name: 'TES albedo and thermal inertia (Putzig and Mellon, 2007)', use: 'Mars surface properties, from literature values', side: 'Mars' },
+  { name: 'USGS HRSC and MOLA blended DEM, 200 m (ESA Mars Express HRSC, NASA MGS MOLA)', use: 'Mars terrain fingerprints and the Mars heightmaps in the Twin Terrain Lab', side: 'Mars' },
+  { name: 'MGS TES albedo (USGS mosaic) and thermal inertia (Putzig and Mellon 2007, NASA PDS)', use: 'Mars albedo, which is scored, and thermal inertia, quoted as context and not matched to Earth', side: 'Mars' },
+  { name: 'Copernicus GLO-30 averaged to 200 m, WorldClim, Macrostrat', use: 'Earth side of the Mars search: terrain at the Mars scale, the arid screen, and coarse lithology', side: 'Earth' },
 ];
 
 const RESOURCES: { name: string; status: 'Used' | 'Indirectly' | 'Not used'; note: string }[] = [
   { name: 'NASA Earthdata Search', status: 'Indirectly', note: 'MODIS products read anonymously through Planetary Computer, no login needed.' },
   { name: 'NASA Worldview and GIBS', status: 'Not used', note: 'Image tiles only, and the analysis needs numbers. GIBS is a map imagery fallback in the app.' },
-  { name: 'NASA PDS', status: 'Used', note: 'The archive that supplied the LOLA and Diviner products.' },
+  { name: 'NASA PDS', status: 'Used', note: 'The archive that supplied the LOLA and Diviner products and the Mars thermal inertia maps.' },
   { name: 'LRO (LOLA, Mini-RF)', status: 'Used', note: 'LOLA is core. Mini-RF is for characterisation only.' },
   { name: 'LRO Diviner', status: 'Used', note: 'Core temperature and ice targets for the Moon.' },
   { name: 'CSA RCM', status: 'Not used', note: 'Needs an account and is aimed at maritime and disaster use.' },
@@ -63,7 +83,10 @@ const LIMITS = [
   'Prior art exists for ranking Earth sites against Moon and Mars terrain. Do not call this approach unprecedented.',
   'Terrain alone gives the same validation as the full 10-category composite (AUC 0.82 for both). The ice and crater categories have no validation support (AUC 0.44 and 0.50).',
   'Among the known analogs, only Mauna Kea (98th percentile) and Wright Valley (85th) rank high on terrain. The engine finds terrain look-alikes, not the established analog list.',
-  'Mars sites use 200 m terrain and literature values. They are indicative only.',
+  'Mars results are computed but weakly validated: on 54 known Mars analogs against 10 controls the composite scores AUC 0.85, but terrain alone scores 0.33 and geology 0.34. The composite works mainly because it recognises arid land.',
+  'Mars terrain is 200 m resolution and partly interpolated from 463 m MOLA, so roughness is partly DEM noise and the Earth-Mars comparison is indicative. Craters, clay mineralogy and thermal inertia are not matched.',
+  'Mars sites differ from every Earth block in pressure (Mars about 0.6 kPa against 57 to 95 kPa here) and temperature (Earth blocks 279 to 305 K). Mars-side temperature and day-night swing have no sourced site value in our data, so cards leave them blank.',
+  'Mars "new" places are provisional and the names are approximate. They rest on the 150 km distance check and web searches only, and the Beishan Gobi block has weak adjacent Gobi-wide analog use.',
   'Hot deserts, Antarctica and the far north were outside the search pool.',
 ];
 
@@ -139,6 +162,29 @@ export function Method() {
               </li>
             ))}
           </ol>
+        </Section>
+
+        <Section title="Mars pipeline">
+          <p>
+            Mars cards are computed too, not only quoted from literature. The Moon run above is unchanged; this is a second run with the same idea
+            and its own folder.
+          </p>
+          <ol className="space-y-4">
+            {MARS_PIPELINE.map((step, i) => (
+              <li key={step.title} className="grid grid-cols-[2.25rem_1fr] gap-3">
+                <span className="num grid h-8 w-8 place-items-center rounded-full border border-[var(--mars)] text-sm text-[var(--mars)]">{i + 1}</span>
+                <div>
+                  <h3 className="font-display font-medium text-[var(--ink)]">{step.title}</h3>
+                  <p className="mt-1 text-[var(--dim)]">{step.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="text-sm text-[var(--dim)]">
+            Result: nine finalists. Three are shown as new (Chagai and Taftan, Beishan Gobi, and a Gerze wildcard) and six are held in reserve
+            because they sit next to analog systems that are already studied. The Twin Terrain Lab puts each Earth block beside its Mars site at
+            200 m.
+          </p>
         </Section>
 
         <Section title="Datasets">
