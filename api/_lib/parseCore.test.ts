@@ -26,6 +26,15 @@ describe('parseCore', () => {
     expect(q.required).toEqual(['slope_deg']);
   });
 
+  it('does not treat inherited property names as targets or required keys', () => {
+    const q = sanitize(
+      { body: 'moon', targets: { slope_deg: 0.5 }, weights: {}, required: ['toString', 'constructor', '__proto__', 'slope_deg'], notes: '' },
+      keys,
+    );
+    expect(q.required).toEqual(['slope_deg']);
+    expect(q.weights).toEqual({ slope_deg: 2 });
+  });
+
   it('tolerates a malformed body field', () => {
     expect(sanitize({ body: 'venus', targets: {}, weights: {}, required: [], notes: '' }, keys).body).toBe('either');
   });

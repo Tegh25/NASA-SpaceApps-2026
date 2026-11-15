@@ -107,10 +107,11 @@ export function sanitize(raw: unknown, keys: Set<string>) {
     targets[k] = Math.min(1, Math.max(0, v));
   }
   for (const k of Object.keys(targets)) {
-    const w = p.weights[k];
-    weights[k] = (Number.isFinite(w) ? Math.min(3, Math.max(0, Math.round(w))) : 2) as 0 | 1 | 2 | 3;
+    const w = Object.hasOwn(p.weights, k) ? p.weights[k] : undefined;
+    weights[k] = (typeof w === 'number' && Number.isFinite(w) ? Math.min(3, Math.max(0, Math.round(w))) : 2) as 0 | 1 | 2 | 3;
   }
-  const required = Array.from(new Set(p.required.filter((k) => k in targets)));
+  // Object.hasOwn, not `in`: `in` also matches inherited names such as "toString" and "constructor".
+  const required = Array.from(new Set(p.required.filter((k) => Object.hasOwn(targets, k))));
   return { body: p.body, targets, weights, required, notes: p.notes.slice(0, 240) };
 }
 

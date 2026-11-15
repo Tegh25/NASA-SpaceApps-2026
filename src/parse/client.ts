@@ -39,7 +39,7 @@ export async function parseText(text: string, features: FeatureDef[], body: Body
     for (const [k, v] of Object.entries(q.targets ?? {})) {
       if (!known.has(k) || typeof v !== 'number') continue;
       targets[k] = Math.min(1, Math.max(0, v));
-      weights[k] = (q.weights?.[k] ?? 2) as Weight;
+      weights[k] = ((q.weights && Object.hasOwn(q.weights, k) ? q.weights[k] : undefined) ?? 2) as Weight;
     }
     if (!Object.keys(targets).length) return fallback();
     const kw = keywordParse(capped, keys);
@@ -48,7 +48,7 @@ export async function parseText(text: string, features: FeatureDef[], body: Body
         body: q.body === 'either' ? body : q.body,
         targets,
         weights,
-        required: (q.required ?? []).filter((k) => k in targets),
+        required: (q.required ?? []).filter((k) => Object.hasOwn(targets, k)),
         notes: q.notes ?? '',
         tags: kw.query.tags,
       },
