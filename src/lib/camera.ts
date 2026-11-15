@@ -51,7 +51,11 @@ function sample(v: Cesium.Viewer) {
     lat = deg(c.latitude);
     lon = deg(c.longitude);
     const hasTerrain = !!scene.globe.terrainProvider?.availability;
-    if (hasTerrain) terrainHeightM = scene.globe.getHeight(c) ?? c.height ?? null;
+    if (hasTerrain) {
+      const h = scene.globe.getHeight(c);
+      // getHeight can return junk while tiles stream in; keep only plausible Earth elevations.
+      terrainHeightM = h !== undefined && h > -500 && h < 9000 ? h : null;
+    }
     const px = camera.getPixelSize(new Cesium.BoundingSphere(hit, 1), scene.drawingBufferWidth, scene.drawingBufferHeight);
     if (Number.isFinite(px)) metersPerPx = px;
   }

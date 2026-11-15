@@ -12,7 +12,7 @@ import { Minimap } from './Minimap';
 import { TargetViewController } from './targetViewProfile';
 
 const FIDELITY_LABEL: Record<Fidelity, string> = {
-  photoreal: 'Photorealistic 3D tiles',
+  photoreal: 'Photoreal 3D tiles where covered, terrain elsewhere',
   terrain: 'Terrain + satellite (no photoreal coverage here)',
   low: 'Low detail (no photoreal coverage here)',
 };
@@ -51,7 +51,9 @@ export function TourView() {
       if (cancelled) return;
       if (tileset) {
         tileset.show = true;
-        v.scene.globe.show = false;
+        // Keep terrain + satellite underneath: photoreal coverage is sparse in remote
+        // places like the Tibetan plateau, and hiding the globe left black holes.
+        v.scene.globe.show = true;
         setFidelity('photoreal');
       } else {
         setFidelity(HAS_ION ? 'terrain' : 'low');

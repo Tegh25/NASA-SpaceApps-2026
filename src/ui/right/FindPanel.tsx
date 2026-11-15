@@ -84,7 +84,7 @@ export function FindPanel() {
     <div className="flex h-full min-h-0 flex-col">
       <header className="shrink-0 px-5 pb-3 pt-5">
         <h2 className="font-display text-[22px] leading-tight">Find a match</h2>
-        <p className="mt-1 text-[13px] leading-snug text-[var(--dim)]">Tune the conditions; the cards on the left re-rank live.</p>
+        <p className="mt-1 text-[13px] leading-snug text-[var(--dim)]">Tune the conditions and the location cards re-rank live.</p>
       </header>
 
       <div className="scroll-thin min-h-0 flex-1 overflow-y-auto px-5 pb-4">

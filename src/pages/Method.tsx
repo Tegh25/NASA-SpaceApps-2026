@@ -105,7 +105,7 @@ export function Method() {
           </p>
           <p>
             Typed descriptions become feature targets and weights. A language model proposes them when it is available. If it is not, or it is
-            too slow, a keyword parser takes over. The chips under the search bar show how the text was read.
+            too slow, a keyword parser takes over. The chips under the text box show how the text was read.
           </p>
         </Section>
 

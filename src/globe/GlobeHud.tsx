@@ -82,7 +82,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
 
       {/* Selected site chip */}
       {chip && (
-        <div className="absolute left-1/2 top-4 -translate-x-1/2">
+        <div className="absolute left-1/2 top-20 md:top-4 -translate-x-1/2">
           <div className="panel max-w-[70vw] truncate px-3 py-1.5 text-xs text-[var(--accent)]" role="status">
             {chip}
           </div>
@@ -90,7 +90,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
       )}
 
       {/* Controls */}
-      <div className="absolute right-4 top-4 flex flex-col items-end gap-2">
+      <div className="absolute right-4 top-20 md:top-4 flex flex-col items-end gap-2">
         <div className="panel pointer-events-auto flex overflow-hidden" role="group" aria-label="View mode">
           <button type="button" className={seg(!surface)} aria-pressed={!surface} aria-label="Orbit view" onClick={() => setMode('orbit')}>
             Orbit
@@ -125,7 +125,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
       </div>
 
       {/* Readout */}
-      <div className="panel num absolute bottom-4 left-4 max-w-[calc(100%-2rem)] px-3 py-2 text-[11px] leading-relaxed text-[var(--ink)]" aria-live="off">
+      <div className="panel num absolute bottom-4 hidden md:block left-4 max-w-[calc(100%-2rem)] px-3 py-2 text-[11px] leading-relaxed text-[var(--ink)]" aria-live="off">
         <div>
           {hemi(cam.lat, 'N', 'S')}
           {'  '}

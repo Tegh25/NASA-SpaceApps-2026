@@ -59,6 +59,8 @@ export function formatGap(g: Gap): string | null {
 }
 
 function shortfallOf(f: FeaturedSite): string | null {
+  // Literature cards have only a few sparse values; their written shortfall is more honest.
+  if (f.valueSource === 'literature' && f.shortfalls[0]) return f.shortfalls[0];
   for (const g of f.gaps) {
     const t = formatGap(g);
     if (t) return t;
@@ -108,6 +110,8 @@ function buildCards(data: AppData, body: ActiveBody, query: ParsedQuery, searchi
       q = t ? queryFromTarget(t, data.features) : null;
     }
     const s = q ? scoreVector(get, searching ? query : { ...q, required: [] }) : null;
+    // No computed score for literature-value sites outside a search: it would rest on 1 to 3 sparse numbers.
+    if (!searching && f.valueSource === 'literature') return { f, score: null };
     return { f, score: s ? Math.round(s.score) : null };
   });
 
