@@ -64,6 +64,8 @@ export function isSearchActive(q: ParsedQuery): boolean {
 }
 
 let recomputeTimer: ReturnType<typeof setTimeout> | null = null;
+/** Bumped by every query-changing action. A pending text parse that no longer holds the latest value is dropped. */
+let querySeq = 0;
 
 export const useApp = create<AppState>((set, get) => {
   const recompute = () => {
@@ -81,7 +83,8 @@ export const useApp = create<AppState>((set, get) => {
   const editQuery = (fn: (q: ParsedQuery) => void) => {
     const q = structuredClone(get().query);
     fn(q);
-    set({ query: q, source: 'manual', presetId: get().source === 'preset' ? get().presetId : null });
+    querySeq++;
+    set({ query: q, source: 'manual', presetId: get().source === 'preset' ? get().presetId : null, parsing: false });
     scheduleRecompute();
   };
 
@@ -124,12 +127,16 @@ export const useApp = create<AppState>((set, get) => {
       const trimmed = text.trim();
       set({ queryText: trimmed });
       if (!trimmed) return get().reset();
+      const seq = ++querySeq;
       set({ parsing: true });
       const res = await parseText(trimmed, data.features, query.body);
-      if (get().queryText !== trimmed) return;
+      // Superseded by a reset, preset, slider edit or newer search while parsing: that action already
+      // cleared `parsing` and owns the query, so this result must not overwrite it.
+      if (seq !== querySeq) return;
       set({
         parsing: false,
-        query: res.query,
+        // The body may have been toggled while the parse was in flight; keep the user's current choice.
+        query: { ...res.query, body: get().query.body },
         parserMode: res.mode,
         unknownWords: res.unknown,
         source: 'text',
@@ -144,12 +151,15 @@ export const useApp = create<AppState>((set, get) => {
       const { data } = get();
       if (!data) return;
       if (!targetId) {
-        set({ presetId: null, source: 'manual' });
+        querySeq++;
+        set({ presetId: null, source: 'manual', parsing: false });
         return;
       }
       const t = data.targets.find((x) => x.id === targetId);
       if (!t) return;
+      querySeq++;
       set({
+        parsing: false,
         query: queryFromTarget(t, data.features),
         source: 'preset',
         presetId: t.id,
@@ -189,11 +199,14 @@ export const useApp = create<AppState>((set, get) => {
         q.required = q.required.filter((k) => k !== key);
       }),
     setQuery: (q, source, presetId = null) => {
-      set({ query: q, source, presetId });
+      querySeq++;
+      set({ query: q, source, presetId, parsing: false });
       recompute();
     },
     reset: () => {
+      querySeq++;
       set({
+        parsing: false,
         query: { ...emptyQuery(), body: get().query.body },
         queryText: '',
         source: 'none',
