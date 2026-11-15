@@ -1,0 +1,15 @@
+# raw downloads and environments live outside git
+data/
+.venv/
+*.pkl
+*.npy
+*.npz
+*.part
+__pycache__/
+logs/
+results/_*
+results/*cache*
+mars/data/
+mars/logs/
+mars/results/_*
+mars/results/*.pkl
