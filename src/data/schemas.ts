@@ -154,6 +154,8 @@ export const FeaturedSiteSchema = z.object({
   valueSource: z.enum(['computed', 'literature']).optional(),
   /** Free-form extra numbers (composite, stability, nearest known km, surface check). */
   stats: z.record(z.string(), z.union([z.number(), z.string(), z.null()])).optional(),
+  /** Twin Terrain Lab: matching Earth block and Moon region heightmaps at the same 40 m scale (paths relative to /data/). */
+  twin: z.object({ earthHeightmap: z.string(), moonHeightmap: z.string() }).optional(),
 });
 
 export const FeaturedFileSchema = z.object({
@@ -169,6 +171,8 @@ export const HeightmapSchema = z.object({
   maxElevation: z.number(),
   encoding: z.literal('int16-base64'),
   data: z.string(),
+  /** Slope histogram and relief percentiles (see scripts/build_twin_terrain.py). */
+  stats: z.record(z.string(), z.any()).optional(),
 });
 
 export type Provenance = z.infer<typeof ProvenanceSchema>;

@@ -60,13 +60,15 @@ export function BodyToggle({ className = '' }: { className?: string }) {
       role="radiogroup"
       aria-label="Target body"
       onKeyDown={onKey}
-      className={`relative grid grid-cols-2 rounded-[3px] border border-[var(--rule-hi)] bg-[var(--void)] p-[3px] ${className}`}
+      className={`glass-capsule relative grid grid-cols-2 p-[3px] ${className}`}
     >
       <span
         aria-hidden
-        className="absolute inset-y-[3px] left-[3px] w-[calc(50%-3px)] rounded-[2px] border border-[color-mix(in_srgb,var(--accent)_55%,transparent)] bg-[color-mix(in_srgb,var(--accent)_16%,transparent)]"
-        style={{ transform: `translateX(${idx * 100}%)`, transition: 'transform 250ms var(--ease-out-quint)' }}
-      />
+        className="liquid-blob pointer-events-none absolute inset-y-[3px] left-[3px] w-[calc(50%-3px)]"
+        style={{ transform: `translateX(${idx * 100}%)`, transition: 'transform 350ms cubic-bezier(0.34, 1.45, 0.64, 1)' }}
+      >
+        <span key={idx} />
+      </span>
       {OPTIONS.map((o, i) => {
         const on = i === idx;
         return (
@@ -81,7 +83,7 @@ export function BodyToggle({ className = '' }: { className?: string }) {
             aria-label={`${o.label} analogs`}
             tabIndex={on ? 0 : -1}
             onClick={() => choose(i)}
-            className={`relative z-10 flex h-8 items-center justify-center gap-2 text-[13px] font-medium transition-colors duration-200 ${
+            className={`relative z-10 flex h-9 items-center justify-center gap-2 rounded-full text-[13px] font-medium transition-colors duration-200 ${
               on ? 'text-[var(--ink)]' : 'text-[var(--dim)] hover:text-[var(--ink)]'
             }`}
           >

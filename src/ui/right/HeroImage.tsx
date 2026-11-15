@@ -18,10 +18,10 @@ export function HeroImage({ views, lat, lon, name }: { views: HeroView[]; lat: n
 
   return (
     <figure className="m-0">
-      <div className="notch relative aspect-[16/10] overflow-hidden border border-[var(--rule)] bg-[var(--void)]">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-[16px] border border-white/20 bg-[var(--void)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
         {!anyImage && (
           <div className="grid-paper absolute inset-0 grid place-items-center">
-            <span className="num rounded-sm bg-[var(--hull)] px-2 py-1 text-xs text-[var(--dim)]">{formatLatLon(lat, lon)}</span>
+            <span className="num rounded-full bg-[rgba(8,13,22,0.8)] px-3 py-1 text-xs text-[var(--dim)]">{formatLatLon(lat, lon)}</span>
           </div>
         )}
         {views.map(
@@ -41,7 +41,7 @@ export function HeroImage({ views, lat, lon, name }: { views: HeroView[]; lat: n
         )}
         {anyImage && current && (!current.src || failed[current.id]) && (
           <div className="grid-paper absolute inset-0 grid place-items-center">
-            <span className="num rounded-sm bg-[var(--hull)] px-2 py-1 text-xs text-[var(--dim)]">No image for this view</span>
+            <span className="num rounded-full bg-[rgba(8,13,22,0.8)] px-3 py-1 text-xs text-[var(--dim)]">No image for this view</span>
           </div>
         )}
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -61,7 +61,7 @@ export function HeroImage({ views, lat, lon, name }: { views: HeroView[]; lat: n
           />
         ))}
         {views.length > 1 && (
-          <div role="radiogroup" aria-label="Image view" className="absolute left-3 top-3 inline-flex overflow-hidden rounded-sm border border-[var(--rule-hi)] bg-[var(--hull)]/85 backdrop-blur-sm">
+          <div role="radiogroup" aria-label="Image view" className="glass-capsule glass-blur absolute left-3 top-3 inline-flex p-[2px]">
             {views.map((v) => (
               <button
                 key={v.id}
@@ -69,8 +69,8 @@ export function HeroImage({ views, lat, lon, name }: { views: HeroView[]; lat: n
                 role="radio"
                 aria-checked={v.id === current?.id}
                 onClick={() => setActive(v.id)}
-                className={`px-2.5 py-1 text-xs transition-colors duration-200 ${
-                  v.id === current?.id ? 'bg-[var(--accent)] text-[var(--void)]' : 'text-[var(--dim)] hover:text-[var(--ink)]'
+                className={`rounded-full px-3 py-1 text-xs transition-colors duration-200 ${
+                  v.id === current?.id ? 'bg-[var(--accent)] font-medium text-[var(--void)] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]' : 'text-[var(--ink)]/80 hover:text-[var(--ink)]'
                 }`}
               >
                 {v.label}

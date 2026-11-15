@@ -147,6 +147,10 @@
     "cat_landing": 0.26,
     "cat_light": 0.43,
     "cat_ice": 0.42
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-ngari-tibet.json",
+    "moonHeightmap": "heightmaps/moon-slater-plain.json"
    }
   },
   {
@@ -297,6 +301,10 @@
     "cat_landing": 0.14,
     "cat_light": 0.75,
     "cat_ice": 0.0
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-pamir-muztagh.json",
+    "moonHeightmap": "heightmaps/moon-mons-mouton-plateau.json"
    }
   },
   {
@@ -448,6 +456,10 @@
     "cat_landing": 0.44,
     "cat_light": 0.94,
     "cat_ice": 0.0
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-s-tibet-tingri.json",
+    "moonHeightmap": "heightmaps/moon-malapert-massif.json"
    }
   },
   {
@@ -596,6 +608,10 @@
     "cat_landing": 0.74,
     "cat_light": 0.44,
     "cat_ice": 0.0
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-altyn-tagh.json",
+    "moonHeightmap": "heightmaps/moon-mons-mouton-plateau.json"
    }
   },
   {
@@ -745,6 +761,10 @@
     "cat_landing": 0.28,
     "cat_light": 0.61,
     "cat_ice": 0.0
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-zanda.json",
+    "moonHeightmap": "heightmaps/moon-mons-mouton-plateau.json"
    }
   },
   {
@@ -894,6 +914,10 @@
     "cat_landing": 0.52,
     "cat_light": 0.51,
     "cat_ice": 0.0
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-s-tibet-2.json",
+    "moonHeightmap": "heightmaps/moon-mons-mouton-plateau.json"
    }
   },
   {
@@ -992,6 +1016,10 @@
     "snow": 0.0,
     "role": "validation analog",
     "best_moon": "MM"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-mauna-kea.json",
+    "moonHeightmap": "heightmaps/moon-mons-mouton.json"
    }
   },
   {
@@ -1090,6 +1118,10 @@
     "snow": 0.35,
     "role": "validation analog",
     "best_moon": "MM"
+   },
+   "twin": {
+    "earthHeightmap": "heightmaps/earth/earth-wright-valley.json",
+    "moonHeightmap": "heightmaps/moon-mons-mouton.json"
    }
   },
   {

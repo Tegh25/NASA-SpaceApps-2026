@@ -101,11 +101,7 @@ export function FindPanel() {
                   type="button"
                   aria-pressed={on}
                   onClick={() => applyPreset(t.id)}
-                  className={`shrink-0 whitespace-nowrap rounded-sm border px-3 py-1.5 text-[13px] transition-colors duration-200 ${
-                    on
-                      ? 'glow-active border-[var(--accent)] bg-[var(--deck)] text-[var(--ink)]'
-                      : 'border-[var(--rule-hi)] text-[var(--dim)] hover:border-[var(--dim)] hover:text-[var(--ink)]'
-                  }`}
+                  className={`glass-capsule shrink-0 whitespace-nowrap px-3.5 py-1.5 text-[13px] ${on ? 'text-[var(--ink)]' : 'text-[var(--dim)] hover:text-[var(--ink)]'}`}
                 >
                   {t.name}
                 </button>
@@ -149,7 +145,7 @@ export function FindPanel() {
               onChange={(e) => setText(e.target.value)}
               onKeyDown={onKey}
               placeholder="cold, dry, flat basaltic plain"
-              className="min-h-[56px] flex-1 resize-none rounded-sm border border-[var(--rule-hi)] bg-[var(--void)] px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--faint)] focus:border-[var(--accent)] focus:outline-none"
+              className="min-h-[56px] flex-1 resize-none rounded-[16px] border border-white/20 bg-black/30 px-3.5 py-2 text-sm text-[var(--ink)] shadow-[inset_0_2px_6px_rgba(0,0,0,0.3)] placeholder:text-[var(--faint)] focus:border-[var(--accent)] focus:outline-none"
             />
             <button
               type="button"
@@ -157,7 +153,7 @@ export function FindPanel() {
               disabled={parsing}
               aria-label="Search"
               title="Search (Enter)"
-              className="glow-active grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[var(--accent)] text-[var(--void)] transition-transform duration-200 hover:scale-105 disabled:opacity-70"
+              className="glass-drop grid h-12 w-12 shrink-0 place-items-center disabled:opacity-70"
             >
               {parsing ? <Loader2 size={20} className="animate-spin" aria-hidden /> : <ArrowRight size={20} aria-hidden />}
             </button>
@@ -169,7 +165,7 @@ export function FindPanel() {
               <>
                 <div className="flex flex-wrap gap-1.5">
                   {activeKeys.map((f) => (
-                    <span key={f.key} className="inline-flex items-center rounded-sm border border-[var(--rule-hi)] bg-[var(--deck)] text-xs">
+                    <span key={f.key} className="glass-capsule inline-flex items-center text-xs">
                       <span className="px-2 py-1">
                         {f.label} <span className="num text-[var(--accent)]">{levelWord(query.targets[f.key]!)}</span>
                         {query.required.includes(f.key) ? <span className="text-[var(--good)]">, must match</span> : null}
@@ -178,7 +174,7 @@ export function FindPanel() {
                         type="button"
                         onClick={() => removeFeature(f.key)}
                         aria-label={`Remove ${f.label}`}
-                        className="grid h-6 w-6 place-items-center text-[var(--faint)] hover:text-[var(--ink)]"
+                        className="grid h-6 w-6 place-items-center rounded-full text-[var(--faint)] hover:text-[var(--ink)]"
                       >
                         <X size={12} aria-hidden />
                       </button>
@@ -219,7 +215,7 @@ export function FindPanel() {
                   />
                   {on && (
                     <div className="mt-1.5 flex items-center justify-between gap-2">
-                      <div role="radiogroup" aria-label={`Importance of ${fd.label}`} className="inline-flex overflow-hidden rounded-sm border border-[var(--rule-hi)]">
+                      <div role="radiogroup" aria-label={`Importance of ${fd.label}`} className="glass-capsule inline-flex overflow-hidden">
                         {([1, 2, 3] as Weight[]).map((n) => (
                           <button
                             key={n}
@@ -228,7 +224,7 @@ export function FindPanel() {
                             aria-checked={w === n}
                             aria-label={`Importance ${n}`}
                             onClick={() => setWeight(fd.key, n)}
-                            className={`num h-6 w-7 text-xs transition-colors ${w === n ? 'bg-[var(--accent)] text-[var(--void)]' : 'text-[var(--dim)] hover:text-[var(--ink)]'}`}
+                            className={`num h-6 w-7 text-xs transition-colors ${w === n ? 'bg-[var(--accent)] font-medium text-[var(--void)]' : 'text-[var(--dim)] hover:text-[var(--ink)]'}`}
                           >
                             {n}
                           </button>
@@ -247,7 +243,7 @@ export function FindPanel() {
             <button
               type="button"
               onClick={reset}
-              className="flex items-center gap-1.5 rounded-sm border border-[var(--rule-hi)] px-3 py-1.5 text-xs text-[var(--dim)] transition-colors hover:border-[var(--dim)] hover:text-[var(--ink)]"
+              className="glass-capsule flex items-center gap-1.5 px-3.5 py-1.5 text-xs text-[var(--dim)] hover:text-[var(--ink)]"
             >
               <RotateCcw size={12} aria-hidden /> Reset all
             </button>

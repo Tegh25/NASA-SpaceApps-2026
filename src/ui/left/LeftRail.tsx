@@ -2,6 +2,7 @@ import { BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { activeBody, useCards } from '../../lib/cards';
 import { useApp } from '../../state/store';
+import { Glass } from '../kit/Glass';
 import { BodyToggle } from './BodyToggle';
 import { CardList, CardSkeletons } from './CardList';
 import { Logo } from './Logo';
@@ -14,7 +15,7 @@ export function LeftRail({ selectedId }: { selectedId: string | null }) {
     mode === 'search' ? 'Closest matches to your description' : body === 'moon' ? 'Earth analogs for the Moon' : 'Earth analogs for Mars';
 
   return (
-    <aside className="console texture flex h-full w-[320px] flex-col" aria-label="Candidate locations">
+    <Glass as="aside" className="flex h-full w-[320px] flex-col" aria-label="Candidate locations">
       <div className="px-4 pb-3 pt-4">
         <Logo />
       </div>
@@ -36,11 +37,11 @@ export function LeftRail({ selectedId }: { selectedId: string | null }) {
         <p className="text-[11px] leading-4 text-[var(--dim)]">Orbital data from NASA LRO, MGS and MODIS.</p>
         <Link
           to="/method"
-          className="flex shrink-0 items-center gap-1.5 rounded-[2px] border border-[var(--rule-hi)] px-2 py-1 text-[12px] text-[var(--ink)] transition-colors hover:border-[var(--accent)]"
+          className="glass-capsule flex shrink-0 items-center gap-1.5 px-3 py-1.5 text-[12px] text-[var(--ink)]"
         >
           <BookOpen size={13} aria-hidden /> Method
         </Link>
       </footer>
-    </aside>
+    </Glass>
   );
 }

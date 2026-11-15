@@ -7,11 +7,13 @@ import { Home } from './pages/Home';
 import { Method } from './pages/Method';
 import { useApp } from './state/store';
 import { TourView } from './tour/TourView';
+import { GlassFilters } from './ui/kit/GlassFilters';
 import { CardSkeletons } from './ui/left/CardList';
 import { Logo } from './ui/left/Logo';
 
 const TargetPage = lazy(() => import('./target/TargetPage'));
 const ComparePage = lazy(() => import('./target/ComparePage'));
+const LabPage = lazy(() => import('./lab/LabPage'));
 
 /** Instant first paint while data and Cesium load. */
 function BootSkeleton() {
@@ -80,12 +82,14 @@ export default function App() {
   const isGlobeRoute = pathname === '/' || pathname.startsWith('/site/') || pathname.startsWith('/tour/') || pathname.startsWith('/compare/');
   const interactive = pathname === '/' || pathname.startsWith('/site/');
   const isCompare = pathname.startsWith('/compare/');
+  // /lab/ draws its own full-screen three.js scene, so the globe stays hidden there (not in isGlobeRoute).
 
   return (
     <div className="relative h-full w-full overflow-hidden">
+      <GlassFilters />
       <div
         className={`absolute inset-y-0 ${
-          isCompare ? 'left-0 right-1/2 hidden md:block' : interactive ? 'left-0 right-0 md:left-[320px] lg:right-[400px]' : 'left-0 right-0'
+          isCompare ? 'left-0 right-1/2 hidden md:block' : 'left-0 right-0'
         }`}
       >
         <GlobeView hidden={!isGlobeRoute} interactive={interactive} />
@@ -133,6 +137,14 @@ export default function App() {
           element={
             <Suspense fallback={<Loading label="Loading comparison..." />}>
               <ComparePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/lab/:siteId"
+          element={
+            <Suspense fallback={<Loading label="Loading terrain lab..." />}>
+              <LabPage />
             </Suspense>
           }
         />

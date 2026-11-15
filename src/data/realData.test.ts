@@ -71,7 +71,7 @@ describe('real data pack', () => {
     expect(targets.provenance?.mock).toBe(false);
     expect(cells.provenance?.mock).toBe(false);
     expect(featured.provenance?.mock).toBe(false);
-    for (const f of readdirSync('public/data/heightmaps')) {
+    for (const f of readdirSync('public/data/heightmaps').filter((x) => x.endsWith('.json'))) {
       expect(read(`heightmaps/${f}`).provenance?.mock, f).toBe(false);
     }
   });
@@ -133,7 +133,7 @@ describe('real data pack', () => {
 
   it('every heightmap file on disk is referenced (no stale mock files)', () => {
     const refs = new Set(targets.targets.map((t) => t.heightmap).filter(Boolean));
-    for (const f of readdirSync('public/data/heightmaps')) expect(refs.has(`heightmaps/${f}`), f).toBe(true);
+    for (const f of readdirSync('public/data/heightmaps').filter((x) => x.endsWith('.json'))) expect(refs.has(`heightmaps/${f}`), f).toBe(true);
   });
 
   it('featured: ids resolve, images exist, values in range, >= 3 new Moon cards', () => {
@@ -175,6 +175,30 @@ describe('real data pack', () => {
       }
       expect(Math.sqrt(bd), `${f.id} nearest block distance (deg)`).toBeLessThan(0.01);
       for (const k of KEYS) expect(f.values[k], `${f.id}.${k}`).toBe(cells.values[k][best]);
+    }
+  });
+
+  it('Twin Terrain Lab: every twin path exists, Earth heightmaps are 256 x 256 at 40 m', () => {
+    const twins = featured.featured.filter((f) => f.twin);
+    expect(twins.length).toBeGreaterThanOrEqual(6);
+    for (const f of twins) {
+      const { earthHeightmap, moonHeightmap } = f.twin!;
+      expect(existsSync(`public/data/${earthHeightmap}`), `${f.id} ${earthHeightmap}`).toBe(true);
+      expect(existsSync(`public/data/${moonHeightmap}`), `${f.id} ${moonHeightmap}`).toBe(true);
+      const e = HeightmapSchema.parse(read(earthHeightmap));
+      expect(e.width).toBe(256);
+      expect(e.height).toBe(256);
+      expect(e.metersPerPixel).toBe(40);
+      const m = HeightmapSchema.parse(read(moonHeightmap));
+      expect(m.metersPerPixel).toBe(40);
+      for (const hm of [e, m]) {
+        const st = hm.stats as { slopeHist: number[]; slopeP50: number; slopeP90: number; reliefM: number };
+        expect(st.slopeHist.length, f.id).toBe(45);
+        expect(st.slopeHist.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 2);
+        expect(st.slopeP90).toBeGreaterThanOrEqual(st.slopeP50);
+        expect(st.reliefM).toBeGreaterThan(0);
+      }
+      expect(read(earthHeightmap).provenance.datasets[0].name).toMatch(/Copernicus/);
     }
   });
 });

@@ -65,7 +65,7 @@ export function BottomSheet({
   return (
     <section
       aria-label="Search and site details"
-      className="console notch pointer-events-auto fixed inset-x-0 bottom-0 z-30 flex flex-col"
+      className="glass pointer-events-auto fixed inset-x-2 bottom-2 z-30 flex flex-col"
       style={{ height, transition: dragH === null ? 'height 250ms var(--ease-out-quint)' : 'none' }}
     >
       <div
@@ -85,7 +85,7 @@ export function BottomSheet({
           }}
           className="group flex h-8 w-24 flex-col items-center justify-center gap-0.5 rounded-[2px]"
         >
-          <span className="h-1 w-10 rounded-full bg-[var(--rule-hi)] transition-colors group-hover:bg-[var(--accent)]" />
+          <span className="h-1 w-10 rounded-full bg-white/35 transition-colors group-hover:bg-[var(--accent)]" />
           <ChevronUp
             size={12}
             aria-hidden

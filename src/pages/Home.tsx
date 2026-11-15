@@ -1,10 +1,13 @@
 import { SlidersHorizontal, X, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { BodyInset } from '../fx/BodyInset';
+import { Intro } from '../fx/Intro';
 import { GlobeHud } from '../globe/GlobeHud';
 import { activeBody, useCards } from '../lib/cards';
 import { useUrlSync } from '../lib/urlState';
 import { useApp } from '../state/store';
+import { Glass } from '../ui/kit/Glass';
 import { RightPanel } from '../ui/right/RightPanel';
 import { BodyToggle } from '../ui/left/BodyToggle';
 import { BottomSheet } from '../ui/left/BottomSheet';
@@ -71,21 +74,23 @@ export function Home() {
   return (
     <div data-body={body} className="pointer-events-none absolute inset-0 z-10">
       {bp !== 'mobile' && (
-        <div className="pointer-events-auto absolute inset-y-0 left-0 z-20">
+        <div className="pointer-events-auto absolute bottom-3 left-3 top-3 z-20">
           <LeftRail selectedId={selectedId} />
         </div>
       )}
 
       {/* Middle column: the globe shows through; HUD and pencil notes sit on top. */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 md:left-[320px] lg:right-[400px]">
+      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 md:left-[344px] lg:right-[424px]">
         <GlobeHud />
         <GlobeNotes selectedId={selectedId} />
+        <Intro />
+        {bp === 'desktop' && <BodyInset />}
         {bp === 'tablet' && !selectedId && !findOpen && (
           <button
             type="button"
             onClick={() => setFindOpen(true)}
             aria-label="Open find panel"
-            className="panel pointer-events-auto absolute right-4 top-4 flex h-9 items-center gap-2 px-3 text-[13px] text-[var(--ink)] hover:border-[var(--accent)]"
+            className="glass-capsule pointer-events-auto absolute right-4 top-4 flex h-9 items-center gap-2 px-4 text-[13px] text-[var(--ink)]"
           >
             <SlidersHorizontal size={14} aria-hidden /> Find
           </button>
@@ -93,16 +98,16 @@ export function Home() {
       </div>
 
       {bp === 'desktop' && (
-        <aside className="console notch pointer-events-auto absolute inset-y-0 right-0 w-[400px]" aria-label="Find and explore">
+        <Glass as="aside" className="pointer-events-auto absolute bottom-3 right-3 top-3 w-[400px]" aria-label="Find and explore">
           <RightPanel siteId={selectedId} />
-        </aside>
+        </Glass>
       )}
 
       {bp === 'tablet' && (
         <div
-          className="pointer-events-auto absolute inset-y-0 right-0 w-[400px] max-w-[calc(100%-320px-16px)]"
+          className="pointer-events-auto absolute inset-y-3 right-3 w-[400px] max-w-[calc(100%-332px-24px)]"
           style={{
-            transform: selectedId || findOpen ? 'none' : 'translateX(calc(100% + 16px))',
+            transform: selectedId || findOpen ? 'none' : 'translateX(calc(100% + 24px))',
             transition: 'transform 250ms var(--ease-out-quint)',
             visibility: selectedId || findOpen ? 'visible' : 'hidden',
           }}
@@ -112,27 +117,27 @@ export function Home() {
             type="button"
             onClick={closeDrawer}
             aria-label="Close panel"
-            className="console absolute -left-10 top-4 z-10 grid h-9 w-9 place-items-center text-[var(--dim)] hover:text-[var(--ink)]"
+            className="glass-capsule absolute -left-12 top-1 z-10 grid h-9 w-9 place-items-center text-[var(--dim)] hover:text-[var(--ink)]"
           >
             <X size={16} aria-hidden />
           </button>
-          <div className="console notch h-full" aria-label="Find and explore">
+          <Glass className="h-full" aria-label="Find and explore">
             <RightPanel siteId={selectedId} />
-          </div>
+          </Glass>
         </div>
       )}
 
       {bp === 'mobile' && (
         <>
           <header className="pointer-events-auto absolute inset-x-2 top-2 z-20">
-            <div className="panel flex items-center justify-between gap-2 px-3 py-2">
+            <div className="glass flex items-center justify-between gap-2 !rounded-[22px] px-3 py-2">
               <Logo tagline={false} />
               <div className="flex items-center gap-2">
                 <BodyToggle className="w-[150px]" />
                 <Link
                   to="/method"
                   aria-label="Method"
-                  className="grid h-9 w-9 place-items-center rounded-[3px] border border-[var(--rule-hi)] text-[var(--ink)]"
+                  className="glass-capsule grid h-9 w-9 place-items-center text-[var(--ink)]"
                 >
                   <BookOpen size={15} aria-hidden />
                 </Link>
@@ -140,7 +145,7 @@ export function Home() {
             </div>
           </header>
           {!selectedId && !sheetOpen && (
-            <div className="pointer-events-auto absolute inset-x-0 z-20" style={{ bottom: sheetH + 8 }}>
+            <div className="pointer-events-auto absolute inset-x-0 z-20" style={{ bottom: sheetH + 16 }}>
               <MobileCarousel selectedId={selectedId} />
             </div>
           )}

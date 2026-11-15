@@ -5,6 +5,8 @@ import { trackCamera } from '../lib/camera';
 import { getSite } from '../lib/sites';
 import { isSearchActive, useApp } from '../state/store';
 import { COLORS, PIN_SCALE, pencilImage, pinImage, pulseImage, scoreColor } from './pins';
+import { showBeam } from '../fx/beam';
+import { HeatField, heatQuery, useHeat } from './heatField';
 import { createViewer, HAS_ION, prefersReducedMotion } from './viewer';
 
 interface Props {
@@ -46,6 +48,7 @@ export function GlobeView({ hidden, interactive }: Props) {
   const overlayRef = useRef<Cesium.BillboardCollection | null>(null);
   const labelsRef = useRef<Cesium.LabelCollection | null>(null);
   const resultsRef = useRef<Cesium.PointPrimitiveCollection | null>(null);
+  const heatRef = useRef<HeatField | null>(null);
   const items = useRef<{ featured: Item[]; results: Item[]; overlay: Item[] }>({ featured: [], results: [], overlay: [] });
   const pulses = useRef<Pulse[]>([]);
   const applyOcclusionRef = useRef<() => void>(() => {});
@@ -75,6 +78,7 @@ export function GlobeView({ hidden, interactive }: Props) {
       if (disposed) return;
       viewerRef.current = v;
       const sp = v.scene.primitives;
+      heatRef.current = new HeatField(v); // first, so pins draw over it
       resultsRef.current = sp.add(new Cesium.PointPrimitiveCollection());
       featuredRef.current = sp.add(new Cesium.BillboardCollection({ scene: v.scene }));
       overlayRef.current = sp.add(new Cesium.BillboardCollection({ scene: v.scene }));
@@ -138,8 +142,42 @@ export function GlobeView({ hidden, interactive }: Props) {
     return () => {
       disposed = true;
       untrack?.();
+      heatRef.current?.dispose();
+      heatRef.current = null;
     };
   }, []);
+
+  // Live heat field: every Earth block, coloured by match score (or by closeness to the body's default target).
+  const heatOn = useHeat((s) => s.on);
+  useEffect(() => {
+    const h = heatRef.current;
+    if (!h || !data) return;
+    h.setCells(data.cells);
+  }, [data, ready]);
+  useEffect(() => {
+    const h = heatRef.current;
+    if (!h) return;
+    h.setVisible(heatOn && interactive && !hidden);
+  }, [heatOn, interactive, hidden, ready]);
+  const firstHeat = useRef(true);
+  useEffect(() => {
+    const h = heatRef.current;
+    if (!h || !data || !heatOn) return;
+    const { q, mode, name } = heatQuery(data, query, searchActive);
+    useHeat.setState({ mode, targetName: name });
+    h.update(q, firstHeat.current);
+    firstHeat.current = false;
+  }, [data, ready, query, searchActive, heatOn]);
+
+  // Hover beam: a tall glowing line above the hovered site, visible from orbit.
+  useEffect(() => {
+    const v = viewerRef.current;
+    if (!v || !data || !hoveredId || !interactive) return;
+    const site = getSite(data, hoveredId);
+    if (!site) return;
+    const body = featuredBodies(site.featured?.analogFor ?? [], data.targets)[0] ?? 'moon';
+    return showBeam(v, site.lat, site.lon, COLORS[body]);
+  }, [data, ready, hoveredId, interactive]);
 
   useEffect(() => {
     const v = viewerRef.current;
