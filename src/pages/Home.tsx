@@ -52,6 +52,10 @@ export function Home() {
   const bp = useBreakpoint();
   const [findOpen, setFindOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  // On phones, picking a site opens the sheet so the explore content and Enter button are reachable.
+  useEffect(() => {
+    if (id) setSheetOpen(true);
+  }, [id]);
   const [sheetH, setSheetH] = useState(0);
   useUrlSync();
 

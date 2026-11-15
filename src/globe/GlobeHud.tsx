@@ -82,7 +82,7 @@ export function GlobeHud({ className = '' }: { className?: string }) {
 
       {/* Selected site chip */}
       {chip && (
-        <div className="absolute left-1/2 top-20 md:top-4 -translate-x-1/2">
+        <div className="absolute left-1/2 top-4 hidden -translate-x-1/2 md:block">
           <div className="glass-capsule max-w-[70vw] truncate px-4 py-1.5 text-xs text-[var(--accent)]" role="status">
             {chip}
           </div>
