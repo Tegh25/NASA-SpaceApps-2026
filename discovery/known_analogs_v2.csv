@@ -1,0 +1,156 @@
+id,name,lat,lon,body,type,radius_km,confidence,source_url
+haughton,"Haughton crater, Devon Island (HMP)",75.38,-89.67,both,impact,30,high,https://en.wikipedia.org/wiki/Haughton_crater
+yungay,"Yungay, Atacama",-24.08,-69.95,mars,geology,50,high,https://en.wikipedia.org/wiki/Atacama_Desert
+wright_valley,"Wright Valley, Dry Valleys",-77.52,161.85,mars,geology,50,high,https://en.wikipedia.org/wiki/Wright_Valley
+rio_tinto,"Rio Tinto, Spain",37.72,-6.56,mars,geology,30,high,https://en.wikipedia.org/wiki/Rio_Tinto_(river)
+bockfjorden,"Bockfjorden volcanic complex, Svalbard",79.43,13.33,mars,volcanic,20,medium,https://en.wikipedia.org/wiki/Bockfjorden
+pilbara,"Dresser Formation, Pilbara",-21.15,119.43,mars,biology,50,high,https://en.wikipedia.org/wiki/Dresser_Formation
+dallol,"Dallol, Danakil",14.24,40.30,mars,geology,30,high,https://en.wikipedia.org/wiki/Dallol_(volcano)
+lonar,Lonar crater,19.98,76.51,both,impact,15,high,https://en.wikipedia.org/wiki/Lonar_Lake
+lambahraun,"Lambahraun lava field, Iceland",64.43,-20.55,both,volcanic,30,medium,https://en.wikipedia.org/wiki/Langj%C3%B6kull
+dumont,"Dumont Dunes, Mojave",35.68,-116.22,mars,terrain,20,medium,https://en.wikipedia.org/wiki/Dumont_Dunes
+mdrs,"Mars Desert Research Station, Utah",38.41,-110.79,mars,ops,30,high,https://en.wikipedia.org/wiki/Mars_Desert_Research_Station
+ramon,"Makhtesh Ramon, Israel",30.60,34.80,mars,geology,30,high,https://en.wikipedia.org/wiki/Makhtesh_Ramon
+lava_beds,Lava Beds National Monument,41.71,-121.51,both,cave,30,high,https://en.wikipedia.org/wiki/Lava_Beds_National_Monument
+mistastin,"Mistastin crater, Labrador",55.88,-63.31,moon,impact,20,high,https://en.wikipedia.org/wiki/Mistastin_crater
+sudbury,Sudbury impact structure,46.60,-81.18,both,impact,40,high,https://en.wikipedia.org/wiki/Sudbury_Basin
+ries,Noerdlinger Ries crater,48.88,10.57,moon,impact,25,high,https://en.wikipedia.org/wiki/N%C3%B6rdlinger_Ries
+lanzarote,"La Corona lava tube, Lanzarote",29.17,-13.45,both,volcanic,30,high,https://en.wikipedia.org/wiki/Lanzarote
+black_point,"Black Point lava flow, Arizona",35.69,-111.44,both,volcanic,15,high,https://en.wikipedia.org/wiki/San_Francisco_volcanic_field
+cinder_lake,"Cinder Lake crater field, Flagstaff",35.29,-111.48,moon,terrain,10,high,https://en.wikipedia.org/wiki/San_Francisco_volcanic_field
+meteor,"Meteor Crater (Barringer), Arizona",35.03,-111.02,both,impact,15,high,https://en.wikipedia.org/wiki/Meteor_Crater
+mauna_kea,Mauna Kea (PISCES analog site),19.82,-155.47,moon,ops,20,high,https://en.wikipedia.org/wiki/Mauna_Kea
+craters_moon,Craters of the Moon NM (BASALT),43.42,-113.52,both,volcanic,40,high,https://en.wikipedia.org/wiki/Craters_of_the_Moon_National_Monument_and_Preserve
+hiseas,"HI-SEAS habitat, Mauna Loa",19.60,-155.51,mars,ops,15,high,https://en.wikipedia.org/wiki/Hawaii_Space_Exploration_Analog_and_Simulation
+dome_c,"Concordia Station, Dome C",-75.10,123.33,both,ops,30,high,https://en.wikipedia.org/wiki/Concordia_Station
+salda,"Lake Salda, Turkey",37.55,29.68,mars,geology,15,high,https://en.wikipedia.org/wiki/Lake_Salda
+ojos_salado,Ojos del Salado,-27.11,-68.54,mars,volcanic,40,high,https://meetingorganizer.copernicus.org/EGU22/EGU22-587.html
+tres_cruces,Nevado Tres Cruces / Tres Cruces salar,-27.07,-68.80,mars,geology,40,high,https://meetingorganizer.copernicus.org/EPSC2021/EPSC2021-452.html
+maricunga,Salar de Maricunga,-26.95,-69.10,mars,geology,40,high,https://meetingorganizer.copernicus.org/EPSC2021/EPSC2021-452.html
+tso_kar,"Tso Kar, Ladakh (ISRO HOPE)",33.30,77.98,both,ops,30,high,https://www.theweek.in/news/sci-tech/2025/08/01/locked-away-at-14000-feet-isro-kicks-off-10-day-analogue-space-survival-test.amp.html
+leh_lham,"Leh, Ladakh (ISRO LHAM Hab-1)",34.15,77.58,both,ops,30,high,https://gulfnews.com/world/asia/india/isro-launches-indias-first-analog-space-mission-in-ladakhs-leh-1.1730460104802
+hanle,"Hanle, Ladakh",32.78,78.96,both,ops,30,low,https://theprint.in/science/why-remote-ladakh-was-identified-as-site-for-indias-mars-moon-research-studies/2205135
+dalangtan,"Dalangtan playa, Qaidam Basin",38.40,91.40,mars,geology,50,medium,https://cab.inta-csic.es/publicaciones/dalangtan-playa-qaidam-basin-nw-china-its-microbial-life-and-physicochemical-characteristics-and-their-astrobiological-implications/
+lejia,"Laguna Lejia, Atacama",-23.50,-67.72,mars,geology,30,medium,https://meetingorganizer.copernicus.org/EPSC2021/EPSC2021-452.html
+tolbachik,"Tolbachik, Kamchatka",55.83,160.39,both,volcanic,40,medium,https://en.wikipedia.org/wiki/Tolbachik
+erebus,"Mount Erebus, Antarctica",-77.53,167.15,mars,volcanic,30,medium,https://en.wikipedia.org/wiki/Mount_Erebus
+longyearbyen,"Longyearbyen, Svalbard",78.22,15.65,mars,ops,30,medium,https://en.wikipedia.org/wiki/Longyearbyen
+aquarius_neemo,Aquarius Reef Base (NASA NEEMO),24.96,-80.45,both,ops,10,high,https://en.wikipedia.org/wiki/Aquarius_Reef_Base
+pavilion_lake,"Pavilion Lake, British Columbia",50.87,-121.74,both,biology,20,high,https://en.wikipedia.org/wiki/Pavilion_Lake
+fmars,"Flashline Mars Arctic Research Station, Devon Island",75.43,-89.80,mars,ops,20,high,https://en.wikipedia.org/wiki/Flashline_Mars_Arctic_Research_Station
+mars500,"Mars-500 / SIRIUS, IBMP Moscow",55.79,37.55,mars,ops,10,high,https://en.wikipedia.org/wiki/Mars-500
+hera_jsc,"NASA HERA, Johnson Space Center",29.55,-95.09,both,ops,10,high,https://en.wikipedia.org/wiki/Human_analog_mission
+lunares,"LunAres Research Station, Pila",53.15,16.74,both,ops,15,high,https://en.wikipedia.org/wiki/LunAres
+sam_biosphere2,"Space Analog for Moon and Mars, Biosphere 2",32.58,-110.85,both,ops,10,high,https://en.wikipedia.org/wiki/Biosphere_2
+kaunertal,Kaunertal Glacier (AMADEE-15),46.87,10.73,mars,ops,15,medium,https://en.wikipedia.org/wiki/Kaunertal
+lenghu_mars_camp,"Lenghu Mars Camp, Qinghai",38.38,93.37,mars,ops,40,medium,https://news.cgtn.com/news/2020-01-02/Exploring-China-s-piece-of-Mars-on-Earth-MVxt5TnngI/index.html
+jinchang_mars_base1,"Mars Base 1, Jinchang Gobi, Gansu",38.52,102.19,mars,ops,30,low,https://www.caixinglobal.com/2023-05-16/gallery-mars-on-earth-102056142.html
+mars_science_city,"Mars Science City, Dubai (planned)",25.12,55.41,mars,ops,10,low,https://gulfnews.com/uae/science/mars-science-city-to-be-fully-operational-in-4-years-1.61596317
+petra_wadi_rum,Wadi Rum (JSRI PETRA analog missions),29.57,35.42,mars,ops,30,medium,https://jordantimes.com/news/local/jordanian-palestinian-women-lead-historic-space-simulation-in-wadi-rum
+mars_v_gobi,"MARS-V analog site, Mongolian Gobi (planned)",44.50,105.00,mars,ops,150,low,https://universemagazine.com/en/mars-v-rehearsal-for-life-on-the-red-planet/
+merzouga,"Merzouga / Erfoud, Moroccan Sahara (Ibn Battuta Centre)",31.10,-4.01,mars,terrain,50,medium,https://www.europlanet-society.org/?p=1390
+chott_el_djerid,"Chott el Djerid, Tunisia",33.70,8.40,mars,geology,60,low,https://en.wikipedia.org/wiki/Chott_el_Djerid
+sa_grutta,"Supramonte caves, Sardinia (ESA CAVES)",40.22,9.55,moon,cave,20,high,https://en.wikipedia.org/wiki/ESA_CAVES
+bletterbach,"Bletterbach, Dolomites (ESA PANGAEA)",46.36,11.35,mars,geology,15,medium,https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/CAVES_and_PANGAEA/What_is_PANGAEA
+timanfaya,"Timanfaya, Lanzarote (ESA PANGAEA)",29.00,-13.75,both,volcanic,20,high,https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/CAVES_and_PANGAEA/What_is_PANGAEA
+kilauea,"Kilauea, Hawaii",19.42,-155.29,both,volcanic,30,high,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+mauna_loa,"Mauna Loa, Hawaii",19.48,-155.60,both,volcanic,40,medium,https://en.wikipedia.org/wiki/Mauna_Loa
+mauna_ulu,"Mauna Ulu, Kilauea East Rift (BASALT)",19.37,-155.21,both,volcanic,15,medium,https://en.wikipedia.org/wiki/Maunaulu
+sunset_crater,"Sunset Crater, Arizona",35.37,-111.50,moon,volcanic,15,medium,https://en.wikipedia.org/wiki/Sunset_Crater
+sp_crater,"SP Crater, Arizona",35.58,-111.63,moon,volcanic,10,medium,https://en.wikipedia.org/wiki/SP_Mountain
+kilbourne_hole,"Kilbourne Hole maar, New Mexico",31.97,-106.97,moon,volcanic,10,medium,https://en.wikipedia.org/wiki/Kilbourne_Hole
+amboy_crater,"Amboy Crater, Mojave",34.55,-115.78,moon,volcanic,10,low,https://en.wikipedia.org/wiki/Amboy_Crater
+pisgah,"Pisgah lava flow, Mojave",34.75,-116.37,both,volcanic,20,low,https://en.wikipedia.org/wiki/Pisgah_Crater
+mojave,Mojave Desert,35.00,-116.00,mars,terrain,100,medium,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+death_valley,Death Valley,36.50,-117.00,mars,terrain,80,medium,https://en.wikipedia.org/wiki/Death_Valley
+white_sands,"White Sands dunefield, New Mexico",32.78,-106.17,mars,terrain,30,low,https://en.wikipedia.org/wiki/White_Sands_National_Park
+great_sand_dunes,"Great Sand Dunes, Colorado",37.73,-105.51,mars,terrain,20,low,https://en.wikipedia.org/wiki/Great_Sand_Dunes_National_Park_and_Preserve
+newberry,"Newberry Volcano, Oregon",43.72,-121.23,moon,volcanic,25,medium,https://en.wikipedia.org/wiki/Newberry_Volcano
+yellowstone,Yellowstone hot springs,44.53,-110.84,mars,biology,40,medium,https://en.wikipedia.org/wiki/Yellowstone_National_Park
+upheaval_dome,"Upheaval Dome, Utah",38.44,-109.90,both,impact,10,medium,https://en.wikipedia.org/wiki/Upheaval_Dome
+bonneville,"Bonneville Salt Flats, Utah",40.77,-113.85,mars,geology,30,low,https://en.wikipedia.org/wiki/Bonneville_Salt_Flats
+lechuguilla,"Lechuguilla Cave, New Mexico",32.19,-104.50,mars,cave,10,medium,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+el_malpais,"El Malpais lava tubes, New Mexico",34.95,-108.00,both,cave,30,low,https://en.wikipedia.org/wiki/El_Malpais_National_Monument
+salar_uyuni,"Salar de Uyuni, Bolivia",-20.13,-67.49,mars,geology,80,medium,https://en.wikipedia.org/wiki/Salar_de_Uyuni
+teide,"Teide, Tenerife",28.27,-16.64,both,volcanic,25,high,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+cueva_del_viento,"Cueva del Viento, Tenerife",28.34,-16.68,both,cave,10,low,https://en.wikipedia.org/wiki/Cueva_del_Viento
+jameos_del_agua,"Jameos del Agua / Cueva de los Verdes, Lanzarote",29.16,-13.43,both,cave,10,medium,https://en.wikipedia.org/wiki/Jameos_del_Agua
+tabernas,"Tabernas Desert, Spain",37.00,-2.43,mars,terrain,40,medium,https://en.wikipedia.org/wiki/Tabernas_Desert
+laguna_tirez,"Laguna de Tirez, Spain",39.55,-3.35,mars,geology,10,medium,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+etna,"Mount Etna, Sicily",37.75,14.99,both,volcanic,30,high,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+algar_do_carvao,"Algar do Carvao, Terceira, Azores",38.74,-27.21,both,cave,5,low,https://en.wikipedia.org/wiki/Algar_do_Carv%C3%A3o
+gruta_das_torres,"Gruta das Torres, Pico, Azores",38.49,-28.50,both,cave,5,low,https://en.wikipedia.org/wiki/Gruta_das_Torres
+kazumura,"Kazumura Cave, Hawaii",19.58,-155.12,both,cave,10,low,https://en.wikipedia.org/wiki/Kazumura_Cave
+askja,"Askja caldera and lava fields, Iceland",65.03,-16.75,moon,volcanic,30,high,https://ouci.dntb.gov.ua/works/4OkaKAW4
+dyngjusandur,"Dyngjusandur sand sheet, Iceland",65.00,-16.30,mars,terrain,25,low,https://iro.uiowa.edu/esploro/outputs/graduate/Dyngjusandur-sand-sheet-Iceland-as-a/9983777160202771
+holuhraun,"Holuhraun lava field, Iceland",64.87,-16.83,both,volcanic,20,high,https://www.usgs.gov/publications/2014-2015-holuhraun-lava-flow-field-iceland-a-planetary-analog-young-volcanic-terrains
+krafla,"Krafla, Iceland",65.71,-16.78,moon,volcanic,20,medium,https://en.wikipedia.org/wiki/Krafla
+hekla,"Hekla, Iceland",63.99,-19.66,both,volcanic,15,low,https://en.wikipedia.org/wiki/Hekla
+surtshellir,"Surtshellir lava tube, Iceland",64.78,-20.73,both,cave,10,low,https://en.wikipedia.org/wiki/Surtshellir
+ny_alesund,"Ny-Alesund, Svalbard (Europlanet TA)",78.92,11.93,mars,geology,20,medium,https://www.isa.au.dk/networks/euroPlanet/facilities/tna1/overview.html
+svalbard_region,Svalbard archipelago (regional),78.40,15.50,mars,terrain,150,medium,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+kangerlussuaq,"Kangerlussuaq, West Greenland (Europlanet TA1)",67.01,-50.71,mars,ice,50,high,https://europlanet-society.org/?p=8745
+devon_island,Devon Island (regional),75.25,-88.00,mars,terrain,100,high,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+gypsum_hill,"Gypsum Hill springs, Axel Heiberg Island",79.40,-90.75,mars,geology,20,high,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+pingualuit,"Pingualuit crater, Quebec",61.28,-73.67,both,impact,10,low,https://en.wikipedia.org/wiki/Pingualuit_crater
+manicouagan,"Manicouagan crater, Quebec",51.38,-68.70,both,impact,50,low,https://en.wikipedia.org/wiki/Manicouagan_Reservoir
+gros_morne,"Gros Morne Tablelands, Newfoundland",49.55,-57.90,mars,geology,20,medium,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+spotted_lake,"Spotted Lake, British Columbia",49.08,-119.57,mars,geology,5,medium,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+dry_valleys,McMurdo Dry Valleys (regional),-77.47,162.52,mars,terrain,150,high,https://en.wikipedia.org/wiki/McMurdo_Dry_Valleys
+beacon_valley,"Beacon Valley, Antarctica",-77.83,160.65,mars,ice,20,high,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+don_juan_pond,"Don Juan Pond, Antarctica",-77.56,161.18,mars,geology,5,high,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+blood_falls,"Blood Falls, Taylor Glacier",-77.72,162.27,mars,biology,5,medium,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+taylor_valley,"Taylor Valley, Dry Valleys",-77.62,163.20,mars,ice,30,high,https://en.wikipedia.org/wiki/Taylor_Valley
+deception_island,"Deception Island, Antarctica",-63.00,-60.65,mars,volcanic,15,medium,https://core-cms.cambridgecore.org/core/services/aop-cambridge-core/content/view/754D22D1AB04484EB610CBF2536D9080/S1473550425000023a.pdf/the-potential-of-deception-island-antarctica-as-a-multifunctional-martian-analogue-of-astrobiological-interest.pdf
+lake_untersee,"Lake Untersee, Antarctica",-71.35,13.45,mars,ice,10,low,https://en.wikipedia.org/wiki/Lake_Untersee
+atacama_core,Atacama hyperarid core,-24.50,-69.25,mars,terrain,150,high,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+llullaillaco,Llullaillaco volcano,-24.72,-68.54,mars,volcanic,25,medium,https://en.wikipedia.org/wiki/Llullaillaco
+salar_pajonales,"Salar de Pajonales, Chile",-25.14,-68.82,mars,geology,30,high,https://www.frontiersin.org/articles/10.3389/fspas.2021.797591
+laguna_verde_chile,"Laguna Verde, Atacama (Ojos del Salado region)",-26.88,-68.54,mars,biology,20,high,https://meetingorganizer.copernicus.org/EPSC2021/EPSC2021-452.html
+salar_atacama,Salar de Atacama,-23.50,-68.25,mars,geology,60,medium,https://en.wikipedia.org/wiki/Salar_de_Atacama
+socompa,Socompa volcano and lagoon,-24.40,-68.25,mars,biology,20,medium,https://en.wikipedia.org/wiki/Socompa
+el_tatio,El Tatio geysers,-22.33,-68.01,mars,geology,15,medium,https://en.wikipedia.org/wiki/El_Tatio
+licancabur,"Licancabur / Laguna Verde, Bolivia-Chile (NASA High Lakes)",-22.83,-67.88,mars,biology,20,high,https://astrobiology.nasa.gov/news/2008-high-lakes-project-from-early-mars-to-todays-earth/
+agua_negra_rock_glaciers,"Agua Negra basin rock glaciers (Dos Lenguas), Argentina",-30.10,-69.80,mars,ice,30,low,https://meetingorganizer.copernicus.org/EPSC2026/EPSC2026-939.html
+puna_argentina,Argentine Puna plateau (Europlanet TA1 Facility 6),-25.00,-67.00,mars,terrain,200,medium,https://www.europlanet.org/?p=14039
+danakil,Danakil Depression (Europlanet TA),14.00,40.30,mars,terrain,80,high,https://www.europlanet-society.org/?p=1390
+erta_ale,Erta Ale lava lake,13.60,40.67,mars,volcanic,15,low,https://en.wikipedia.org/wiki/Erta_Ale
+samail_ophiolite,"Samail ophiolite, Oman",23.10,58.10,mars,geology,100,medium,https://en.wikipedia.org/wiki/Semail_Ophiolite
+dead_sea,Dead Sea,31.50,35.50,mars,geology,30,low,https://en.wikipedia.org/wiki/Dead_Sea
+namib,Namib Desert,-24.75,15.28,mars,terrain,100,medium,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+gilf_kebir,"Gilf Kebir plateau, Egypt",23.44,25.84,mars,terrain,100,low,https://en.wikipedia.org/wiki/Gilf_Kebir
+great_sand_sea,"Great Sand Sea, Egypt-Libya",26.50,25.00,mars,terrain,150,low,https://en.wikipedia.org/wiki/Great_Sand_Sea
+kamil,"Kamil crater, Egypt",22.02,26.09,both,impact,10,medium,https://en.wikipedia.org/wiki/Kamil_Crater
+wabar,"Wabar craters, Saudi Arabia",21.50,50.47,both,impact,10,low,https://en.wikipedia.org/wiki/Wabar_craters
+tibesti,"Tibesti Mountains, Chad-Libya",20.78,18.05,mars,volcanic,100,low,https://en.wikipedia.org/wiki/Tibesti_Mountains
+gosses_bluff,"Gosses Bluff, Australia",-23.83,132.31,both,impact,15,low,https://en.wikipedia.org/wiki/Gosses_Bluff_crater
+vredefort,"Vredefort dome, South Africa",-27.00,27.50,both,impact,60,medium,https://en.wikipedia.org/wiki/Vredefort_impact_structure
+tswaing,"Tswaing crater, South Africa",-25.41,28.08,both,impact,10,low,https://en.wikipedia.org/wiki/Tswaing_Crater
+chicxulub,"Chicxulub crater, Mexico",21.40,-89.52,both,impact,100,medium,https://en.wikipedia.org/wiki/Chicxulub_crater
+popigai,"Popigai crater, Siberia",71.65,111.18,both,impact,50,low,https://en.wikipedia.org/wiki/Popigai_impact_structure
+clearwater_lakes,"Clearwater Lakes craters, Quebec",56.15,-74.30,both,impact,30,low,https://en.wikipedia.org/wiki/Clearwater_Lakes
+siljan,"Siljan ring, Sweden",61.04,14.92,both,impact,40,low,https://en.wikipedia.org/wiki/Siljan_Ring
+bosumtwi,"Lake Bosumtwi, Ghana",6.50,-1.41,both,impact,10,low,https://en.wikipedia.org/wiki/Lake_Bosumtwi
+lop_nur,"Lop Nur yardangs, Xinjiang",40.17,90.58,mars,terrain,100,medium,https://en.wikipedia.org/wiki/Lop_Nur
+ruoqiang_taklimakan,"Ruoqiang, southern Taklimakan",39.02,88.17,mars,biology,60,low,https://www.space.com/scienceastronomy/070403_st_life_limits.html
+lena_kurungnakh,"Kurungnakh Island, Lena Delta (thermokarst)",72.33,126.29,mars,ice,30,high,https://epic.awi.de/22493/1/Ulr2010a.pdf
+manjanggul,"Manjanggul lava tube, Jeju",33.53,126.77,both,cave,10,low,https://en.wikipedia.org/wiki/Manjanggul
+wai_o_tapu,"Wai-O-Tapu, Taupo Volcanic Zone",-38.36,176.37,mars,geology,20,medium,https://en.wikipedia.org/wiki/Wai-O-Tapu
+lake_eyre,Kati Thanda-Lake Eyre,-28.67,137.33,mars,geology,60,low,https://en.wikipedia.org/wiki/Kati_Thanda%E2%80%93Lake_Eyre
+lake_tyrrell,"Lake Tyrrell, Victoria",-35.33,142.83,mars,geology,15,low,https://en.wikipedia.org/wiki/Lake_Tyrrell
+piton_fournaise,"Piton de la Fournaise, Reunion (LMAS)",-21.24,55.71,both,volcanic,20,medium,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+movile_cave,"Movile Cave, Romania",43.83,28.56,mars,cave,5,medium,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+villa_luz,"Cueva de Villa Luz, Mexico",17.44,-92.76,mars,cave,5,medium,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+mponeng,"Mponeng gold mine, South Africa",-26.44,27.43,mars,biology,5,low,https://en.wikipedia.org/wiki/Mars_habitability_analogue_environments_on_Earth
+boulby,"Boulby Mine, UK",54.55,-0.82,mars,geology,5,medium,https://en.wikipedia.org/wiki/Boulby_Mine
+lunar_palace1,"Lunar Palace 1, Beihang University Beijing",39.98,116.35,moon,ops,5,medium,https://en.wikipedia.org/wiki/Lunar_Palace_1
+pisces_hilo,"PISCES headquarters, Hilo",19.70,-155.08,both,ops,10,low,https://en.wikipedia.org/wiki/Terrestrial_analogue_site
+haleakala,"Haleakala summit, Maui",20.71,-156.25,both,volcanic,15,low,https://en.wikipedia.org/wiki/Haleakal%C4%81
+dasht_e_lut,"Dasht-e Lut kaluts, Iran",30.50,59.00,mars,terrain,100,low,https://en.wikipedia.org/wiki/Lut_Desert
+white_desert,"White Desert, Egypt",27.30,28.20,mars,terrain,40,low,https://en.wikipedia.org/wiki/White_Desert_National_Park
+ape_cave,"Ape Cave lava tube, Mount St. Helens",46.11,-122.21,both,cave,5,low,https://en.wikipedia.org/wiki/Ape_Cave
+ubehebe,"Ubehebe Crater, Death Valley",37.01,-117.45,moon,volcanic,5,low,https://en.wikipedia.org/wiki/Ubehebe_Crater
+lake_vanda,"Lake Vanda, Wright Valley",-77.52,161.58,mars,ice,5,medium,https://en.wikipedia.org/wiki/Lake_Vanda
+lake_bonney,"Lake Bonney, Taylor Valley",-77.72,162.43,mars,ice,5,medium,https://en.wikipedia.org/wiki/Lake_Bonney_(Antarctica)
+lake_hoare,"Lake Hoare, Taylor Valley",-77.63,162.90,mars,ice,5,medium,https://en.wikipedia.org/wiki/Lake_Hoare
+lost_hammer,"Lost Hammer spring, Axel Heiberg Island",79.08,-90.21,mars,geology,10,high,https://en.wikipedia.org/wiki/Axel_Heiberg_Island
