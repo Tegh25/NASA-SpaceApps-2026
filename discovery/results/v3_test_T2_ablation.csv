@@ -1,0 +1,11 @@
+dropped,AUC,median_pctile_known,top100_overlap_with_full
+(none),0.82,16.7,1.0
+terrain,0.82,22.1,0.58
+multiscale,0.83,22.8,0.82
+craters,0.82,14.3,0.68
+landing,0.83,24.3,0.75
+lighting,0.78,9.6,0.7
+thermal,0.82,17.7,0.94
+ice,0.8,17.2,0.29
+sun,0.82,16.7,1.0
+geology,0.82,16.1,0.97

@@ -1,0 +1,11 @@
+category,AUC_known_vs_negative,median_pctile_known,median_pctile_negative,known_ge75th
+terrain,0.82,29.2,7.6,4
+multiscale,0.75,6.1,0.5,3
+craters,0.5,48.9,53.4,6
+landing,0.69,6.5,1.4,1
+lighting,0.77,69.6,53.3,8
+thermal,0.52,1.6,5.0,6
+ice,0.44,13.2,20.7,0
+sun,0.6,0.0,0.0,5
+geology,0.64,0.0,0.0,11
+COMPOSITE,0.82,16.7,0.9,2
