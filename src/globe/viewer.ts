@@ -1,5 +1,6 @@
 import * as Cesium from 'cesium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
+import { useGlobeHealth } from './health';
 
 declare const __CESIUM_ION_TOKEN__: string;
 
@@ -70,6 +71,23 @@ function buildGraticule(): Cesium.PolylineCollection {
   return lines;
 }
 
+/**
+ * Cesium has no recovery for a lost WebGL context: its render loop keeps running against a 0 x 0 buffer and
+ * dies with "Expected width to be greater than 0". Stop the loop, tell the app, and replace Cesium's own error
+ * dialog with the app's message (see GlobeFailureNotice).
+ */
+function watchHealth(v: Cesium.Viewer) {
+  v.canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    v.useDefaultRenderLoop = false;
+    useGlobeHealth.getState().report('context-lost');
+  });
+  v.scene.renderError.addEventListener(() => {
+    v.useDefaultRenderLoop = false;
+    useGlobeHealth.getState().report('render-error');
+  });
+}
+
 export async function createViewer(container: HTMLElement): Promise<Cesium.Viewer> {
   if (viewer) return viewer;
   if (creating) return creating;
@@ -100,6 +118,8 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
       vrButton: false,
       projectionPicker: false,
       msaaSamples: 4,
+      // The app shows its own message (GlobeFailureNotice) instead of Cesium's dialog.
+      showRenderLoopErrors: false,
     });
     const scene = v.scene;
     const globe = scene.globe;
@@ -167,6 +187,7 @@ export async function createViewer(container: HTMLElement): Promise<Cesium.Viewe
 
     v.camera.setView({ destination: Cesium.Cartesian3.fromDegrees(INITIAL_VIEW.lon, INITIAL_VIEW.lat, INITIAL_VIEW.height) });
     syncByHeight();
+    watchHealth(v);
     viewer = v;
     if (import.meta.env.DEV) (window as unknown as { __viewer: Cesium.Viewer }).__viewer = v;
     resolveReady(v);
