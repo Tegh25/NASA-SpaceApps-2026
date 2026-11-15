@@ -1,5 +1,8 @@
 .env
 .env.local
+# Other variants (.env.production, .env.development.local, ...) may hold secrets too.
+.env.*
+!.env.example
 node_modules/
 dist/
 .vercel/
