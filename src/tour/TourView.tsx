@@ -39,6 +39,7 @@ export function TourView() {
   const touch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
   const siteKey = info?.site.id;
+  const twinPath = info?.site.featured?.twin?.earthHeightmap;
   const spawn = info?.site.featured?.tour?.spawn ?? (info ? { lat: info.site.lat, lon: info.site.lon, heading: 0 } : null);
 
   useEffect(() => {
@@ -49,13 +50,23 @@ export function TourView() {
     (async () => {
       const v = await whenViewer();
       if (cancelled) return;
-      // Fly in straight away. The photoreal tiles and the ground sample load alongside the flight
-      // (both are usually warm already from the site prefetch) instead of in front of it.
-      if (cachedGround(siteKey) === undefined) void warmTour(siteKey, spawn);
+      // The ground height is usually warm from the site prefetch. If not, give it a short head start
+      // (World Terrain sample, else the shipped Copernicus twin heightmap) so the walker lands on
+      // the ground instead of hovering; whatever arrives later is passed on as a hint.
+      const warm = warmTour(siteKey, spawn, twinPath);
+      if (cachedGround(siteKey) === undefined) {
+        await Promise.race([warm, new Promise((r) => setTimeout(r, 1500))]);
+        if (cancelled) return;
+      }
       setFidelity(HAS_ION ? 'terrain' : 'low');
       tvRef.current = new TargetViewController(v);
       controller = new TourController(v, { spawn, tileset: null, onPointerLock: setLocked, groundHint: cachedGround(siteKey) });
       setCtl(controller);
+      if (import.meta.env.DEV) (window as unknown as { __tour: unknown }).__tour = controller;
+      void warm.then(() => {
+        const g = cachedGround(siteKey);
+        if (!cancelled && g !== undefined) controller?.hintGround(g);
+      });
       void getPhotorealTileset(v).then((ts) => {
         if (cancelled || !ts || !controller) return;
         tileset = ts;

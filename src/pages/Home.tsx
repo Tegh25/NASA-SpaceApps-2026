@@ -68,6 +68,25 @@ export function Home() {
     return prefetchSite(data, id);
   }, [data, id]);
 
+  // Preload the headline demo site (best new Moon candidate) a few seconds after load, so its first
+  // "Enter site" lands immediately even if nobody has opened it yet.
+  useEffect(() => {
+    if (!data) return;
+    const top =
+      [...data.featured]
+        .filter((f) => f.kind === 'new' && (f.body ?? 'moon') === 'moon')
+        .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))[0] ?? data.featured[0];
+    if (!top) return;
+    let undo: (() => void) | undefined;
+    const t = setTimeout(() => {
+      undo = prefetchSite(data, top.id);
+    }, 4000);
+    return () => {
+      clearTimeout(t);
+      undo?.();
+    };
+  }, [data]);
+
   // Default body is the Moon unless the URL asked for something else.
   useEffect(() => {
     if (status !== 'ready') return;

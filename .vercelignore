@@ -1,0 +1,13 @@
+# Not needed to build or serve the site
+discovery/
+docs/screenshots/
+node_modules/
+dist/
+.claude/
+.agents/
+*.log
+.DS_Store
+# Never upload local secrets; set them as Vercel env vars instead
+.env
+.env.*
+!.env.example
