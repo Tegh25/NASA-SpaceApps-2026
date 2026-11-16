@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terralog: project demo (7 slides)</title>
+<meta name="description" content="Terralog, NASA Space Apps Challenge 2026 project demo: Earth places that match the Moon's south pole and Mars landing sites." />
+<meta name="ai-disclosure" content="Slide text and layout were drafted with an AI assistant (Anthropic Claude) and edited by the team. Screenshots are real captures of the app; no images are AI-generated." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --void: #05070c; --hull: #0b111b; --rule: #1c2a3d; --ink: #e6eef6; --dim: #8b9bb0;
+    --moon: #9ee7f2; --mars: #ff7a3d; --pencil: #f3e3a2; --good: #4fe0b0; --bad: #ff5d73;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--void); color: var(--ink); font-family: Inter, system-ui, sans-serif; }
+  .deck { height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; }
+  .slide {
+    position: relative; min-height: 100vh; scroll-snap-align: start; padding: 6vh 6vw 9vh;
+    display: flex; flex-direction: column; justify-content: center; gap: 2.4vh;
+    background: radial-gradient(ellipse at 80% 0%, rgba(158,231,242,0.07), transparent 55%), var(--void);
+    border-bottom: 1px solid var(--rule);
+  }
+  .slide.mars { background: radial-gradient(ellipse at 80% 0%, rgba(255,122,61,0.09), transparent 55%), var(--void); }
+  h1, h2 { font-family: 'Space Grotesk', Inter, sans-serif; letter-spacing: -0.01em; margin: 0; }
+  h1 { font-size: clamp(40px, 7vw, 92px); line-height: 1; }
+  h2 { font-size: clamp(26px, 3.6vw, 48px); line-height: 1.08; max-width: 26ch; }
+  p, li { font-size: clamp(15px, 1.45vw, 21px); line-height: 1.45; color: var(--ink); max-width: 72ch; margin: 0; }
+  .dim { color: var(--dim); }
+  .num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .hand { font-family: Caveat, cursive; color: var(--pencil); font-size: clamp(20px, 2.1vw, 30px); }
+  .accent { color: var(--moon); } .ember { color: var(--mars); }
+  .grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3vw; align-items: center; }
+  .shot { width: 100%; border-radius: 14px; border: 1px solid var(--rule); box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); display: block; }
+  .shots2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4vw; }
+  ul { margin: 0; padding-left: 1.1em; display: grid; gap: 1vh; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2vw; }
+  .card { border: 1px solid var(--rule); background: var(--hull); border-radius: 14px; padding: 1.4vw 1.4vw 1.2vw; }
+  .card h3 { margin: 0 0 .6vh; font-family: 'Space Grotesk', sans-serif; font-size: clamp(16px, 1.5vw, 22px); }
+  .card p { font-size: clamp(13px, 1.1vw, 16px); }
+  .pill { display: inline-block; border: 1px solid currentColor; border-radius: 99px; padding: 2px 10px; font-size: 12px; margin-bottom: .8vh; }
+  .stats { display: flex; gap: 3vw; flex-wrap: wrap; }
+  .stat b { display: block; font-family: 'JetBrains Mono', monospace; font-size: clamp(26px, 3.4vw, 48px); color: var(--moon); font-weight: 500; }
+  .stat span { color: var(--dim); font-size: clamp(12px, 1vw, 15px); }
+  .pipe { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1vw; counter-reset: s; }
+  .pipe div { border-top: 2px solid var(--moon); padding-top: 1.2vh; font-size: clamp(13px, 1.15vw, 17px); line-height: 1.4; }
+  .foot { position: absolute; left: 6vw; right: 6vw; bottom: 3vh; display: flex; justify-content: space-between; font-size: 12px; color: var(--dim); font-family: 'JetBrains Mono', monospace; }
+  a { color: var(--moon); }
+  @media (max-width: 860px) { .grid, .shots2, .cards, .pipe { grid-template-columns: 1fr; } .slide { padding: 8vh 6vw 12vh; } }
+  @media print {
+    @page { size: 1600px 900px; margin: 0; }
+    .deck { height: auto; overflow: visible; }
+    .slide { height: 900px; min-height: 0; page-break-after: always; border: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="deck">
+
+  <!-- 1. Title -->
+  <section class="slide">
+    <p class="dim num">NASA Space Apps Challenge 2026: Permanent Moon Base Locations and Mars</p>
+    <h1>Terralog</h1>
+    <h2 style="max-width:30ch;font-weight:500">We searched real satellite data for places on Earth whose terrain matches the Moon's south pole and Mars landing sites.</h2>
+    <div class="stats" style="margin-top:2vh">
+      <div class="stat"><b>12,362</b><span>Earth blocks scored vs 9 Artemis III regions</span></div>
+      <div class="stat"><b class="ember">68,496</b><span>arid blocks screened vs 4 Mars sites</span></div>
+      <div class="stat"><b>6</b><span>new candidate sites, with honest gaps</span></div>
+    </div>
+    <p>Live app: <a href="https://terralog-three.vercel.app">terralog-three.vercel.app</a> &nbsp; Code: <a href="https://github.com/Tegh25/NASA-SpaceApps-2026">github.com/Tegh25/NASA-SpaceApps-2026</a></p>
+    <div class="foot"><span>Team SpaceX Hackers</span><span>1 / 7</span></div>
+  </section>
+
+  <!-- 2. Problem -->
+  <section class="slide">
+    <h2>Crews rehearse on Earth before they go. Which Earth places actually look like where they are going?</h2>
+    <ul>
+      <li>Artemis III targets the lunar south pole: steep crater rims, long shadows from a sun that circles the horizon, ice-stable cold traps.</li>
+      <li>Today's analog sites (Hawaii, Iceland, the Dry Valleys) were picked by experience, not by measuring them against a specific landing region.</li>
+      <li>We asked a measurable question: for each candidate Moon region and Mars landing site, which 20 to 30 km blocks of Earth have the closest terrain, lighting, thermal and surface statistics, and how far off are they?</li>
+    </ul>
+    <p class="hand">a ranked, checkable list instead of a hunch</p>
+    <div class="foot"><span>Problem</span><span>2 / 7</span></div>
+  </section>
+
+  <!-- 3. Method -->
+  <section class="slide">
+    <h2>Same code on both worlds: fingerprint the target, then score every Earth block.</h2>
+    <div class="pipe">
+      <div><b>1. Moon targets</b><br/><span class="dim">LRO LOLA 40 m elevation + LRO Diviner temperature and ice stability for 9 Artemis III regions.</span></div>
+      <div><b>2. Earth blocks</b><br/><span class="dim">Copernicus GLO-30 terrain, MODIS temperature, snow, NDVI, NASA POWER climate for 12,362 blocks.</span></div>
+      <div><b>3. Score</b><br/><span class="dim">10 categories: slopes, multi-scale roughness, craters, landing area, low-sun shadows, thermal, ice, geology.</span></div>
+      <div><b>4. Novelty</b><br/><span class="dim">Keep only places at least 150 km from 166 catalogued analog sites (251 for Mars).</span></div>
+      <div><b>5. Verify</b><br/><span class="dim">Landsat 8/9 and Sentinel-2 check that the surface is really bare rock.</span></div>
+    </div>
+    <p class="dim">Mars: 68,496 arid blocks at 200 m vs Jezero, Gale, Meridiani and Oxia Planum (HRSC+MOLA terrain, MGS TES albedo and thermal inertia). Validation: the score separates known analogs from forests and farmland with AUC 0.82.</p>
+    <div class="foot"><span>Method</span><span>3 / 7</span></div>
+  </section>
+
+  <!-- 4. Results -->
+  <section class="slide">
+    <h2>What we found, and where it falls short.</h2>
+    <div class="cards">
+      <div class="card"><span class="pill accent">Moon, new</span><h3>Ngari, western Tibet</h3><p>Closest to <b>Slater Plain</b>. Stays in the top 40 in 87 % of 1,000 re-weightings; 82 % bare ground; 243 km from the nearest known analog.</p></div>
+      <div class="card"><span class="pill accent">Moon, new</span><h3>Pamir, near Muztagh Ata</h3><p>Closest to <b>Mons Mouton Plateau</b>. Stability 87 %; 514 km from the nearest known site; 22 to 33 % sparse vegetation.</p></div>
+      <div class="card"><span class="pill accent">Moon, conditional</span><h3>Southern Tibet, Tingri</h3><p>Steep match for <b>Malapert Massif</b>; ranking is weight-sensitive and one corner has a glacier.</p></div>
+      <div class="card"><span class="pill ember">Mars, new</span><h3>Chagai / Taftan, Pakistan-Iran</h3><p>Near-identical to <b>Oxia Planum</b> in slope, relief and albedo (0.20 vs 0.195); 100 % bare; 392 km from known sites.</p></div>
+      <div class="card"><span class="pill ember">Mars, new</span><h3>Beishan Gobi, Gansu</h3><p>Second Oxia match: stability 99 %, 100 % bare, 339 km from the nearest catalogued site.</p></div>
+      <div class="card" style="border-color:rgba(255,93,115,.5)"><span class="pill" style="color:var(--bad)">Every site</span><h3>Gaps we state in numbers</h3><p>No Earth block closes the temperature gap (about 275 K vs 105 to 153 K) or the lighting gap (0 vs 365 circling-sun days). Mars air pressure is about 150 times lower.</p></div>
+    </div>
+    <p class="dim">Place names are approximate; "new" means no analog program found within 150 km in catalogues and web searches. Prior art exists, so we claim a quantified match, not a first.</p>
+    <div class="foot"><span>Results</span><span>4 / 7</span></div>
+  </section>
+
+  <!-- 5. The app -->
+  <section class="slide">
+    <div class="grid">
+      <div style="display:grid;gap:2vh">
+        <h2>Terralog turns the research into something anyone can explore.</h2>
+        <ul>
+          <li>Glowing globe: every scored block, coloured live by how well it matches.</li>
+          <li>Pick Moon or Mars; cards show each site's match score, why it matches, and what it cannot reproduce.</li>
+          <li>Move sliders (temperature, rain, slope, ice) or type "cold, dry, flat plain": the ranking updates instantly across all 12,362 blocks.</li>
+          <li>Enter a site and walk it at eye height in 3D.</li>
+        </ul>
+      </div>
+      <img class="shot" src="/pitch/glass-explore-1440.webp" alt="Terralog explore view of Ngari, western Tibet, with match score 76 against Slater Plain" />
+    </div>
+    <div class="foot"><span>The app</span><span>5 / 7</span></div>
+  </section>
+
+  <!-- 6. Twin Terrain Lab -->
+  <section class="slide">
+    <h2>Twin Terrain Lab: real Tibet next to the real Moon, at the same scale.</h2>
+    <div class="shots2">
+      <img class="shot" src="/pitch/lab-side-by-side.webp" alt="Ngari terrain block next to the Slater Plain Moon block, both 10.24 km at 40 m per pixel" />
+      <img class="shot" src="/pitch/lab-lunar-sun.webp" alt="The same blocks under a 1.5 degree lunar polar sun, with long black shadows on the Moon side" />
+    </div>
+    <p>Both blocks are real elevation data at 40 m per pixel (Copernicus GLO-30 vs LRO LOLA). Slopes overlap by <span class="num accent">61 %</span>. Drop the sun to the Moon's 1.5° polar angle and the lighting gap becomes visible. Morph one into the other; the same view works for Mars sites at 200 m.</p>
+    <div class="foot"><span>Twin Terrain Lab</span><span>6 / 7</span></div>
+  </section>
+
+  <!-- 7. Impact -->
+  <section class="slide mars">
+    <h2>Why it matters, and what is next.</h2>
+    <ul>
+      <li><b>Impact:</b> mission planners and analog programs get a reproducible, data-backed shortlist of training and test sites matched to specific landing regions, with the gaps spelled out.</li>
+      <li><b>Open:</b> the full pipeline, data and app are public; anyone can re-run it with new targets.</li>
+      <li><b>Next:</b> field-check the sites, add thermal and mineralogy data, extend Mars validation, and add more Artemis and Mars candidate regions.</li>
+    </ul>
+    <p>Try it: <a href="https://terralog-three.vercel.app">terralog-three.vercel.app</a> &nbsp; Code and data: <a href="https://github.com/Tegh25/NASA-SpaceApps-2026">github.com/Tegh25/NASA-SpaceApps-2026</a></p>
+    <p class="dim" style="font-size:13px">Data: NASA LRO (LOLA, Diviner), NASA MODIS, NASA POWER, NASA GIBS, NASA/USGS Landsat, MGS TES; ESA Copernicus DEM and Sentinel-2; JAXA ALOS PALSAR; USGS HRSC+MOLA. AI disclosure: app code and these slides were written with help from an AI assistant (Anthropic Claude) and reviewed by the team; screenshots are real app captures, no AI-generated images.</p>
+    <div class="foot"><span>Impact</span><span>7 / 7</span></div>
+  </section>
+
+</main>
+<script>
+  // Arrow keys / PageUp / PageDown move between slides.
+  const slides = [...document.querySelectorAll('.slide')];
+  const deck = document.querySelector('.deck');
+  const cur = () => slides.findIndex((s) => s.getBoundingClientRect().top >= -innerHeight / 2);
+  addEventListener('keydown', (e) => {
+    const i = Math.max(0, cur());
+    if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); slides[Math.min(slides.length - 1, i + 1)].scrollIntoView({ behavior: 'smooth' }); }
+    if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); slides[Math.max(0, i - 1)].scrollIntoView({ behavior: 'smooth' }); }
+  });
+</script>
+</body>
+</html>

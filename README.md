@@ -128,6 +128,15 @@ docs/                 Product guide, design, deploy and QA notes, screenshots
 - [`docs/DEPLOY.md`](docs/DEPLOY.md): deployment
 - [`discovery/README.md`](discovery/README.md) and [`discovery/mars/README.md`](discovery/mars/README.md): pipeline
 
+## Use of AI (Super Intelligence) tools
+
+As required by the NASA Space Apps rules, we disclose where SI tools were used:
+
+- **Code:** much of the web app (`src/`, `api/`) and the data scripts (`scripts/`, parts of `discovery/`) was written with an AI coding assistant (Anthropic Claude, via Claude Code) and reviewed, run and tested by the team.
+- **Text:** site descriptions, "why it matches" paragraphs, the Method page and the demo slides were drafted with AI from our own results tables and checked by the team. The in-app "Ask AI" explanation is generated live and labelled as AI-written.
+- **Data and findings:** all numbers come from the cited NASA and partner datasets, processed by our pipeline; none are AI-generated.
+- **Images and video:** none are AI-generated. Screenshots are real captures of the app.
+
 ## Attributions
 
 NASA PDS, LRO LOLA, Diviner and Mini-RF, Mars MOLA, THEMIS and TES, MODIS, Landsat; ESA Copernicus DEM GLO-30, Sentinel-2 and WorldCover; USGS HRSC+MOLA blended DEM and Artemis III region outlines; JAXA ALOS PALSAR-2; Cesium ion, NASA GIBS, Google Photorealistic 3D Tiles and Natural Earth. Terralog does not use Google Street View imagery.
