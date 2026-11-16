@@ -39,7 +39,7 @@ export function prefetchSite(data: AppData, siteId: string): () => void {
   let fired = false;
   const timer = setTimeout(() => {
     fired = true;
-    import('../globe/warm').then((m) => m.warmTour(siteId, spawn)).catch(() => {});
+    import('../globe/warm').then((m) => m.warmTour(siteId, spawn, f?.twin?.earthHeightmap)).catch(() => {});
   }, CESIUM_WARM_DELAY_MS);
   return () => {
     if (fired) return;

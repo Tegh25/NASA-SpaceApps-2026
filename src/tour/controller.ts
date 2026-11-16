@@ -1,4 +1,5 @@
 import * as Cesium from 'cesium';
+import { withTimeout } from '../globe/warm';
 import { prefersReducedMotion } from '../globe/viewer';
 
 export const EYE_HEIGHT = 1.7;
@@ -19,6 +20,8 @@ const ARRIVE_ABOVE_GROUND_M = 150;
 const ARRIVE_BLIND_M = 6000;
 /** Quick globe readings further than this from the last full-detail sample are ignored. */
 const QUICK_TRUST_M = 150;
+/** Upper bound for one full-detail ground sample before falling back. */
+const DETAIL_TIMEOUT_MS = 4000;
 
 export interface TourPose {
   lat: number;
@@ -179,6 +182,13 @@ export class TourController {
     });
   }
 
+  /** A ground height found after the tour started (prefetch or shipped heightmap). Used only until a real sample lands. */
+  hintGround(h: number) {
+    if (this.groundKnown || !plausible(h)) return;
+    this.lastDetailedH = h;
+    this.setGround(h);
+  }
+
   private setGround(h: number) {
     this.pose.ground = h;
     this.groundKnown = true;
@@ -209,15 +219,24 @@ export class TourController {
     this.lastDetailed = now;
     try {
       let h: number | undefined;
+      // Photoreal tiles are sparse in remote places and sampleHeightMostDetailed can stall there,
+      // so it gets a time limit and the terrain is tried next. The terrain provider is undefined
+      // until World Terrain finishes loading.
       if (photoreal) {
-        const [p] = await scene.sampleHeightMostDetailed([carto], [], 1);
-        h = p?.height;
-      } else if (this.viewer.terrainProvider.availability) {
-        const [p] = await Cesium.sampleTerrainMostDetailed(this.viewer.terrainProvider, [carto]);
-        h = p?.height;
-      } else {
-        h = scene.globe.getHeight(carto) ?? 0;
+        try {
+          const [p] = await withTimeout(scene.sampleHeightMostDetailed([carto], [], 1), DETAIL_TIMEOUT_MS);
+          h = p?.height;
+        } catch {
+          h = undefined;
+        }
       }
+      const tp = scene.globe.terrainProvider;
+      if (!plausible(h) && tp && tp.availability) {
+        const [p] = await withTimeout(Cesium.sampleTerrainMostDetailed(tp, [carto]), DETAIL_TIMEOUT_MS);
+        h = p?.height;
+      }
+      // Flat ellipsoid (no ion token): the imagery is drawn at 0 m, so that is the ground.
+      if (!plausible(h) && !(tp && tp.availability)) h = tp instanceof Cesium.EllipsoidTerrainProvider ? 0 : scene.globe.getHeight(carto);
       if (plausible(h)) {
         this.setGround(h);
         this.lastDetailedH = h;
