@@ -4,7 +4,9 @@
 
 Terralog is a browser app and research pipeline built for the NASA Space Apps Challenge 2026 (Toronto), challenge "Permanent Moon Base Locations and Mars". It compares candidate Moon base regions and Mars landing sites with Earth terrain and climate, ranks the closest Earth matches, and lets you explore them on a globe, in a ground-level tour, and in a 3D side-by-side terrain lab.
 
-<!-- Screenshots: add from docs/screenshots/readme-home-mars.png, readme-explore.png, readme-mars-lab.png -->
+### Nasa Challenge
+
+[Permanent Moon Base Locations and Mars](https://www.spaceappschallenge.org/2026/challenges/permanent-moon-base-locations-and-mars/)
 
 ## Features
 
